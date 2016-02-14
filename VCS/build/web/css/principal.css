@@ -1,0 +1,48 @@
+/* 
+    Created on : 10/01/2016, 04:47:52 PM
+    Author     : Geovanny Barrera
+*/
+
+.alineado{
+float: right;
+right: 22px; 
+}
+.alineado2{
+text-align: right;
+}
+.alineado3{
+text-align: center;
+}
+.tamanio{
+width: 1%;
+padding:0;
+}
+.tamanio2{
+width: 100%;
+}
+.caption {
+padding: 0;
+width: 100%;
+position: relative;
+}
+.caption img {
+width: 100%;
+height: auto;
+display: block;
+padding: 0;
+border: 0;
+}
+.caption::before {
+content: attr(title);
+position: absolute;
+background: #EAF200; /* Color de fondo */
+background: rgba(234, 242, 0, 0.6); /* Color de fondo en RGBA */
+color: #000; /* Color del texto */
+font-size: 14px; /* Tamaño del texto */
+padding: 5px;
+right: 0;
+bottom: 0;
+left: 0;
+text-align: center;
+z-index: 1;
+}
