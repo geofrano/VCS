@@ -34,7 +34,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div class="col-md-9">
-                <jsp:include page="botonera_ficha_estudiante.jsp"/>
+                <jsp:include page="consultar_ficha_estudiante.jsp"/>
             </div>
             </div>
             <div class="row">

@@ -25,9 +25,7 @@
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-                </div>       
-
-
+                </div>
             </td>
         </tr>
         <tr>
