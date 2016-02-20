@@ -172,7 +172,6 @@ app.controller("ControladorVCS", function($scope, $http) {
     };
 
     $scope.carga_datos = function() {
-        alert("aaaaaaaaaa");
         var ruta = document.getElementById("ruta_principal").value;
         var id_cc = document.getElementById("group1").value;
         alert("id_cc " + id_cc);
@@ -206,7 +205,7 @@ app.controller("ControladorVCS", function($scope, $http) {
                     document.getElementById("txt_dir_cia").value = article.emp_dir;
                     document.getElementById("txt_nomb_progama").value = article.programa;
                     document.getElementById("txt_nomb_proy").value = article.proyecto;
-                    //document.getElementById("txt_actividad").value = article.tutor;
+                    document.getElementById("txt_tutor").value = article.tutor;
                     document.getElementById("txt_act_realizar").value = article.actividades;
                 });
             }

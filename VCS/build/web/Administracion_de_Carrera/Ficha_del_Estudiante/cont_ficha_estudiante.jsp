@@ -122,13 +122,14 @@
                         Prácticas Pre profesionales):</label></td>
                 <td colspan="3"><textarea readonly="readonly" class="form-control" id="txt_act_realizar" name="txt_act_realizar"></textarea></td>
             </tr>
-            <tr>
-                <td align="center" colspan="4">
-                    <button ng-click="" type="button" class="btn btn-success" onclick="" ng-disabled="txt_tipo_doc.$invalid || txt_cedula.$invalid"><span class="glyphicon glyphicon-saved"></span> Grabar</button>
-                </td>
-            </tr>
         </table>
-
     </fieldset>
-
 </fieldset>
+<br>
+<table>
+    <tr>
+        <td align="left"><label for="txt_tutor">Nombre del Tutor:&nbsp;&nbsp;</label></td>
+        <td align="left"><input type="text" readonly="readonly" class="form-control" id="txt_tutor" name="txt_tutor" ng-model="txt_tutor"></td>
+    </tr>
+</table>
+<br><br><center><button ng-click="" type="button" class="btn btn-success" onclick="" ng-disabled="txt_tipo_doc.$invalid || txt_cedula.$invalid"><span class="glyphicon glyphicon-saved"></span> Grabar</button></center>
