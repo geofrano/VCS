@@ -13,26 +13,78 @@ app.controller("ControladorVCS", function ($scope, $http) {
     $scope.consultar_estudiante = function () {
         var estudiante = document.getElementById("txt_nombre_est").value;
         var ruta = document.getElementById("ruta_principal").value;
-        //alert(ruta);
+
+        var $tabla = $("#tbl_estudiante");
+        $tabla.find("tr:gt(0)").remove();
+
         $.ajax({
             type: 'POST',
+            dataType: 'json',
             data: {id_est: estudiante},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
             url: ruta + '/F_Consulta_Estudiante',
-            success: function (result) {
-                $('#div_datos').html(result);
+            success: function (data) {
+                $("#div_datos").html("");
+
+                $.each(data.items, function (index, article) {
+                    $tabla.append("<tr><td>" + article.id_cc + "</td>\n" +
+                            "<td>" + article.nomb_est + "</td>\n" +
+                            //"<td>" + article.emp_nombre + "</td>\n" +
+                            "<td>" + article.lugar_suscrip + "</td>\n" +
+                            "<td>" + article.fecha_suscrip + "</td>\n" +
+                            "<td><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" alt=\"Modificar\"/>" +
+                            "</td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" alt=\"Eliminar\"/>" +
+                            "</td></tr>\n");
+                    document.getElementById("existe_data").value = "1";
+                });
+                var v = document.getElementById("existe_data").value;
+                if (v == "0") {
+                    $tabla.append("<tr><td colspan=\"4\" align=\"center\">No hay datos a mostrar</td></tr>");
+                }
+
             }
         });
     };
+
     $scope.carga_ingreso = function () {
         var estudiante = document.getElementById("txt_nombre_est").value;
         var ruta = document.getElementById("ruta_principal").value;
-        window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ingresar_ficha_estudiante.jsp", target="_self");
+        var seleccionado = $("input[name='group1']:checked").val();
+
+        if (seleccionado) {//Verifico que tenga seleccionado una Carta compromiso
+            alert("ENTRO SELECCIONADO");
+            //document.getElementById("frm_datos").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ingresar_ficha_estudiante.jsp";
+            //document.frm_datos.submit();
+            $("#frm_consulta").css("display", "none");
+            $("#div_ingreso").css("display", "block");
+            //$scope.submitted = true;
+            $.ajax({
+                type: 'POST',
+                //data: {id_cmb:'carrera'},
+                //data: $('#formid').serialize(),
+                url: ruta + '/Administracion_de_Carrera/Ficha_del_Estudiante/cont_ficha_estudiante.jsp',
+                success: function (data) {
+                    $("#div_ingreso").html("");
+                    $("#div_ingreso").append(data);
+                }
+            });
+        } else {
+            alert("No ha seleccionado una carta compromiso. Favor verifique");
+        }
+
+
         //alert(ruta);
     };
-    
+
     $scope.carga2 = function () {
         var ruta = document.getElementById("ruta_principal").value;
         //var fullname = $('#fullname').val();
+
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -106,14 +158,6 @@ app.controller("ControladorVCS", function ($scope, $http) {
         });
     };
 
-    $scope.guarda_carta_comp = function () {
-        var ruta = document.getElementById("ruta_principal").value;
-        $scope.user = {};
-        document.getElementById("frm_carta_comp").action = ruta + "/F_carta_compromiso.jsp";
-        document.frm_carta_comp.submit();
-        $scope.submitted = true;
-    };
-
     $scope.carga_combo_carrera = function () {
         var ruta = document.getElementById("ruta_principal").value;
         //var fullname = $('#fullname').val();
@@ -176,17 +220,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
             }
         });
     };
-    $scope.llama_pagina_hija = function (tipo_accion) {
-        alert(tipo_accion);
-        if (tipo_accion == "ingresar") {
-            window.open("consultar_ficha_estudiante.jsp", "_self");
-        } else if (tipo_accion == "modificar") {
 
-        } else if (tipo_accion == "eliminar") {
-
-        }
-
-    };
     $scope.consulta_ficha_est = function () {
 
         $.ajax({
@@ -199,7 +233,27 @@ app.controller("ControladorVCS", function ($scope, $http) {
         });
     };
 
+    $scope.carga_datos = function () {
+        alert("aaaaaaaaaa");
+        var ruta = document.getElementById("ruta_principal").value;
+        var id_cc= document.getElementById("group1").value;
+        alert("id_cc "+id_cc);
+$.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cc: id_cc},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_muestra_ficha_estudiante',
+            success: function (data) {
 
+                $.each(data.items, function (index, article) {
+                    document.getElementById("txt_id_carta_comp").value = article.id_carta_comp;
+
+                });
+            }
+        });
+    };
     $(function () {
         $('#datetimepicker6').datetimepicker();
         $('#datetimepicker7').datetimepicker({
@@ -213,13 +267,4 @@ app.controller("ControladorVCS", function ($scope, $http) {
         });
     });
 
-    /*$scope.insertaprueba=function() {
-     $http.post("vistas/blank.jsp",{'txt_nombre_empresa':$scope.txt_nombre_empresa})
-     .success(function(data,status,headers,config){
-     console.log("data inserted successfull"); 
-     });
-     };*/
-
 });
-
-

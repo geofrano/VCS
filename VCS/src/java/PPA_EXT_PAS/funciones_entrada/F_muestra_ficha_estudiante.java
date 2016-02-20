@@ -7,7 +7,6 @@
 package PPA_EXT_PAS.funciones_entrada;
 
 import PPA_EXT_PAS.eventos.Administrar_Ficha_Estudiante;
-import PPA_EXT_PAS.eventos.Administrar_Menu_Principal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -35,14 +34,9 @@ public class F_muestra_ficha_estudiante extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json; charset=UTF-8");
         try {
-            String cod_carta_comp=request.getParameter("txt_cod_cart_comp").toString();
-            String tipo_act=request.getParameter("txt_tipo_act").toString();
-            String nombre_est=request.getParameter("txt_nomb_est").toString();
-            
-                    
-                    
+            String cod_carta_comp=request.getParameter("id_cc").toString();     
             PrintWriter out = response.getWriter();
-            out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp, nombre_est, tipo_act)));
+            out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp)));
             out.flush();
             out.close();
             

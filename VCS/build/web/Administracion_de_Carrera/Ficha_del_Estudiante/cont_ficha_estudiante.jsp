@@ -3,10 +3,11 @@
     Created on : 11/01/2016, 09:27:00 PM
     Author     : Geovanny Barrera
 --%>
-<h1>FICHA DEL ESTUDIANTE PARA EL TUTOR</h1>
+<fieldset>
+    <legend><h1 class="alineado3">FICHA DEL ESTUDIANTE PARA EL TUTOR</h1></legend>
 
 <fieldset><legend>DATOS DEL ESTUDIANTE</legend>
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive" ng-open="carga_datos()">
         <tr>
             <td><label for="txt_id_carta_comp">CARTA COMPROMISO:</label></td>
             <td><input type="text" class="form-control" id="txt_id_carta_comp" name="txt_id_carta_comp" ng-model="txt_id_carta_comp"/></td>
@@ -132,4 +133,5 @@
         </tr>
     </table>
 
+</fieldset>
 </fieldset>

@@ -30,17 +30,18 @@ import org.json.JSONObject;
  * @author lpita
  */
 public class Administrar_Estudiante {
+    String existe_data;
     
     public Administrar_Estudiante(){
         super();
     }
     public static List<Carta_Compromiso> consulta_carta_compro(String nombre_estudiante) throws IOException{
         List<Carta_Compromiso> datos = new LinkedList<Carta_Compromiso>();
-
+        
         ArrayList<Parametro> parametro = new ArrayList<>();
         String sql = "SELECT cc_id, \n" +
-                     "       es_nombre,\n" +
-                     "       es_apellido,\n" +
+                     "   es_apellido||' '||es_nombre,\n" +
+                     "       'PEND',\n" +
                      "       cc_lugar_suscripcion, \n" +
                      "       to_char(cc_fecha_suscripcion,'dd/mm/yyyy'), \n" +
                      "       cc_estado\n" +
@@ -67,7 +68,9 @@ public class Administrar_Estudiante {
                 carta_comp.setEstado(cres.getString(5).trim());
                 System.out.println("EST: "+cres.getString(1).trim());
                 datos.add(carta_comp);
+                
             }
+
             //out.println("</table>");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -82,7 +85,7 @@ public class Administrar_Estudiante {
             json.put("emp_nombre", carta_comp.getNomb_empresa());
             json.put("lugar_suscrip", carta_comp.getLugar_suscripcion());
             json.put("fecha_suscrip", carta_comp.getFecha_suscripcion());
-            //json.put("estado", carta_comp.getEstado());
+            //json.put("existe", carta_comp.getActividad_1());
             
         } catch (JSONException ex) {
             Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,6 +102,7 @@ public class Administrar_Estudiante {
             }
 
             json.put("items", jsonItems);
+            
         } catch (JSONException ex) {
             Logger.getLogger(Menu_principal.class.getName()).log(Level.SEVERE, null, ex);
         }
