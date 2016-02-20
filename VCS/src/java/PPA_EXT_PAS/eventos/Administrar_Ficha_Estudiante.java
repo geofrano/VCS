@@ -96,7 +96,7 @@ public class Administrar_Ficha_Estudiante {
                 + " mes_ini, anio_ini, dia_fin, mes_fin, anio_fin,\n"
                 + " ced_est, nombre_estudiante, cel_est, correo_est,\n"
                 + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
-                + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, proyecto,\n"
+                + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
                 + " nombre_tutor, actividades\n"
                 + "from view_datos_cc\n"
                 + "where trim(id_cc) = ? ";
@@ -132,7 +132,12 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setTelf_representante(cres.getString(20).trim());
                 carta_comp.setDir_empresa(cres.getString(21).trim());
                 carta_comp.setNombre_programa(cres.getString(22).trim());
-                carta_comp.setProyecto(cres.getString(23).trim());
+                if (cres.getString(23).trim().equals("NA")){
+                    carta_comp.setProyecto("");
+                }else{
+                    carta_comp.setProyecto(cres.getString(23).trim());
+                }
+                
                 carta_comp.setNombre_tutor(cres.getString(24).trim());
                 carta_comp.setActividad_1(cres.getString(25).trim());
 
