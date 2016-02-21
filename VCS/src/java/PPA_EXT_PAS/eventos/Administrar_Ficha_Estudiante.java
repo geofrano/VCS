@@ -74,7 +74,7 @@ public class Administrar_Ficha_Estudiante {
                 + " ced_est, nombre_estudiante, cel_est, correo_est,\n"
                 + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
-                + " nombre_tutor, actividades, coalesce(cod_proy, 'NA') cod_proy\n"
+                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy\n"
                 + "from view_datos_cc\n"
                 + "where trim(id_cc) = ? ";
 
@@ -112,7 +112,7 @@ public class Administrar_Ficha_Estudiante {
                 if (cres.getString(23).trim().equals("NA")){carta_comp.setProyecto("");}else{carta_comp.setProyecto(cres.getString(23).trim());}
                 carta_comp.setNombre_tutor(cres.getString(24).trim());
                 carta_comp.setActividad_1(cres.getString(25).trim());
-                if (cres.getString(26).trim().equals("NA")){carta_comp.setActividad_2("");}else{carta_comp.setActividad_2(cres.getString(26).trim());}
+                if (cres.getString(26).trim().equals(0)){carta_comp.setActividad_2("");}else{carta_comp.setActividad_2(cres.getString(26).trim());}
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
