@@ -189,6 +189,11 @@ app.controller("ControladorVCS", function($scope, $http) {
                     document.getElementById("txt_actividad").value = article.tipo_act;
                     document.getElementById("txt_fecha_ini").value = article.dia_ini +'/'+article.mes_ini+'/'+article.anio_ini;
                     document.getElementById("txt_fecha_fin").value = article.dia_fin +'/'+article.mes_fin+'/'+article.anio_fin;
+                    if (article.est_ced.length > 10){
+                        document.getElementById("txt_tipo_doc").value = "PASAPORTE";
+                    }else {
+                        document.getElementById("txt_tipo_doc").value = "CÉDULA DE CIUDADANÍA";
+                    }
                     document.getElementById("txt_cedula").value = article.est_ced;
                     document.getElementById("txt_nombre_completo").value = article.est_nombre;
                     document.getElementById("txt_fono_est").value = article.est_fono;

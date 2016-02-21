@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 <td><label for="txt_tipo_doc">TIPO DE DOCUMENTO:</label></td>
-                <td><input type="text" class="form-control" id="txt_tipo_doc" name="txt_tipo_doc" ng-model="txt_tipo_doc"/></td>
+                <td><input type="text" class="form-control" id="txt_tipo_doc" readonly="readonly" name="txt_tipo_doc" ng-model="txt_tipo_doc"/></td>
                 <td align="right"><label for="txt_fecha_ini">INICIO:</label></td>
                 <td>
                     <div class="form-group">
@@ -42,7 +42,7 @@
                 <td colspan="3"><input type="text" readonly="readonly" id="txt_nombre_completo" class="form-control" name="txt_nombre_completo" ng-model="txt_nombre_completo"/></td>
             </tr>
             <tr>
-                <td><label for="txt_direccion">DIRECCION:</label></td>
+                <td><label for="txt_direccion">DIRECCION:</label><label class="text-danger">(*)</label></td>
                 <td colspan="3"><input type="text" id="txt_direccion_est" class="form-control" name="txt_direccion_est" ng-model="txt_direccion_est"/></td>
             </tr>
             <tr>
@@ -64,7 +64,7 @@
             <tr>
             <table class="table table-hover table-responsive">
                 <tr>
-                    <td colspan="3" width=160px><label for="txt_carrera">CARRERA:</label></td>
+                    <td colspan="3" width=179px><label for="txt_carrera">CARRERA:</label></td>
                     <td><input type="text" id="txt_carrera" readonly="readonly" class="form-control" name="txt_carrera" ng-model="txt_carrera"/></td>
                     <td colspan="1" width=171px><label for="txt_semestre">CICLO O SEMESTRE<br>QUE CURSA:</label></td>
                     <td colspan="1"><input type="text" readonly="readonly" id="txt_semestre" size="10" class="form-control" name="txt_semestre" ng-model="txt_semestre"/></td>
