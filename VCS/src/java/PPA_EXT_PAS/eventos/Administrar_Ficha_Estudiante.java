@@ -40,13 +40,11 @@ public class Administrar_Ficha_Estudiante {
     public boolean procesar_peticion() {
         ArrayList<Parametro> parametros = new ArrayList<>();
         boolean res = false;
-        String sql = "INSERT INTO \"VCS_FICHA_ESTUDIANTE\"(\n"
-                + "            \"ID_FICHA_ESTUDIANTE\",direccion, telefono, email, \n"
-                + "            facebook, twiter, linkedin, responsable_proyecto, nombre_proyecto, \n"
-                + "            descripcion_actividades, estado)\n"
+        String sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
+                + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
+                + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
                 + "    VALUES (?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?, ?, \n"
-                + "            ?, ?);";
+                + "            ?, ?, ?, ?)";
         parametros.add(new Parametro(1, this.ficha_estudiante.getId_ficha_estudiante()));
         parametros.add(new Parametro(2, this.ficha_estudiante.getDireccion()));
         parametros.add(new Parametro(3, this.ficha_estudiante.getTelefono()));
@@ -109,10 +107,18 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setTelf_representante(cres.getString(20).trim());
                 carta_comp.setDir_empresa(cres.getString(21).trim());
                 carta_comp.setNombre_programa(cres.getString(22).trim());
-                if (cres.getString(23).trim().equals("NA")){carta_comp.setProyecto("");}else{carta_comp.setProyecto(cres.getString(23).trim());}
+                if (cres.getString(23).trim().equals("NA")) {
+                    carta_comp.setProyecto("");
+                } else {
+                    carta_comp.setProyecto(cres.getString(23).trim());
+                }
                 carta_comp.setNombre_tutor(cres.getString(24).trim());
                 carta_comp.setActividad_1(cres.getString(25).trim());
-                if (cres.getString(26).trim().equals(0)){carta_comp.setActividad_2("");}else{carta_comp.setActividad_2(cres.getString(26).trim());}
+                if (cres.getString(26).trim().equals(0)) {
+                    carta_comp.setActividad_2("");
+                } else {
+                    carta_comp.setActividad_2(cres.getString(26).trim());
+                }
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {

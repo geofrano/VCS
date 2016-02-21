@@ -174,7 +174,6 @@ app.controller("ControladorVCS", function($scope, $http) {
     $scope.carga_datos = function() {
         var ruta = document.getElementById("ruta_principal").value;
         var id_cc = document.getElementById("group1").value;
-        alert("id_cc " + id_cc);
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -187,11 +186,11 @@ app.controller("ControladorVCS", function($scope, $http) {
                 $.each(data.items, function(index, article) {
                     document.getElementById("txt_id_carta_comp").value = article.id_carta_comp;
                     document.getElementById("txt_actividad").value = article.tipo_act;
-                    document.getElementById("txt_fecha_ini").value = article.dia_ini +'/'+article.mes_ini+'/'+article.anio_ini;
-                    document.getElementById("txt_fecha_fin").value = article.dia_fin +'/'+article.mes_fin+'/'+article.anio_fin;
-                    if (article.est_ced.length > 10){
+                    document.getElementById("txt_fecha_ini").value = article.dia_ini + '/' + article.mes_ini + '/' + article.anio_ini;
+                    document.getElementById("txt_fecha_fin").value = article.dia_fin + '/' + article.mes_fin + '/' + article.anio_fin;
+                    if (article.est_ced.length > 10) {
                         document.getElementById("txt_tipo_doc").value = "PASAPORTE";
-                    }else {
+                    } else {
                         document.getElementById("txt_tipo_doc").value = "CÉDULA DE CIUDADANÍA";
                     }
                     document.getElementById("txt_cedula").value = article.est_ced;
@@ -221,24 +220,27 @@ app.controller("ControladorVCS", function($scope, $http) {
 
     $scope.graba_ficha_estudiante = function() {
         var ruta = document.getElementById("ruta_principal").value;
-        var id_cc = document.getElementById("group1").value;
-        alert("id_cc " + id_cc);
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {id_cc: id_cc},
-            //data: {id_cmb:'carrera'},
-            //data: $('#formid').serialize(),
-            url: ruta + '/F_muestra_ficha_estudiante',
-            success: function(data) {
+        var direccion = document.getElementById("txt_direccion").value;
+        if (direccion == "") {
+            alert("Favor ingrese la direccion del estudiante");
+        } else {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                //data: {id_cc: id_cc},
+                //data: {id_cmb:'carrera'},
+                data: $('#frm_ficha').serialize(),
+                url: ruta + '/F_graba_Ficha_estudiante',
+                success: function(data) {
 
-                $.each(data.items, function(index, article) {
-                    document.getElementById("txt_cedula").value = article.est_ced;
-                });
-            }
-        });
+                    $.each(data.items, function(index, article) {
+                        document.getElementById("txt_cedula").value = article.est_ced;
+                    });
+                }
+            });
+        }
     };
-    
+
     $(function() {
         $('#datetimepicker6').datetimepicker();
         $('#datetimepicker7').datetimepicker({

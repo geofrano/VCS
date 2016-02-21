@@ -4,6 +4,7 @@
     Author     : Geovanny Barrera
 --%>
 <br>
+<form method="POST" action="" id="frm_ficha" name="frm_ficha">
 <fieldset>
     <legend><h1 class="alineado3">FICHA DEL ESTUDIANTE PARA EL TUTOR</h1></legend>
 
@@ -43,7 +44,7 @@
             </tr>
             <tr>
                 <td><label for="txt_direccion">DIRECCION:</label><label class="text-danger">(*)</label></td>
-                <td colspan="3"><input type="text" id="txt_direccion_est" required="" class="form-control" name="txt_direccion_est" ng-model="txt_direccion_est"/></td>
+                <td colspan="3"><input type="text" id="txt_direccion_est" required="required" class="form-control" name="txt_direccion_est" ng-model="txt_direccion_est"/></td>
             </tr>
             <tr>
                 <td><label for="txt_fono_est">TELÉFONOS:</label></td>
@@ -134,3 +135,4 @@
 </table>
 <input type="hidden" class="form-control" id="txt_cod_proy" name="txt_cod_proy" ng-model="txt_cod_proy"/>
 <br><br><center><button ng-click="" type="button" class="btn btn-success" onclick="" ng-disabled="txt_direccion_est.$invalid || txt_cedula.$invalid"><span class="glyphicon glyphicon-saved"></span> Grabar</button></center>
+</form>
