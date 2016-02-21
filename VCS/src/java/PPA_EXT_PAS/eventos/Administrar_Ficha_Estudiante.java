@@ -33,8 +33,14 @@ public class Administrar_Ficha_Estudiante {
 
     public Administrar_Ficha_Estudiante(HttpServletRequest request) {
         this.ficha_estudiante = new Ficha_Estudiante();
-        this.ficha_estudiante.setId_ficha_estudiante((String) request.getParameter("txt_id_ficha_estudiante"));
-
+        this.ficha_estudiante.setId_carta_compromiso((String) request.getParameter("txt_id_carta_comp"));
+        this.ficha_estudiante.setNombre_proyecto((String) request.getParameter("txt_nombre_completo"));
+        this.ficha_estudiante.setTwiter((String) request.getParameter("txt_twitter"));
+        this.ficha_estudiante.setFacebook((String) request.getParameter("txt_facebook"));
+        this.ficha_estudiante.setLinkedin((String) request.getParameter("txt_linkedin"));
+        this.ficha_estudiante.setTipo_documento((String) request.getParameter("txt_tipo_doc"));
+        this.ficha_estudiante.setDireccion((String) request.getParameter("txt_direccion"));
+        this.ficha_estudiante.setCod_proy((String) request.getParameter("txt_cod_proy"));
     }
 
     public boolean procesar_peticion() {
@@ -45,17 +51,14 @@ public class Administrar_Ficha_Estudiante {
                 + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
                 + "    VALUES (?, ?, ?, ?, \n"
                 + "            ?, ?, ?, ?)";
-        parametros.add(new Parametro(1, this.ficha_estudiante.getId_ficha_estudiante()));
-        parametros.add(new Parametro(2, this.ficha_estudiante.getDireccion()));
-        parametros.add(new Parametro(3, this.ficha_estudiante.getTelefono()));
-        parametros.add(new Parametro(4, this.ficha_estudiante.getEmail()));
-        parametros.add(new Parametro(5, this.ficha_estudiante.getFacebook()));
-        parametros.add(new Parametro(6, this.ficha_estudiante.getTwiter()));
-        parametros.add(new Parametro(7, this.ficha_estudiante.getLinkedin()));
-        parametros.add(new Parametro(8, this.ficha_estudiante.getResponsable_proyecto()));
-        parametros.add(new Parametro(9, this.ficha_estudiante.getNombre_proyecto()));
-        parametros.add(new Parametro(10, this.ficha_estudiante.getDescripcion_actividades()));
-        parametros.add(new Parametro(11, this.ficha_estudiante.getEstado()));
+        parametros.add(new Parametro(1, this.ficha_estudiante.getNombre_proyecto()));
+        parametros.add(new Parametro(2, this.ficha_estudiante.getTwiter()));
+        parametros.add(new Parametro(3, this.ficha_estudiante.getFacebook()));
+        parametros.add(new Parametro(4, this.ficha_estudiante.getLinkedin()));
+        parametros.add(new Parametro(5, this.ficha_estudiante.getId_carta_compromiso()));
+        parametros.add(new Parametro(6, this.ficha_estudiante.getTipo_documento()));
+        parametros.add(new Parametro(7, this.ficha_estudiante.getDireccion()));
+        parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
 
         try {
             res = AccesoDatos.ejecutaComando(sql, parametros);
