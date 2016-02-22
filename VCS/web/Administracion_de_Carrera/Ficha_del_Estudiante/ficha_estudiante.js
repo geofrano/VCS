@@ -263,6 +263,7 @@ function graba() {
                 success: function(data) {
                     if (data.trim() == "SI") {
                         swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
+                        window.open(ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp","_self");
                     } else {
                         swal("Error!", "La ficha del estudiante no ha sido ingresada", "error");
                     }
