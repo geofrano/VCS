@@ -34,13 +34,8 @@ public class F_graba_Ficha_estudiante extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante(request);
-            boolean resultado=ficha.procesar_peticion();
-            if (resultado){
-                out.println("SI");
-            }else{
-                out.println("NO");
-            }
-            
+            String resultado=ficha.procesar_peticion();
+                out.println(resultado);
         }
     }
 

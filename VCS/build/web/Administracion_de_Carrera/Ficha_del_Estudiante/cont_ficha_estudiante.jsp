@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <td><label for="txt_direccion_est">DIRECCION:</label><label class="text-danger">(*)</label></td>
-                <td colspan="3"><input type="text" id="txt_direccion_est" required="required" class="form-control" name="txt_direccion_est" ng-model="txt_direccion_est"/></td>
+                <td colspan="3"><input type="text" id="txt_direccion_est" required="required" class="form-control" name="txt_direccion_est"/></td>
             </tr>
             <tr>
                 <td><label for="txt_fono_est">TELÉFONOS:</label></td>

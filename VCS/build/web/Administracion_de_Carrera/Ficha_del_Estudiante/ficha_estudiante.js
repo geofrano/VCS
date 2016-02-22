@@ -57,7 +57,7 @@ app.controller("ControladorVCS", function($scope, $http) {
         var seleccionado = $("input[name='group1']:checked").val();
 
         if (seleccionado) {//Verifico que tenga seleccionado una Carta compromiso
-            alert("ENTRO SELECCIONADO");
+            
             //document.getElementById("frm_datos").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ingresar_ficha_estudiante.jsp";
             //document.frm_datos.submit();
             $("#frm_consulta").css("display", "none");
@@ -218,26 +218,6 @@ app.controller("ControladorVCS", function($scope, $http) {
     };
 
 
-    $scope.graba_ficha_estudiante = function() {
-        alert("jjjjjjjjjj");
-        var ruta = document.getElementById("ruta_principal").value;
-        var direccion = document.getElementById("txt_direccion").value;
-        if (direccion == "") {
-            alert("Favor ingrese la direccion del estudiante");
-        } else {
-            $.ajax({
-                type: 'POST',
-                //dataType: 'json',
-                //data: {id_cc: id_cc},
-                //data: {id_cmb:'carrera'},
-                data: $('#frm_ficha').serialize(),
-                url: ruta + '/F_graba_Ficha_estudiante',
-                success: function(data) {
-                    alert(data);
-                }
-            });
-        }
-    };
 
     $(function() {
         $('#datetimepicker6').datetimepicker();
@@ -253,17 +233,26 @@ app.controller("ControladorVCS", function($scope, $http) {
     });
 
 });
-    function graba(){
-        alert("OOOOOOO");
-        var ruta = document.getElementById("ruta_principal").value;
-        var direccion = document.getElementById("txt_direccion_est").value;
-        var cod_proy=document.getElementById("cod_proy").value;
-        
-        alert(cod_proy);
-        if (direccion == "") {
-            alert("Favor ingrese la direccion del estudiante");
-            document.getElementById("txt_direccion_est").focus();
-        } else {
+function graba() {
+    var ruta = document.getElementById("ruta_principal").value;
+    var direccion = document.getElementById("txt_direccion_est").value;
+    var cod_proy = document.getElementById("cod_proy").value;
+
+    if (direccion == "") {
+        alert("Favor ingrese la direccion del estudiante");
+        document.getElementById("txt_direccion_est").focus();
+    } else {
+        swal({
+            title: "Está seguro?",
+            text: "Favor confirme que los datos ingresados son los correctos!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Si,Guardar!",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        },
+        function() {
             $.ajax({
                 type: 'POST',
                 //dataType: 'json',
@@ -272,8 +261,16 @@ app.controller("ControladorVCS", function($scope, $http) {
                 data: $('#frm_ficha').serialize(),
                 url: ruta + '/F_graba_Ficha_estudiante',
                 success: function(data) {
-                    alert(data);
+                    if (data.trim() == "SI") {
+                        swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
+                    } else {
+                        swal("Error!", "La ficha del estudiante no ha sido ingresada", "error");
+                    }
+
                 }
             });
-        }
+
+        });
+
     }
+}

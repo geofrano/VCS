@@ -44,10 +44,10 @@ public class Administrar_Ficha_Estudiante {
 
     }
 
-    public boolean procesar_peticion() {
+    public String procesar_peticion() {
         ArrayList<Parametro> parametros = new ArrayList<>();
-        boolean res = false;
-        String sql = "";
+        String res = "";
+        String sql = "select f_inserta_ficha_est(?,?,?,?,?,?,?,?)";
         parametros.add(new Parametro(1, this.ficha_estudiante.getNombre_proyecto()));
         parametros.add(new Parametro(2, this.ficha_estudiante.getTwiter()));
         parametros.add(new Parametro(3, this.ficha_estudiante.getFacebook()));
@@ -55,25 +55,16 @@ public class Administrar_Ficha_Estudiante {
         parametros.add(new Parametro(5, this.ficha_estudiante.getId_carta_compromiso()));
         parametros.add(new Parametro(6, this.ficha_estudiante.getTipo_documento()));
         parametros.add(new Parametro(7, this.ficha_estudiante.getDireccion()));
-
-        if (this.ficha_estudiante.getCod_proy().equals("") || this.ficha_estudiante.getCod_proy() == null) {
-            sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
-                    + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
-                    + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
-                    + "    VALUES (?, ?, ?, ?, \n"
-                    + "            ?, ?, ?, null)";
-        } else {
-            sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
-                    + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
-                    + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
-                    + "    VALUES (?, ?, ?, ?, \n"
-                    + "        ?, ?, ?, ?)";
-            System.out.println("cod_proy "+this.ficha_estudiante.getCod_proy());
-            parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
-        }
+        System.out.println("cod_proy "+this.ficha_estudiante.getCod_proy());
+        parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
 
         try {
-            res = AccesoDatos.ejecutaComando(sql, parametros);
+             ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, parametros);
+            while (cres.next()) {
+                res = cres.getString(0);
+            }
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

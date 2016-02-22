@@ -81,11 +81,6 @@ app.controller("ControladorVCS", function($scope, $http) {
         $scope.submitted = true;
     };
 
-    $scope.carreras_grado = [
-        {id: 1, name: 'Ingenieria de Sistemas'},
-        {id: 2, name: 'Ingenieria de Administracion'},
-        {id: 3, name: 'Ingenieria de Contabilidad'}
-    ];
     $scope.prueba = function() {
         $scope.carrera = $scope.carrera_grado.carreras_grado;
         var prueba = document.getElementById("carrera_selected").value;
