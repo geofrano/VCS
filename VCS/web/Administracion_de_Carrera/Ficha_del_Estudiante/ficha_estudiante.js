@@ -219,6 +219,7 @@ app.controller("ControladorVCS", function($scope, $http) {
 
 
     $scope.graba_ficha_estudiante = function() {
+        alert("jjjjjjjjjj");
         var ruta = document.getElementById("ruta_principal").value;
         var direccion = document.getElementById("txt_direccion").value;
         if (direccion == "") {
@@ -226,16 +227,13 @@ app.controller("ControladorVCS", function($scope, $http) {
         } else {
             $.ajax({
                 type: 'POST',
-                dataType: 'json',
+                //dataType: 'json',
                 //data: {id_cc: id_cc},
                 //data: {id_cmb:'carrera'},
                 data: $('#frm_ficha').serialize(),
                 url: ruta + '/F_graba_Ficha_estudiante',
                 success: function(data) {
-
-                    $.each(data.items, function(index, article) {
-                        document.getElementById("txt_cedula").value = article.est_ced;
-                    });
+                    alert(data);
                 }
             });
         }
@@ -255,3 +253,27 @@ app.controller("ControladorVCS", function($scope, $http) {
     });
 
 });
+    function graba(){
+        alert("OOOOOOO");
+        var ruta = document.getElementById("ruta_principal").value;
+        var direccion = document.getElementById("txt_direccion_est").value;
+        var cod_proy=document.getElementById("cod_proy").value;
+        
+        alert(cod_proy);
+        if (direccion == "") {
+            alert("Favor ingrese la direccion del estudiante");
+            document.getElementById("txt_direccion_est").focus();
+        } else {
+            $.ajax({
+                type: 'POST',
+                //dataType: 'json',
+                //data: {id_cc: id_cc},
+                //data: {id_cmb:'carrera'},
+                data: $('#frm_ficha').serialize(),
+                url: ruta + '/F_graba_Ficha_estudiante',
+                success: function(data) {
+                    alert(data);
+                }
+            });
+        }
+    }

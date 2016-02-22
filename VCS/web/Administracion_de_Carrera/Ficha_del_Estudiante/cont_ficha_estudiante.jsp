@@ -43,7 +43,7 @@
                 <td colspan="3"><input type="text" readonly="readonly" id="txt_nombre_completo" class="form-control" name="txt_nombre_completo" ng-model="txt_nombre_completo"/></td>
             </tr>
             <tr>
-                <td><label for="txt_direccion">DIRECCION:</label><label class="text-danger">(*)</label></td>
+                <td><label for="txt_direccion_est">DIRECCION:</label><label class="text-danger">(*)</label></td>
                 <td colspan="3"><input type="text" id="txt_direccion_est" required="required" class="form-control" name="txt_direccion_est" ng-model="txt_direccion_est"/></td>
             </tr>
             <tr>
@@ -133,6 +133,8 @@
         <td align="left"><input type="text" readonly="readonly" class="form-control" id="txt_tutor" name="txt_tutor" ng-model="txt_tutor"></td>
     </tr>
 </table>
-<input type="hidden" class="form-control" id="txt_cod_proy" name="txt_cod_proy" ng-model="txt_cod_proy"/>
-<br><br><center><button ng-click="" type="button" class="btn btn-success" onclick="" ng-disabled="txt_direccion_est.$invalid || txt_cedula.$invalid"><span class="glyphicon glyphicon-saved"></span> Grabar</button></center>
+<input type="hidden" value="0" id="cod_proy" name="cod_proy"/>
+<br><br><center><input type="button" onclick="graba()" ng-click="grabar()" value="Generar">
+   
+</center>
 </form>

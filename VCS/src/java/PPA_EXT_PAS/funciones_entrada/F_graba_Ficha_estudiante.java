@@ -6,6 +6,7 @@
 
 package PPA_EXT_PAS.funciones_entrada;
 
+import PPA_EXT_PAS.eventos.Administrar_Ficha_Estudiante;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -32,6 +33,13 @@ public class F_graba_Ficha_estudiante extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante(request);
+            boolean resultado=ficha.procesar_peticion();
+            if (resultado){
+                out.println("SI");
+            }else{
+                out.println("NO");
+            }
             
         }
     }

@@ -34,23 +34,20 @@ public class Administrar_Ficha_Estudiante {
     public Administrar_Ficha_Estudiante(HttpServletRequest request) {
         this.ficha_estudiante = new Ficha_Estudiante();
         this.ficha_estudiante.setId_carta_compromiso((String) request.getParameter("txt_id_carta_comp"));
-        this.ficha_estudiante.setNombre_proyecto((String) request.getParameter("txt_nombre_completo"));
+        this.ficha_estudiante.setNombre_proyecto((String) request.getParameter("txt_nomb_proy"));
         this.ficha_estudiante.setTwiter((String) request.getParameter("txt_twitter"));
         this.ficha_estudiante.setFacebook((String) request.getParameter("txt_facebook"));
         this.ficha_estudiante.setLinkedin((String) request.getParameter("txt_linkedin"));
         this.ficha_estudiante.setTipo_documento((String) request.getParameter("txt_tipo_doc"));
-        this.ficha_estudiante.setDireccion((String) request.getParameter("txt_direccion"));
-        this.ficha_estudiante.setCod_proy((String) request.getParameter("txt_cod_proy"));
+        this.ficha_estudiante.setDireccion((String) request.getParameter("txt_direccion_est"));
+        this.ficha_estudiante.setCod_proy((String) request.getParameter("cod_proy"));
+
     }
 
     public boolean procesar_peticion() {
         ArrayList<Parametro> parametros = new ArrayList<>();
         boolean res = false;
-        String sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
-                + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
-                + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
-                + "    VALUES (?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?)";
+        String sql = "";
         parametros.add(new Parametro(1, this.ficha_estudiante.getNombre_proyecto()));
         parametros.add(new Parametro(2, this.ficha_estudiante.getTwiter()));
         parametros.add(new Parametro(3, this.ficha_estudiante.getFacebook()));
@@ -58,7 +55,22 @@ public class Administrar_Ficha_Estudiante {
         parametros.add(new Parametro(5, this.ficha_estudiante.getId_carta_compromiso()));
         parametros.add(new Parametro(6, this.ficha_estudiante.getTipo_documento()));
         parametros.add(new Parametro(7, this.ficha_estudiante.getDireccion()));
-        parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
+
+        if (this.ficha_estudiante.getCod_proy().equals("") || this.ficha_estudiante.getCod_proy() == null) {
+            sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
+                    + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
+                    + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
+                    + "    VALUES (?, ?, ?, ?, \n"
+                    + "            ?, ?, ?, null)";
+        } else {
+            sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
+                    + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
+                    + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
+                    + "    VALUES (?, ?, ?, ?, \n"
+                    + "        ?, ?, ?, ?)";
+            System.out.println("cod_proy "+this.ficha_estudiante.getCod_proy());
+            parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
+        }
 
         try {
             res = AccesoDatos.ejecutaComando(sql, parametros);
@@ -117,11 +129,7 @@ public class Administrar_Ficha_Estudiante {
                 }
                 carta_comp.setNombre_tutor(cres.getString(24).trim());
                 carta_comp.setActividad_1(cres.getString(25).trim());
-                if (cres.getString(26).trim().equals(0)) {
-                    carta_comp.setActividad_2("");
-                } else {
-                    carta_comp.setActividad_2(cres.getString(26).trim());
-                }
+                carta_comp.setActividad_2(cres.getString(26).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
