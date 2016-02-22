@@ -13,7 +13,7 @@ package PPA_EXT_PAS.dominio;
 public class Ficha_Estudiante {
     
     // <editor-fold defaultstate="collapsed" desc="Atributos">
-    private String id_ficha_estudiante;     //Identificador de la Ficha del Estudiante
+    private String id_carta_compromiso;     //Identificador de la Ficha del Estudiante
     private String direccion;               //Direccion del Estudiante
     private String telefono;                //Número de Telefono del Estudiante
     private String email;                   //Email del Estudiante
@@ -24,7 +24,7 @@ public class Ficha_Estudiante {
     private String nombre_proyecto;         //Nombre del Proyecto
     private String descripcion_actividades; //Descripcion de las actividades a Realizar
     private String estado;                  //Estado de la Ficha del Estudiante
-    
+    private String tipo_documento;          //Tipo de documento del estudiante
     private String fecha_ini;               //Fecha de inicio de la actividad
     private String fecha_fin;               //Fecha de finalizacion de la actividad
     private String actividad;               //Tipo de actividad a realizar
@@ -42,18 +42,36 @@ public class Ficha_Estudiante {
     private String direccion_emp;           //Direccion de la empresa
     private String nomb_programa;           //Nombre del programa
     private String nomb_tutor;              //Nnombre del Tutor asignado
-    
+    private String cod_proy;                //Codigo del proyecto
     
     
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Setters & Getters">    
-    public String getId_ficha_estudiante() {
-        return id_ficha_estudiante;
+    
+    
+    public String getCod_proy() {
+        return cod_proy;
     }
 
-    public void setId_ficha_estudiante(String id_ficha_estudiante) {
-        this.id_ficha_estudiante = id_ficha_estudiante;
+    public void setCod_proy(String cod_proy) {
+        this.cod_proy = cod_proy;
+    }
+
+    public String getTipo_documento() {
+        return tipo_documento;
+    }
+
+    public void setTipo_documento(String tipo_documento) {
+        this.tipo_documento = tipo_documento;
+    }
+
+    public String getId_carta_compromiso() {
+        return id_carta_compromiso;
+    }
+
+    public void setId_carta_compromiso(String id_carta_compromiso) {
+        this.id_carta_compromiso = id_carta_compromiso;
     }
 
     public String getDireccion() {

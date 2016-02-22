@@ -36,6 +36,10 @@
         <servlet-name>F_consulta_codigo_cc</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_consulta_codigo_cc</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>F_graba_Ficha_estudiante</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_entrada.F_graba_Ficha_estudiante</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>F_consulta_codigo_cc</servlet-name>
         <url-pattern>/F_consulta_codigo_cc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_graba_Ficha_estudiante</servlet-name>
+        <url-pattern>/F_graba_Ficha_estudiante</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

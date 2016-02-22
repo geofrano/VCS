@@ -25,6 +25,16 @@ public class Carta_Compromiso {
     private String objetivo_actividad;
     private String fecha_inicio;
     private String fecha_fin;
+    private String dia_inicio;
+    private String mes_inicio;
+    private String anio_inicio;
+    private String dia_fin;
+    private String mes_fin;
+    private String anio_fin;
+    private String ced_estudiante;
+    private String fono_estudiante;
+    private String mail_estudiante;
+    private String proyecto;
     private String horario_previsto;
     private String nombre_programa;
     private String area_actividad;
@@ -58,6 +68,86 @@ public class Carta_Compromiso {
     private String fecha_suscripcion;
     private String estado;
 
+    public String getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(String proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public String getMail_estudiante() {
+        return mail_estudiante;
+    }
+
+    public void setMail_estudiante(String mail_estudiante) {
+        this.mail_estudiante = mail_estudiante;
+    }
+
+    public String getFono_estudiante() {
+        return fono_estudiante;
+    }
+
+    public void setFono_estudiante(String fono_estudiante) {
+        this.fono_estudiante = fono_estudiante;
+    }
+
+    public String getCed_estudiante() {
+        return ced_estudiante;
+    }
+
+    public void setCed_estudiante(String ced_estudiante) {
+        this.ced_estudiante = ced_estudiante;
+    }
+    
+    public String getDia_inicio() {
+        return dia_inicio;
+    }
+
+    public void setDia_inicio(String dia_inicio) {
+        this.dia_inicio = dia_inicio;
+    }
+
+    public String getMes_inicio() {
+        return mes_inicio;
+    }
+
+    public void setMes_inicio(String mes_inicio) {
+        this.mes_inicio = mes_inicio;
+    }
+
+    public String getAnio_inicio() {
+        return anio_inicio;
+    }
+
+    public void setAnio_inicio(String anio_inicio) {
+        this.anio_inicio = anio_inicio;
+    }
+
+    public String getDia_fin() {
+        return dia_fin;
+    }
+
+    public void setDia_fin(String dia_fin) {
+        this.dia_fin = dia_fin;
+    }
+
+    public String getMes_fin() {
+        return mes_fin;
+    }
+
+    public void setMes_fin(String mes_fin) {
+        this.mes_fin = mes_fin;
+    }
+
+    public String getAnio_fin() {
+        return anio_fin;
+    }
+
+    public void setAnio_fin(String anio_fin) {
+        this.anio_fin = anio_fin;
+    }
+    
     public String getFecha_suscripcion() {
         return fecha_suscripcion;
     }

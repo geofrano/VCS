@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import PPA_EXT_PAS.eventos.Administrar_Estudiante;
+import PPA_EXT_PAS.eventos.Administrar_Menu_Principal;
+import javax.servlet.RequestDispatcher;
 /**
  *
  * @author lpita
@@ -29,10 +31,19 @@ public class F_Consulta_Estudiante extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        Administrar_Estudiante adm_est=new Administrar_Estudiante();
-        //String tipo_cmb=(String)request.getParameter("id_cmb");
-        adm_est.consulta_carta_compro(response, request);
+        response.setContentType("application/json; charset=UTF-8");
+        try {
+            PrintWriter out = response.getWriter();
+            String nombre_estudiante=(String)request.getParameter("id_est");
+            System.out.println("id_est"+nombre_estudiante);
+            out.print(Administrar_Estudiante.toJSON(Administrar_Estudiante.consulta_carta_compro(nombre_estudiante)));
+            //out.print(Administrar_Menu_Principal.toJSON(Administrar_Menu_Principal.mostrar_menu()));
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            RequestDispatcher a=request.getRequestDispatcher("Home.jsp");//pagina principal
+            a.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -56,28 +56,19 @@ public class F_autenticar_usuario extends HttpServlet {
                     sesion.setAttribute("nombre_usuario", autentica.getAdmin().getUs_nombre());
                     sesion.setAttribute("direccion_usuario", autentica.getAdmin().getUs_direccion());
                     sesion.setAttribute("apellido_usuario", autentica.getAdmin().getUs_apellido());
-                    sesion.setAttribute("carrera_usuario", autentica.getAdmin().getId_carrera());
-                    sesion.setAttribute("id_cargo_usuario", autentica.getAdmin().getId_cargo());
-                    sesion.setAttribute("email_usuario", autentica.getAdmin().getUs_email());
-                    sesion.setAttribute("sexo_usuario", autentica.getAdmin().getUs_sexo());
-                    sesion.setAttribute("tutor_usuario", autentica.getAdmin().getUs_tutor());
+                    sesion.setAttribute("cargo_usuario", autentica.getAdmin().getUs_cargo());
+                    //sesion.setAttribute("email_usuario", autentica.getAdmin().getUs_email());
                     
                     System.out.println("SE CONECTO");
                     response.sendRedirect(response.encodeRedirectURL("Home.jsp"));
                     //sesion.setAttribute("nombre_usuario", "administrador");
                     //sesion.setAttribute("apellido_usuario", "de VCS");
                 }else{
-                    //sesion.setAttribute("nombre_usuario", "na");
-                    //sesion.setAttribute("apellido_usuario", "nn");
                     sesion.setAttribute("usuario", null);
                     sesion.setAttribute("nombre_usuario", null);
                     sesion.setAttribute("direccion_usuario", null);
                     sesion.setAttribute("apellido_usuario", null);
-                    sesion.setAttribute("carrera_usuario", null);
-                    sesion.setAttribute("id_cargo_usuario", null);
-                    sesion.setAttribute("email_usuario", null);
-                    sesion.setAttribute("sexo_usuario", null);
-                    sesion.setAttribute("tutor_usuario", null);
+                    sesion.setAttribute("cargo_usuario", null);
                     //response.getWriter().write("NO");
                 }
                 

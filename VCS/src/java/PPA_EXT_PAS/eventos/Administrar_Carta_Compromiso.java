@@ -188,7 +188,7 @@ public class Administrar_Carta_Compromiso {
         response.sendRedirect(response.encodeRedirectURL("Home.jsp"));
         return res;
     }
-    public static List< Carta_Compromiso > consulta_cc() {
+    public static List<Carta_Compromiso> consulta_cc() {
         List<Carta_Compromiso> codigo = new LinkedList<Carta_Compromiso>();
 
         String sql = "select id_carta_comp, (max(secuencial)+1) from \"VCS_CARTA_COMPROMISO\" where id_carta_comp = 'CC001.PA-GIS' group by id_carta_comp";

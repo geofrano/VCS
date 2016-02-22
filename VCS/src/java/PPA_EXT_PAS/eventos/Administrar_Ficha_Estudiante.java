@@ -33,40 +33,44 @@ public class Administrar_Ficha_Estudiante {
 
     public Administrar_Ficha_Estudiante(HttpServletRequest request) {
         this.ficha_estudiante = new Ficha_Estudiante();
-        this.ficha_estudiante.setId_ficha_estudiante((String) request.getParameter("txt_id_ficha_estudiante"));
-        this.ficha_estudiante.setDireccion((String) request.getParameter("txt_direccion"));
-        this.ficha_estudiante.setDescripcion_actividades((String) request.getParameter("txt_descripcion"));
-        this.ficha_estudiante.setEmail((String) request.getParameter("txt_email"));
-        this.ficha_estudiante.setEstado("A");
+        this.ficha_estudiante.setId_carta_compromiso((String) request.getParameter("txt_id_carta_comp"));
+        this.ficha_estudiante.setNombre_proyecto((String) request.getParameter("txt_nomb_proy"));
+        this.ficha_estudiante.setTwiter((String) request.getParameter("txt_twitter"));
         this.ficha_estudiante.setFacebook((String) request.getParameter("txt_facebook"));
         this.ficha_estudiante.setLinkedin((String) request.getParameter("txt_linkedin"));
-        this.ficha_estudiante.setTwiter((String) request.getParameter("txt_twiter"));
-        this.ficha_estudiante.setResponsable_proyecto((String) request.getParameter("txt_responsable_proyecto"));
-        this.ficha_estudiante.setTelefono((String) request.getParameter("txt_telefono"));
+        this.ficha_estudiante.setTipo_documento((String) request.getParameter("txt_tipo_doc"));
+        this.ficha_estudiante.setDireccion((String) request.getParameter("txt_direccion_est"));
+        this.ficha_estudiante.setCod_proy((String) request.getParameter("cod_proy"));
 
     }
 
     public boolean procesar_peticion() {
         ArrayList<Parametro> parametros = new ArrayList<>();
         boolean res = false;
-        String sql = "INSERT INTO \"VCS_FICHA_ESTUDIANTE\"(\n"
-                + "            \"ID_FICHA_ESTUDIANTE\",direccion, telefono, email, \n"
-                + "            facebook, twiter, linkedin, responsable_proyecto, nombre_proyecto, \n"
-                + "            descripcion_actividades, estado)\n"
-                + "    VALUES (?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?, ?, \n"
-                + "            ?, ?);";
-        parametros.add(new Parametro(1, this.ficha_estudiante.getId_ficha_estudiante()));
-        parametros.add(new Parametro(2, this.ficha_estudiante.getDireccion()));
-        parametros.add(new Parametro(3, this.ficha_estudiante.getTelefono()));
-        parametros.add(new Parametro(4, this.ficha_estudiante.getEmail()));
-        parametros.add(new Parametro(5, this.ficha_estudiante.getFacebook()));
-        parametros.add(new Parametro(6, this.ficha_estudiante.getTwiter()));
-        parametros.add(new Parametro(7, this.ficha_estudiante.getLinkedin()));
-        parametros.add(new Parametro(8, this.ficha_estudiante.getResponsable_proyecto()));
-        parametros.add(new Parametro(9, this.ficha_estudiante.getNombre_proyecto()));
-        parametros.add(new Parametro(10, this.ficha_estudiante.getDescripcion_actividades()));
-        parametros.add(new Parametro(11, this.ficha_estudiante.getEstado()));
+        String sql = "";
+        parametros.add(new Parametro(1, this.ficha_estudiante.getNombre_proyecto()));
+        parametros.add(new Parametro(2, this.ficha_estudiante.getTwiter()));
+        parametros.add(new Parametro(3, this.ficha_estudiante.getFacebook()));
+        parametros.add(new Parametro(4, this.ficha_estudiante.getLinkedin()));
+        parametros.add(new Parametro(5, this.ficha_estudiante.getId_carta_compromiso()));
+        parametros.add(new Parametro(6, this.ficha_estudiante.getTipo_documento()));
+        parametros.add(new Parametro(7, this.ficha_estudiante.getDireccion()));
+
+        if (this.ficha_estudiante.getCod_proy().equals("") || this.ficha_estudiante.getCod_proy() == null) {
+            sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
+                    + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
+                    + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
+                    + "    VALUES (?, ?, ?, ?, \n"
+                    + "            ?, ?, ?, null)";
+        } else {
+            sql = "INSERT INTO \"MPP_FICHA_ESTUDIANTE\"(\n"
+                    + "             fe_nombre_proyecto, fe_twitter, fe_facebook, fe_linked_in, \n"
+                    + "            cc_id, fe_tipo_documento, fe_direccion, pr_id)\n"
+                    + "    VALUES (?, ?, ?, ?, \n"
+                    + "        ?, ?, ?, ?)";
+            System.out.println("cod_proy "+this.ficha_estudiante.getCod_proy());
+            parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
+        }
 
         try {
             res = AccesoDatos.ejecutaComando(sql, parametros);
@@ -76,41 +80,56 @@ public class Administrar_Ficha_Estudiante {
         return res;
     }
 
-    public static List<Carta_Compromiso> mostrar_carta_compromiso(String id_carta_comp,
-            String nombre_est, String tipo_actividad) {
-        List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso >();
+    public static List<Carta_Compromiso> mostrar_carta_compromiso(String id_carta_comp) {
+        List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
+        String sql = "select id_cc, tipo_actividad, dia_ini,\n"
+                + " mes_ini, anio_ini, dia_fin, mes_fin, anio_fin,\n"
+                + " ced_est, nombre_estudiante, cel_est, correo_est,\n"
+                + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
+                + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
+                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy\n"
+                + "from view_datos_cc\n"
+                + "where trim(id_cc) = ? ";
 
-        String sql = "SELECT id_carta_comp ||'-'|| lpad(trim(to_char(a.secuencial,'99999999')),3,'0') id_cc, "
-                + "trim(nomb_empresa) nombre_empresa,\n"
-                + "       trim(\"Nomb_estudiante\") nombre_est, "
-                + "trim(\"Ciclo_curso\") semestre, trim(\"Tipo_actividad\") tipo_act,"
-                + "to_char(\"Fecha_inicio\",'dd/mm/yyyy') fecha_ini,\n"
-                + "  to_char(\"Fecha_fin\",'dd/mm/yyyy') fecha_fin\n"
-                + "  FROM \"VCS_CARTA_COMPROMISO\" a\n"
-                + "  where lpad(trim(to_char(a.secuencial,'99999999')),3,'0') = lpad(?,3,'0')\n"
-                + "  and   a.\"Nomb_estudiante\" like ?\n"
-                + "  and   trim(a.\"Tipo_actividad\") =  trim(coalesce(?, a.\"Tipo_actividad\"))\n"
-                + "  and exists(select 'X' FROM \"VCS_TRAMITES\" where id_carta_compromiso = id_carta_comp ||'-'|| lpad(trim(to_char(a.secuencial,'99999999')),3,'0')\n"
-                + "  and trim(etapa_tramite) = trim('FICHA_ESTUDIANTE') and estado = 'P')\n"
-                + "  and a.\"Estado\"='A'";
         ArrayList<Parametro> lstPar = new ArrayList<>();
         lstPar.add(new Parametro(1, id_carta_comp));
-        lstPar.add(new Parametro(2, nombre_est));
-        lstPar.add(new Parametro(3, tipo_actividad));
         Carta_Compromiso carta_comp;
         try {
             ConjuntoResultado cres
-                    = AccesoDatos.ejecutaQuery(sql,lstPar);
+                    = AccesoDatos.ejecutaQuery(sql, lstPar);
             while (cres.next()) {
                 carta_comp = new Carta_Compromiso();
-                carta_comp.setId_carta_compromiso(cres.getString(0).trim());
-                carta_comp.setNomb_empresa(cres.getString(1).trim());
-                carta_comp.setNomb_estudiante(cres.getString(2).trim());
-                carta_comp.setCiclo_curso(cres.getString(3).trim());
-                carta_comp.setTipo_actividad(cres.getString(4).trim());
-                carta_comp.setFecha_inicio(cres.getString(5).trim());
-                carta_comp.setFecha_fin(cres.getString(6).trim());
-                
+                carta_comp.setId_carta_compromiso(cres.getString(0));
+                carta_comp.setTipo_actividad(cres.getString(1));
+                carta_comp.setDia_inicio(cres.getString(2));
+                carta_comp.setMes_inicio(cres.getString(3));
+                carta_comp.setAnio_inicio(cres.getString(4));
+                carta_comp.setDia_fin(cres.getString(5));
+                carta_comp.setMes_fin(cres.getString(6));
+                carta_comp.setAnio_fin(cres.getString(7));
+                carta_comp.setCed_estudiante(cres.getString(8));
+                carta_comp.setNomb_estudiante(cres.getString(9).trim());
+                carta_comp.setFono_estudiante(cres.getString(10).trim());
+                carta_comp.setMail_estudiante(cres.getString(11).trim());
+                carta_comp.setCarrera_grado(cres.getString(12).trim());
+                carta_comp.setCiclo_curso(cres.getString(13).trim());
+                carta_comp.setNomb_empresa(cres.getString(14).trim());
+                carta_comp.setNombre_representante(cres.getString(15).trim());
+                carta_comp.setArea_actividad(cres.getString(16).trim());
+                carta_comp.setResponsable_area(cres.getString(17).trim());
+                carta_comp.setHorario_previsto(cres.getString(18).trim());
+                carta_comp.setCargo_representante(cres.getString(19).trim());
+                carta_comp.setTelf_representante(cres.getString(20).trim());
+                carta_comp.setDir_empresa(cres.getString(21).trim());
+                carta_comp.setNombre_programa(cres.getString(22).trim());
+                if (cres.getString(23).trim().equals("NA")) {
+                    carta_comp.setProyecto("");
+                } else {
+                    carta_comp.setProyecto(cres.getString(23).trim());
+                }
+                carta_comp.setNombre_tutor(cres.getString(24).trim());
+                carta_comp.setActividad_1(cres.getString(25).trim());
+                carta_comp.setActividad_2(cres.getString(26).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
@@ -123,13 +142,32 @@ public class Administrar_Ficha_Estudiante {
         JSONObject json = new JSONObject();
         try {
             json.put("id_carta_comp", carta_comp.getId_carta_compromiso());
-            json.put("nombre_empresa", carta_comp.getNomb_empresa());
-            json.put("nombre_est", carta_comp.getNomb_estudiante());
-            json.put("ciclo_curso", carta_comp.getCiclo_curso());
-            json.put("tipo_actividad", carta_comp.getTipo_actividad());
-            json.put("fecha_ini", carta_comp.getFecha_inicio());
-            json.put("fecha_fin", carta_comp.getFecha_fin());
-
+            json.put("tipo_act", carta_comp.getTipo_actividad());
+            json.put("dia_ini", carta_comp.getDia_inicio());
+            json.put("mes_ini", carta_comp.getMes_inicio());
+            json.put("anio_ini", carta_comp.getAnio_inicio());
+            json.put("dia_fin", carta_comp.getDia_fin());
+            json.put("mes_fin", carta_comp.getMes_fin());
+            json.put("anio_fin", carta_comp.getAnio_fin());
+            json.put("est_ced", carta_comp.getCed_estudiante());
+            json.put("est_nombre", carta_comp.getNomb_estudiante());
+            json.put("est_fono", carta_comp.getFono_estudiante());
+            json.put("est_mail", carta_comp.getMail_estudiante());
+            json.put("est_carrera", carta_comp.getCarrera_grado());
+            json.put("est_ciclo", carta_comp.getCiclo_curso());
+            json.put("empresa", carta_comp.getNomb_empresa());
+            json.put("emp_rep", carta_comp.getNombre_representante());
+            json.put("area_act", carta_comp.getArea_actividad());
+            json.put("resp_area", carta_comp.getResponsable_area());
+            json.put("horario", carta_comp.getHorario_previsto());
+            json.put("cargo_rep", carta_comp.getCargo_representante());
+            json.put("fono_rep", carta_comp.getTelf_representante());
+            json.put("emp_dir", carta_comp.getDir_empresa());
+            json.put("programa", carta_comp.getNombre_programa());
+            json.put("proyecto", carta_comp.getProyecto());
+            json.put("tutor", carta_comp.getNombre_tutor());
+            json.put("actividades", carta_comp.getActividad_1());
+            json.put("cod_proy", carta_comp.getActividad_2());
         } catch (JSONException ex) {
             Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
         }

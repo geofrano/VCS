@@ -52,8 +52,9 @@
                             </tr>
                         </table>
                         <br>
-                            <div class="list-group" id="div_datos"></div>
+                            
                     </fieldset>
+                    <div class="list-group" id="div_datos"></div>
                 </div>
             </div>
             <div class="row">

@@ -10,10 +10,82 @@ app.controller("ControladorVCS", function($scope, $http) {
     $scope.submitted = false;
     $scope.muestra_carrera = false;
 
+    $scope.consultar_estudiante = function() {
+        var estudiante = document.getElementById("txt_nombre_est").value;
+        var ruta = document.getElementById("ruta_principal").value;
+
+        var $tabla = $("#tbl_estudiante");
+        $tabla.find("tr:gt(0)").remove();
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_est: estudiante},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_Consulta_Estudiante',
+            success: function(data) {
+                $("#div_datos").html("");
+
+                $.each(data.items, function(index, article) {
+                    $tabla.append("<tr><td>" + article.id_cc + "</td>\n" +
+                            "<td>" + article.nomb_est + "</td>\n" +
+                            //"<td>" + article.emp_nombre + "</td>\n" +
+                            "<td>" + article.lugar_suscrip + "</td>\n" +
+                            "<td>" + article.fecha_suscrip + "</td>\n" +
+                            "<td><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" alt=\"Modificar\"/>" +
+                            "</td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" alt=\"Eliminar\"/>" +
+                            "</td></tr>\n");
+                    document.getElementById("existe_data").value = "1";
+                });
+                var v = document.getElementById("existe_data").value;
+                if (v == "0") {
+                    $tabla.append("<tr><td colspan=\"4\" align=\"center\">No hay datos a mostrar</td></tr>");
+                }
+
+            }
+        });
+    };
+
+    $scope.carga_ingreso = function() {
+        var estudiante = document.getElementById("txt_nombre_est").value;
+        var ruta = document.getElementById("ruta_principal").value;
+        var seleccionado = $("input[name='group1']:checked").val();
+
+        if (seleccionado) {//Verifico que tenga seleccionado una Carta compromiso
+            alert("ENTRO SELECCIONADO");
+            //document.getElementById("frm_datos").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ingresar_ficha_estudiante.jsp";
+            //document.frm_datos.submit();
+            $("#frm_consulta").css("display", "none");
+            $("#div_ingreso").css("display", "block");
+            //$scope.submitted = true;
+            $.ajax({
+                type: 'POST',
+                //data: {id_cmb:'carrera'},
+                //data: $('#formid').serialize(),
+                url: ruta + '/Administracion_de_Carrera/Ficha_del_Estudiante/cont_ficha_estudiante.jsp',
+                success: function(data) {
+                    $("#div_ingreso").html("");
+                    $("#div_ingreso").append(data);
+                    $scope.carga_datos();
+                }
+            });
+        } else {
+            alert("No ha seleccionado una carta compromiso. Favor verifique");
+        }
+
+
+        //alert(ruta);
+    };
 
     $scope.carga2 = function() {
         var ruta = document.getElementById("ruta_principal").value;
         //var fullname = $('#fullname').val();
+
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -87,87 +159,6 @@ app.controller("ControladorVCS", function($scope, $http) {
         });
     };
 
-    $scope.guarda_carta_comp = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        $scope.user = {};
-        document.getElementById("frm_carta_comp").action = ruta + "/F_carta_compromiso.jsp";
-        document.frm_carta_comp.submit();
-        $scope.submitted = true;
-    };
-
-    $scope.carga_combo_carrera = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        //var fullname = $('#fullname').val();
-        $.ajax({
-            type: 'POST',
-            //data: {id_cmb:'carrera'},
-            url: ruta + '/F_Muestra_carreras',
-            success: function(result) {
-                $('#div_carrera').html(result);
-            }
-        });
-    };
-
-    $scope.carga_combo_programas = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        //var fullname = $('#fullname').val();
-        $.ajax({
-            type: 'POST',
-            data: {id_cmb: 'programas'},
-            url: ruta + '/F_Muestra_programas',
-            success: function(result) {
-                $('#div_programas').html(result);
-            }
-        });
-    };
-
-    $scope.carga_combo_horas = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        //var fullname = $('#fullname').val();
-        $.ajax({
-            type: 'POST',
-            data: {id_cmb: 'horas'},
-            url: ruta + '/F_Muestra_programas',
-            success: function(result) {
-                $('#div_horas').html(result);
-            }
-        });
-    };
-    $scope.carga_combo_ciclo = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        //var fullname = $('#fullname').val();
-        $.ajax({
-            type: 'POST',
-            data: {id_cmb: 'ciclos'},
-            url: ruta + '/F_Muestra_programas',
-            success: function(result) {
-                $('#div_ciclos').html(result);
-            }
-        });
-    };
-    $scope.carga_combo_tipo_actividad = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        //var fullname = $('#fullname').val();
-        $.ajax({
-            type: 'POST',
-            data: {id_cmb: 'tipo_actividad'},
-            url: ruta + '/F_Muestra_programas',
-            success: function(result) {
-                $('#div_tipo_actividad').html(result);
-            }
-        });
-    };
-    $scope.llama_pagina_hija = function(tipo_accion) {
-        alert(tipo_accion);
-        if (tipo_accion == "ingresar") {
-            window.open("consultar_ficha_estudiante.jsp", "_self");
-        } else if (tipo_accion == "modificar") {
-
-        } else if (tipo_accion == "eliminar") {
-
-        }
-
-    };
     $scope.consulta_ficha_est = function() {
 
         $.ajax({
@@ -180,6 +171,73 @@ app.controller("ControladorVCS", function($scope, $http) {
         });
     };
 
+    $scope.carga_datos = function() {
+        var ruta = document.getElementById("ruta_principal").value;
+        var id_cc = document.getElementById("group1").value;
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cc: id_cc},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_muestra_ficha_estudiante',
+            success: function(data) {
+
+                $.each(data.items, function(index, article) {
+                    document.getElementById("txt_id_carta_comp").value = article.id_carta_comp;
+                    document.getElementById("txt_actividad").value = article.tipo_act;
+                    document.getElementById("txt_fecha_ini").value = article.dia_ini + '/' + article.mes_ini + '/' + article.anio_ini;
+                    document.getElementById("txt_fecha_fin").value = article.dia_fin + '/' + article.mes_fin + '/' + article.anio_fin;
+                    if (article.est_ced.length > 10) {
+                        document.getElementById("txt_tipo_doc").value = "PASAPORTE";
+                    } else {
+                        document.getElementById("txt_tipo_doc").value = "CÉDULA DE CIUDADANÍA";
+                    }
+                    document.getElementById("txt_cedula").value = article.est_ced;
+                    document.getElementById("txt_nombre_completo").value = article.est_nombre;
+                    document.getElementById("txt_fono_est").value = article.est_fono;
+                    document.getElementById("txt_email_est").value = article.est_mail;
+                    document.getElementById("txt_carrera").value = article.est_carrera;
+                    document.getElementById("txt_semestre").value = article.est_ciclo;
+                    document.getElementById("txt_empresa").value = article.empresa;
+                    document.getElementById("txt_responsable_empresa").value = article.emp_rep;
+                    document.getElementById("txt_departamento").value = article.area_act;
+                    document.getElementById("txt_responsable_area").value = article.resp_area;
+                    document.getElementById("txt_horario_previsto").value = article.horario;
+                    document.getElementById("txt_cargo_resp_cia").value = article.cargo_rep;
+                    document.getElementById("txt_telefono_cia").value = article.fono_rep;
+                    document.getElementById("txt_dir_cia").value = article.emp_dir;
+                    document.getElementById("txt_nomb_progama").value = article.programa;
+                    document.getElementById("txt_nomb_proy").value = article.proyecto;
+                    document.getElementById("txt_tutor").value = article.tutor;
+                    document.getElementById("txt_act_realizar").value = article.actividades;
+                    document.getElementById("txt_cod_proy").value = article.txt_cod_proy;
+                });
+            }
+        });
+    };
+
+
+    $scope.graba_ficha_estudiante = function() {
+        alert("jjjjjjjjjj");
+        var ruta = document.getElementById("ruta_principal").value;
+        var direccion = document.getElementById("txt_direccion").value;
+        if (direccion == "") {
+            alert("Favor ingrese la direccion del estudiante");
+        } else {
+            $.ajax({
+                type: 'POST',
+                //dataType: 'json',
+                //data: {id_cc: id_cc},
+                //data: {id_cmb:'carrera'},
+                data: $('#frm_ficha').serialize(),
+                url: ruta + '/F_graba_Ficha_estudiante',
+                success: function(data) {
+                    alert(data);
+                }
+            });
+        }
+    };
 
     $(function() {
         $('#datetimepicker6').datetimepicker();
@@ -194,13 +252,28 @@ app.controller("ControladorVCS", function($scope, $http) {
         });
     });
 
-    /*$scope.insertaprueba=function() {
-     $http.post("vistas/blank.jsp",{'txt_nombre_empresa':$scope.txt_nombre_empresa})
-     .success(function(data,status,headers,config){
-     console.log("data inserted successfull"); 
-     });
-     };*/
-
 });
-
-
+    function graba(){
+        alert("OOOOOOO");
+        var ruta = document.getElementById("ruta_principal").value;
+        var direccion = document.getElementById("txt_direccion_est").value;
+        var cod_proy=document.getElementById("cod_proy").value;
+        
+        alert(cod_proy);
+        if (direccion == "") {
+            alert("Favor ingrese la direccion del estudiante");
+            document.getElementById("txt_direccion_est").focus();
+        } else {
+            $.ajax({
+                type: 'POST',
+                //dataType: 'json',
+                //data: {id_cc: id_cc},
+                //data: {id_cmb:'carrera'},
+                data: $('#frm_ficha').serialize(),
+                url: ruta + '/F_graba_Ficha_estudiante',
+                success: function(data) {
+                    alert(data);
+                }
+            });
+        }
+    }

@@ -10,10 +10,7 @@ import accesodatos.AccesoDatos;
 import accesodatos.ConjuntoResultado;
 import accesodatos.Parametro;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 //import org.json.JSONException;
 //import org.json.JSONObject;
 
@@ -47,12 +44,9 @@ public class Autentificar_Usuario {
         this.admin.setUs_usuario(usuario);
         this.admin.setUs_contrasena(clave);
         
-      
         String sql ="SELECT us_nombre, us_apellido, us_direccion, \n" +
-                    "       id_carrera, id_cargo, \n" +
-                    "       us_email, \n" +
-                    "       us_sexo, us_tutor\n" +
-                    "  FROM \"VCS_USUARIOS\" where upper(us_usuario)=upper(?) and us_contrasena=(select md5(?)) and "+
+                    "       us_cargo \n" +
+                    "  FROM \"MAU_USUARIO\" where upper(us_usuario)=upper(?) and us_contrasena=(select md5(?)) and "+
                     " us_estado = 'A'";
         ArrayList<Parametro> lstPar = new ArrayList<>();
         lstPar.add(new Parametro(1,this.admin.getUs_usuario()));
@@ -65,11 +59,8 @@ public class Autentificar_Usuario {
                 this.admin.setUs_nombre(cres.getString(0));
                 this.admin.setUs_apellido(cres.getString(1));
                 this.admin.setUs_direccion(cres.getString(2));
-                this.admin.setId_carrera(cres.getInt(3));
-                this.admin.setId_cargo(cres.getInt(4));
-                this.admin.setUs_email(cres.getString(5));
-                this.admin.setUs_sexo(cres.getString(6));
-                this.admin.setUs_tutor(cres.getString(7));
+                this.admin.setUs_cargo(cres.getString(3));
+                //this.admin.setUs_email(cres.getString(4));
                 lb_valida_login = true;
             }
         } catch (Exception e) {
