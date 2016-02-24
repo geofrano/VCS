@@ -134,7 +134,6 @@
     </tr>
 </table>
 <input type="hidden" value="0" id="cod_proy" name="cod_proy"/>
-<br><br><center><input type="button" onclick="graba()" ng-click="grabar()" value="Generar">
-   
+<br><br><center><button type="button" class="btn btn-primary" onclick="graba();"><span class="glyphicon glyphicon-ok"></span> Grabar</button>
 </center>
 </form>

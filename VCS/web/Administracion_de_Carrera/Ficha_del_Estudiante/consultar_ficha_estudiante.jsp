@@ -13,13 +13,15 @@
         <tr>
             <td><label>Nombre del Estudiante:</label></td>
             <td>
-                <input type="text" class="text-primary form-control" id="txt_nombre_est" name="txt_nombre_est" maxlength="800">
+                <input type="text" class="text-primary form-control" id="txt_nombre_est" title="Nombre del estudiante" name="txt_nombre_est" maxlength="800">
+            </td>
+            <td><div id="div_consulta" name="div_consulta">
+                <img width="30px" height="30px" id="img_consulta" name="img_consulta" class="img-circle" title="Consultar" src="../../images/consultar.jpg" ng-click="consultar_estudiante()"/></div>
+                <div id="div_consulta2" name="div_consulta2" style="display:none">
+                <img width="30px" height="30px" id="img_cargando" name="img_cargando" title="Cargando..." src="../../images/cargando.svg" /></div>
             </td>
             <td>
-                <img width="30px" height="30px" class="img-circle" src="../../images/consultar.jpg" ng-click="consultar_estudiante()"/>
-            </td>
-            <td>
-                <img width="30px" height="30px" class="img-circle" src="../../images/agregar.jpg" ng-click="carga_ingreso()"/>
+                <img width="30px" height="30px" class="img-circle" src="../../images/agregar.jpg" title="Escoja una carta compromiso y presione aqui para ingresar la ficha del estudiante" ng-click="carga_ingreso()"/>
             </td>
         </tr>
     </table>
@@ -33,6 +35,8 @@
         <th>Nombre Estudiante</th>
         <th>Lugar Suscripción</th>
         <th>Fecha Suscripción</th>
+        <th colspan="4"></th>
+
     </tr>
 
 </table>

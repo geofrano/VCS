@@ -85,7 +85,7 @@ public class Administrar_Estudiante {
             json.put("emp_nombre", carta_comp.getNomb_empresa());
             json.put("lugar_suscrip", carta_comp.getLugar_suscripcion());
             json.put("fecha_suscrip", carta_comp.getFecha_suscripcion());
-            //json.put("existe", carta_comp.getActividad_1());
+            json.put("cc_estado", carta_comp.getEstado());
             
         } catch (JSONException ex) {
             Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);

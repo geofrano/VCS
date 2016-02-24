@@ -14,7 +14,6 @@ public class Conexion {
         try {
            prop.load(Conexion.class.getResourceAsStream("database.properties"));
            ds = BasicDataSourceFactory.createDataSource(prop);//CREA EL POOL DE CONEXIONES
-           
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
