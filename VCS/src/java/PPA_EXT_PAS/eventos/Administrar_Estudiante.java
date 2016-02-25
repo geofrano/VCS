@@ -44,10 +44,14 @@ public class Administrar_Estudiante {
                      "       'PEND',\n" +
                      "       cc_lugar_suscripcion, \n" +
                      "       to_char(cc_fecha_suscripcion,'dd/mm/yyyy'), \n" +
-                     "       cc_estado\n" +
+                     "       cc_estado,\n" +
+                     "    tipo_act.pa_valor"+
                      "  FROM \"MPP_CARTA_COMPROMISO\" CC,\n" +
-                     "       \"MPP_ESTUDIANTES\" ES\n" +
+                     "       \"MPP_ESTUDIANTES\" ES,\n" +
+                     "       \"MPP_PARAMETROS\" tipo_act"+
                      " WHERE CC.es_id = ES.es_id\n" +
+                     "   AND cc.cc_tipo_actividad = tipo_act.pa_id "+
+                     "   AND tipo_act.pa_tipo = 'AC'"+
                      "   AND (UPPER(es_nombre) LIKE UPPER('%' || ? || '%') \n" +
                      "	OR UPPER(es_apellido) LIKE UPPER('%' || ? || '%'))";
         
@@ -66,6 +70,7 @@ public class Administrar_Estudiante {
                 carta_comp.setLugar_suscripcion(cres.getString(3).trim());
                 carta_comp.setFecha_suscripcion(cres.getString(4).trim());
                 carta_comp.setEstado(cres.getString(5).trim());
+                carta_comp.setTipo_actividad(cres.getString(6).trim());
                 System.out.println("EST: "+cres.getString(1).trim());
                 datos.add(carta_comp);
                 
@@ -86,7 +91,7 @@ public class Administrar_Estudiante {
             json.put("lugar_suscrip", carta_comp.getLugar_suscripcion());
             json.put("fecha_suscrip", carta_comp.getFecha_suscripcion());
             json.put("cc_estado", carta_comp.getEstado());
-            
+            json.put("cc_tipo_act", carta_comp.getTipo_actividad());
         } catch (JSONException ex) {
             Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
         }

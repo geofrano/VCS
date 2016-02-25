@@ -34,9 +34,16 @@ public class F_muestra_ficha_estudiante extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json; charset=UTF-8");
         try {
-            String cod_carta_comp=request.getParameter("id_cc").toString();     
+            String cod_carta_comp=request.getParameter("id_cc").toString();
+            String tipo_accion = request.getParameter("accion_form").toString();
+            
             PrintWriter out = response.getWriter();
-            out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp)));
+            if (tipo_accion.equals("M")){//Para Modificacion
+                out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp)));
+            }else if (tipo_accion.equals("I")){//Para ingreso
+                out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp)));    
+            }
+            
             out.flush();
             out.close();
             

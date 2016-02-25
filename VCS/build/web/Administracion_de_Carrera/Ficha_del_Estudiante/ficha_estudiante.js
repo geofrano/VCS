@@ -32,12 +32,13 @@ app.controller("ControladorVCS", function($scope, $http) {
                 $.each(data.items, function(index, article) {
                     cont= cont+1;
                     $tabla.append("<tr><td><input type=\"hidden\" name=\"cc_id_"+cont+"\" id=\"cc_id_"+cont+"\" value=\"" + article.id_cc + "\">" + article.id_cc + "</td>\n" +
-                            "<td>" + article.nomb_est + "</td>\n" +
+                            "<td>" + article.cc_tipo_act + "</td>\n" +
+                            "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
                             //"<td>" + article.emp_nombre + "</td>\n" +
                             "<td>" + article.lugar_suscrip + "</td>\n" +
                             "<td>" + article.fecha_suscrip + "</td>\n"+
                             "<td><div style=\"display:none\" name=\"div_inserta_"+cont+"\" id=\"div_inserta_"+cont+"\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div></td>\n"+
-                            "<td colspan='2' class=\"alineado3\">" +
+                            "<td class=\"alineado3\">" +
                              "<div style=\"display:none\" name=\"div_modificar_"+cont+"\" id=\"div_modificar_"+cont+"\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso("+cont+")\"/></div>" +
                             "</td>\n" +
                             "<td class=\"alineado3\">" +
@@ -184,12 +185,13 @@ app.controller("ControladorVCS", function($scope, $http) {
 
     $scope.carga_datos = function(id_cart_comp) {
         var ruta = document.getElementById("ruta_principal").value;
-
+        document.getElementById("accion_form").value="I";
+        
         var id_cc = id_cart_comp;
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            data: {id_cc: id_cc},
+            data: {id_cc: id_cc, accion_form: 'I'},
             //data: {id_cmb:'carrera'},
             //data: $('#formid').serialize(),
             url: ruta + '/F_muestra_ficha_estudiante',
@@ -255,8 +257,8 @@ function graba() {
         document.getElementById("txt_direccion_est").focus();
     } else {
         swal({
-            title: "Está seguro?",
-            text: "Favor confirme que los datos ingresados son los correctos!",
+            title: "Está segur@?",
+            text: "Favor confirme que los datos ingresados son los correctos",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#337ab7",
@@ -298,10 +300,7 @@ function graba() {
     }
 }//FIN GRABA
 function carga_ingreso(cont){
-    alert("HA");
     var id_cc = document.getElementById("cc_id_"+cont).value;
-    alert(id_cc);
-    var estudiante = document.getElementById("txt_nombre_est").value;
         var ruta = document.getElementById("ruta_principal").value;
             //document.getElementById("frm_datos").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ingresar_ficha_estudiante.jsp";
             //document.frm_datos.submit();
@@ -316,6 +315,7 @@ function carga_ingreso(cont){
                 success: function(data) {
                     $("#div_ingreso").html("");
                     $("#div_ingreso").append(data);
+                    document.getElementById("accion_form").value="M";
                     carga_datos(id_cc);
                 }
             });
@@ -324,10 +324,11 @@ function carga_datos(id_cart_comp){
     var ruta = document.getElementById("ruta_principal").value;
         alert(id_cart_comp);
         var id_cc = id_cart_comp.trim();
+        document.getElementById("accion_form").value="M";
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            data: {id_cc: id_cc},
+            data: {id_cc: id_cc, accion_form: 'I'},
             //data: {id_cmb:'carrera'},
             //data: $('#formid').serialize(),
             url: ruta + '/F_muestra_ficha_estudiante',

@@ -134,6 +134,7 @@
     </tr>
 </table>
 <input type="hidden" value="0" id="cod_proy" name="cod_proy"/>
+<input type="hidden" value="I" id="accion_form" name="accion_form"/>
 <br><br><center><button type="button" class="btn btn-primary" onclick="graba();"><span class="glyphicon glyphicon-ok"></span> Grabar</button>
 </center>
 </form>

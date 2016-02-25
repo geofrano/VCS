@@ -128,6 +128,64 @@ public class Administrar_Ficha_Estudiante {
         }
         return opciones;
     }
+    
+    public static List<Carta_Compromiso> mostrar_carta_compromiso2(String id_carta_comp) {
+        List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
+        String sql = "select id_cc, tipo_actividad, dia_ini,\n"
+                + " mes_ini, anio_ini, dia_fin, mes_fin, anio_fin,\n"
+                + " ced_est, nombre_estudiante, cel_est, correo_est,\n"
+                + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
+                + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
+                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy\n"
+                + "from view_datos_cc\n"
+                + "where trim(id_cc) = ? ";
+
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1, id_carta_comp));
+        Carta_Compromiso carta_comp;
+        try {
+            ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, lstPar);
+            while (cres.next()) {
+                carta_comp = new Carta_Compromiso();
+                carta_comp.setId_carta_compromiso(cres.getString(0));
+                carta_comp.setTipo_actividad(cres.getString(1));
+                carta_comp.setDia_inicio(cres.getString(2));
+                carta_comp.setMes_inicio(cres.getString(3));
+                carta_comp.setAnio_inicio(cres.getString(4));
+                carta_comp.setDia_fin(cres.getString(5));
+                carta_comp.setMes_fin(cres.getString(6));
+                carta_comp.setAnio_fin(cres.getString(7));
+                carta_comp.setCed_estudiante(cres.getString(8));
+                carta_comp.setNomb_estudiante(cres.getString(9).trim());
+                carta_comp.setFono_estudiante(cres.getString(10).trim());
+                carta_comp.setMail_estudiante(cres.getString(11).trim());
+                carta_comp.setCarrera_grado(cres.getString(12).trim());
+                carta_comp.setCiclo_curso(cres.getString(13).trim());
+                carta_comp.setNomb_empresa(cres.getString(14).trim());
+                carta_comp.setNombre_representante(cres.getString(15).trim());
+                carta_comp.setArea_actividad(cres.getString(16).trim());
+                carta_comp.setResponsable_area(cres.getString(17).trim());
+                carta_comp.setHorario_previsto(cres.getString(18).trim());
+                carta_comp.setCargo_representante(cres.getString(19).trim());
+                carta_comp.setTelf_representante(cres.getString(20).trim());
+                carta_comp.setDir_empresa(cres.getString(21).trim());
+                carta_comp.setNombre_programa(cres.getString(22).trim());
+                if (cres.getString(23).trim().equals("NA")) {
+                    carta_comp.setProyecto("");
+                } else {
+                    carta_comp.setProyecto(cres.getString(23).trim());
+                }
+                carta_comp.setNombre_tutor(cres.getString(24).trim());
+                carta_comp.setActividad_1(cres.getString(25).trim());
+                carta_comp.setActividad_2(cres.getString(26).trim());
+                opciones.add(carta_comp);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return opciones;
+    }
 
     public static JSONObject toJSONObject(Carta_Compromiso carta_comp) {
         JSONObject json = new JSONObject();

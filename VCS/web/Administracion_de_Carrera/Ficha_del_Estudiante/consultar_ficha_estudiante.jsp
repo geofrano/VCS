@@ -32,7 +32,8 @@
 <table id="tbl_estudiante" class="table table-hover table-responsive">
     <tr>
         <th>Id Carta Compromiso</th>
-        <th>Nombre Estudiante</th>
+        <th>Tipo de Actividad</th>
+        <th colspan="2">Nombre Estudiante</th>
         <th>Lugar Suscripción</th>
         <th>Fecha Suscripción</th>
         <th colspan="4"></th>
