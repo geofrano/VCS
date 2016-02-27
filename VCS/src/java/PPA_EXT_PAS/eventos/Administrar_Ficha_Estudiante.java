@@ -44,10 +44,10 @@ public class Administrar_Ficha_Estudiante {
 
     }
 
-    public String procesar_peticion() {
+    public String procesar_peticion(String accion) {
         ArrayList<Parametro> parametros = new ArrayList<>();
         String res = "";
-        String sql = "select f_inserta_ficha_est(?,?,?,?,?,?,?,?)";
+        String sql = "select f_inserta_ficha_est(?,?,?,?,?,?,?,?,?)";
         parametros.add(new Parametro(1, this.ficha_estudiante.getNombre_proyecto()));
         parametros.add(new Parametro(2, this.ficha_estudiante.getTwiter()));
         parametros.add(new Parametro(3, this.ficha_estudiante.getFacebook()));
@@ -57,7 +57,7 @@ public class Administrar_Ficha_Estudiante {
         parametros.add(new Parametro(7, this.ficha_estudiante.getDireccion()));
         System.out.println("cod_proy "+this.ficha_estudiante.getCod_proy());
         parametros.add(new Parametro(8, this.ficha_estudiante.getCod_proy()));
-
+        parametros.add(new Parametro(9, accion));
         try {
              ConjuntoResultado cres
                     = AccesoDatos.ejecutaQuery(sql, parametros);
@@ -136,9 +136,11 @@ public class Administrar_Ficha_Estudiante {
                 + " ced_est, nombre_estudiante, cel_est, correo_est,\n"
                 + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
-                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy\n"
-                + "from view_datos_cc\n"
-                + "where trim(id_cc) = ? ";
+                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, coalesce(fe_nombre_proyecto, 'NA') ,coalesce( b.fe_twitter, 'NA') , "
+                + " coalesce(b.fe_facebook, 'NA'), coalesce(b.fe_linked_in, 'NA'), b.fe_direccion \n"
+                + "from view_datos_cc a, \"MPP_FICHA_ESTUDIANTE\" b\n" 
+                + " where a.id_cc = b.cc_id and \n"
+                + " trim(a.id_cc) = ? ";
 
         ArrayList<Parametro> lstPar = new ArrayList<>();
         lstPar.add(new Parametro(1, id_carta_comp));
@@ -179,6 +181,33 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setNombre_tutor(cres.getString(24).trim());
                 carta_comp.setActividad_1(cres.getString(25).trim());
                 carta_comp.setActividad_2(cres.getString(26).trim());
+                if (cres.getString(27).trim().equals("NA")) {
+                    carta_comp.setNombre_proyecto("");
+                } else {
+                    carta_comp.setNombre_proyecto(cres.getString(27).trim());
+                }
+                
+                if (cres.getString(28).trim().equals("NA")) {
+                    carta_comp.setTwitter_est("");
+                } else {
+                    carta_comp.setTwitter_est(cres.getString(28).trim());
+                }
+                if (cres.getString(29).trim().equals("NA")) {
+                    carta_comp.setFacebook_est("");
+                } else {
+                    carta_comp.setFacebook_est(cres.getString(29).trim());
+                }
+                
+                if (cres.getString(30).trim().equals("NA")) {
+                    carta_comp.setLinked_in_est("");
+                } else {
+                    carta_comp.setLinked_in_est(cres.getString(30).trim());
+                }
+                if (cres.getString(31).trim().equals("NA")) {
+                    carta_comp.setDireccion_est("");
+                } else {
+                    carta_comp.setDireccion_est(cres.getString(31).trim());
+                }
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
@@ -187,7 +216,7 @@ public class Administrar_Ficha_Estudiante {
         return opciones;
     }
 
-    public static JSONObject toJSONObject(Carta_Compromiso carta_comp) {
+    public static JSONObject toJSONObject(Carta_Compromiso carta_comp,String accion) {
         JSONObject json = new JSONObject();
         try {
             json.put("id_carta_comp", carta_comp.getId_carta_compromiso());
@@ -217,19 +246,29 @@ public class Administrar_Ficha_Estudiante {
             json.put("tutor", carta_comp.getNombre_tutor());
             json.put("actividades", carta_comp.getActividad_1());
             json.put("cod_proy", carta_comp.getActividad_2());
+            
+            if (accion.equals("M")){//Solo si es modificacion se agregan los siguientes campos al json
+                json.put("nom_proy", carta_comp.getNombre_proyecto());
+                json.put("twitter", carta_comp.getTwitter_est());
+                json.put("facebook", carta_comp.getFacebook_est());
+                json.put("linked_in", carta_comp.getLinked_in_est());
+                json.put("dir_est", carta_comp.getDireccion_est());
+            }
+            
+            
         } catch (JSONException ex) {
             Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
         }
         return json;
     }
 
-    public static JSONObject toJSON(List< Carta_Compromiso> carta_comp) {
+    public static JSONObject toJSON(List< Carta_Compromiso> carta_comp,String accion) {
         JSONObject json = new JSONObject();
         try {
             JSONArray jsonItems = new JSONArray();
             for (Iterator<Carta_Compromiso> it = carta_comp.iterator(); it.hasNext();) {
                 Carta_Compromiso opciones = it.next();
-                jsonItems.put(toJSONObject(opciones));
+                jsonItems.put(toJSONObject(opciones,accion));
             }
 
             json.put("items", jsonItems);

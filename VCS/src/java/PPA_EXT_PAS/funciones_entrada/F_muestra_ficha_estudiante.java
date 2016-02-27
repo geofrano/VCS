@@ -39,9 +39,9 @@ public class F_muestra_ficha_estudiante extends HttpServlet {
             
             PrintWriter out = response.getWriter();
             if (tipo_accion.equals("M")){//Para Modificacion
-                out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp)));
+                out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso2(cod_carta_comp),tipo_accion));
             }else if (tipo_accion.equals("I")){//Para ingreso
-                out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp)));    
+                out.print(Administrar_Ficha_Estudiante.toJSON(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp),tipo_accion));    
             }
             
             out.flush();

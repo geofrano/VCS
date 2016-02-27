@@ -66,6 +66,11 @@ public class Carta_Compromiso {
     private String telf_delegado;
     private String lugar_suscripcion;
     private String fecha_suscripcion;
+    private String nombre_proyecto;
+    private String twitter_est;
+    private String facebook_est;
+    private String linked_in_est;
+    private String direccion_est;
     private String estado;
 
     public String getProyecto() {
@@ -74,6 +79,46 @@ public class Carta_Compromiso {
 
     public void setProyecto(String proyecto) {
         this.proyecto = proyecto;
+    }
+
+    public String getTwitter_est() {
+        return twitter_est;
+    }
+
+    public void setTwitter_est(String twitter_est) {
+        this.twitter_est = twitter_est;
+    }
+
+    public String getFacebook_est() {
+        return facebook_est;
+    }
+
+    public void setFacebook_est(String facebook_est) {
+        this.facebook_est = facebook_est;
+    }
+
+    public String getLinked_in_est() {
+        return linked_in_est;
+    }
+
+    public void setLinked_in_est(String linked_in_est) {
+        this.linked_in_est = linked_in_est;
+    }
+
+    public String getDireccion_est() {
+        return direccion_est;
+    }
+
+    public void setDireccion_est(String direccion_est) {
+        this.direccion_est = direccion_est;
+    }
+   
+    public String getNombre_proyecto() {
+        return nombre_proyecto;
+    }
+
+    public void setNombre_proyecto(String nombre_proyecto) {
+        this.nombre_proyecto = nombre_proyecto;
     }
 
     public String getMail_estudiante() {
