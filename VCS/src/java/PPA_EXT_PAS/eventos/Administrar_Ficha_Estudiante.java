@@ -30,7 +30,10 @@ import org.json.JSONObject;
 public class Administrar_Ficha_Estudiante {
 
     private Ficha_Estudiante ficha_estudiante;
-
+    
+    public Administrar_Ficha_Estudiante(){
+        super();
+    }
     public Administrar_Ficha_Estudiante(HttpServletRequest request) {
         this.ficha_estudiante = new Ficha_Estudiante();
         this.ficha_estudiante.setId_carta_compromiso((String) request.getParameter("txt_id_carta_comp"));

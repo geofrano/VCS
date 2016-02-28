@@ -287,6 +287,18 @@ function graba() {
                             closeOnConfirm: false
                         },
                         function() {
+                            $.ajax({
+                type: 'POST',
+                //dataType: 'json',
+                //data: {id_cc: id_cc},
+                //data: {id_cmb:'carrera'},
+                data: $('#frm_ficha').serialize(),
+                
+                url: ruta + '/F_genera_pdf_ficha_estudiante',
+                success: function(data) {
+                    
+                }
+            });
                             window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
                         });
                     } else {
