@@ -10,22 +10,21 @@
     <head>
         <% String ruta=request.getContextPath(); %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Informe de Petición Verbal</title>
+        <title>Ficha del Estudiante - Impresion</title>
+        <% String id_cc = request.getParameter("txt_id_carta_comp").toString();%>
         <script>
             function imprime()
             {
-                
                 var ruta=document.getElementById("ruta_principal").value; 
                 document.getElementById("frm_imprime").action=ruta+"/F_genera_pdf_ficha_estudiante";
                 document.frm_imprime.submit();
-    
             }
         </script>
     </head>
     <body onload="imprime()">
         <form action="" method="POST" id="frm_imprime" name="frm_imprime">
             <input type="hidden" value="<%=ruta%>" id="ruta_principal" name="ruta_principal" />
-            <input type="hidden" value="CC001.PA-GIS-033" id="txt_id_carta_comp" name="txt_id_carta_comp" />
+            <input type="hidden" value="<%=id_cc%>" id="txt_id_carta_comp" name="txt_id_carta_comp" />
         </form>
     </body>
 </html>

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.util.Collections.list;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -57,40 +58,28 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
          ls_dimension[0]=0.9f;
         if ((carta_comp.size() != 0)) {
                 try {
-                    //
-                    // Template JSP file for iText
-                    // by Tal Liron
-                    //
                     response.setContentType("application/pdf");
                     
                     //Para que se muestre
                     response.setHeader("Content-Disposition", "inline; filename=Ficha_estudiante.pdf");
 
-                    // step 1: creation of a document-object
+                    // Creamos el documento con formato A4 veritical
                     Document document = new Document(PageSize.A4);
 
-                    // step 2:
-                    // we create a writer that listens to the document
-                    // and directs a PDF-stream to a temporary buffer
+                    // Asignamos a un buffer temporal el documento
                     ByteArrayOutputStream buffer = new ByteArrayOutputStream();
                     PdfWriter.getInstance(document, buffer);
 
-                    // step 3: we open the document
-                    
-
-                    // step 4: envio el objeto para llenar las tablas en el pdf
+                    //Llamo a la clase que genera el pdf
                     Genera_pdf objTable = new Genera_pdf();
-                    File directorio = new File("c:\\VCS\\");
+                    File directorio = new File("c:\\VCS\\");//Se guarda el documento en el repositorio local
                     if (!directorio.exists()){
                         directorio.mkdir();
                     }
                     
-                    objTable.dibujaPdfsolRetiroEstado(document,ruta_imagenes, ls_dimension, carta_comp, "c:\\VCS\\");
+                    objTable.dibujaPdfFichaEstudiante(document,ruta_imagenes, ls_dimension, carta_comp, "c:\\VCS\\");
                     
-                    // step 5: we close the document
-                    //document.close();
-
-                    // step 6: we output the writer as bytes to the response output
+                    //Abrimos el pdf en el navegador para que se pueda visualizar
                     byte[] bytes = buffer.toByteArray();
                     response.setContentLength(bytes.length);
                     
@@ -100,19 +89,13 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
                     output.flush();
                     output.close();
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                    RequestDispatcher a=request.getRequestDispatcher("ficha_estudiante.jsp");
+				a.forward(request, response);
                 } catch (DocumentException e) {
                     // No se muestra nada 
                     //output.print("<script>alert('Error Interno')</script>");
-                    //e.printStackTrace();
-                    System.out.println("ERROR23");
+                    e.printStackTrace();
+                    System.out.println("ERROR "+e);
                 }
             } else {
                 System.out.println("ERROR");

@@ -140,7 +140,7 @@ public class Administrar_Ficha_Estudiante {
                 + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
                 + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, coalesce(fe_nombre_proyecto, 'NA') ,coalesce( b.fe_twitter, 'NA') , "
-                + " coalesce(b.fe_facebook, 'NA'), coalesce(b.fe_linked_in, 'NA'), b.fe_direccion \n"
+                + " coalesce(b.fe_facebook, 'NA'), coalesce(b.fe_linked_in, 'NA'), b.fe_direccion, to_char(a.cc_fecha_suscripcion,'dd/mm/yyyy') \n"
                 + "from view_datos_cc a, \"MPP_FICHA_ESTUDIANTE\" b\n" 
                 + " where a.id_cc = b.cc_id and \n"
                 + " trim(a.id_cc) = ? ";
@@ -211,6 +211,7 @@ public class Administrar_Ficha_Estudiante {
                 } else {
                     carta_comp.setDireccion_est(cres.getString(31).trim());
                 }
+                carta_comp.setFecha_suscripcion(cres.getString(32).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {

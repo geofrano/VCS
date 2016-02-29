@@ -42,7 +42,7 @@ app.controller("ControladorVCS", function($scope, $http) {
                             "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
                             "</td>\n" +
                             "<td class=\"alineado3\">" +
-                            "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"carga_ingreso(" + cont + ")\"/>" +
+                            "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
                             "</td></tr>\n");
 
                     if (article.cc_estado.trim() == "A") {
@@ -287,20 +287,11 @@ function graba() {
                             closeOnConfirm: false
                         },
                         function() {
-                            $.ajax({
-                type: 'POST',
-                //dataType: 'json',
-                //data: {id_cc: id_cc},
-                //data: {id_cmb:'carrera'},
-                data: $('#frm_ficha').serialize(),
-                
-                url: ruta + '/F_genera_pdf_ficha_estudiante',
-                success: function(data) {
-                    
-                }
-            });
-                            window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                            document.getElementById("frm_ficha").action=ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+                            document.frm_ficha.target="_new";
+                            document.frm_ficha.submit();
                         });
+                        window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
                     } else {
                         swal("Error!", "La ficha del estudiante no ha sido ingresada", "error");
                     }
@@ -311,6 +302,22 @@ function graba() {
 
     }
 }//FIN GRABA
+function elimina(cont){
+    var id_cc = document.getElementById("cc_id_" + cont).value;
+    var ruta = document.getElementById("ruta_principal").value;
+    $.ajax({
+        type: 'POST',
+        data: {id_cc: id_cc, accion_form: 'E'},
+        //data: {id_cmb:'carrera'},
+        //data: $('#formid').serialize(),
+        url: ruta + '/F_muestra_ficha_estudiante',
+        success: function(data) {
+
+        }
+    });
+    
+    
+}
 function carga_ingreso(cont) {
     var id_cc = document.getElementById("cc_id_" + cont).value;
     var ruta = document.getElementById("ruta_principal").value;
