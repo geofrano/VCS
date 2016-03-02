@@ -7,20 +7,20 @@
 <h1 class="alineado3">Carta Compromiso Interinstitucional</h1>
 <div class="form-group">
     <form id="frm_carta_comp" name="frm_carta_comp" action="" method="POST">
-        <fieldset><legend style="color:#DF0101;font-size: 100%;font-weight: bold;">Información General</legend>
+        <fieldset class="legendas2"><legend class="legendas opcion_iluminada">Información General</legend>
             <table class="table table-hover table-responsive">
                 <tr>
                     <td><label>Código: </label></td>
                     <td>
-                        <input type="text" class="text-primary form-control" id="txt_codigo" name="txt_codigo" maxlength="50">
+                        <input type="text" class="text-primary form-control" readonly="readonly" id="txt_codigo" name="txt_codigo" maxlength="50">
                     </td>
                     <td><label>No: </label></td>
                     <td>
-                        <input type="text" class="text-primary form-control disabled" id="txt_numero" name="txt_numero" maxlength="50">
+                        <input type="text" class="text-primary form-control disabled" readonly="readonly" id="txt_numero" name="txt_numero" maxlength="50">
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Nombre de la Empresa o Institución: </label></td>
+                    <td><label>Nombre de la Empresa<br>o Institución: </label></td>
                     <td colspan="3">
                         <input type="text" class="text-primary form-control" id="txt_nombre_empresa" name="txt_nombre_empresa" maxlength="250" >
                     </td>
@@ -36,13 +36,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Actividad Principal de la Empresa o Institución: </label></td>
+                    <td><label>Actividad Principal de<br>la Empresa o Institución: </label></td>
                     <td colspan="3">
                         <input type="text" class="text-primary form-control" id="txt_actividad_empresa" name="txt_actividad_empresa" maxlength="250">
                     </td>
                 </tr>
                 <tr>
-                    <td><label>Apellidos y Nombres del Estudiante: </label></td>
+                    <td><label>Apellidos y Nombres del<br>Estudiante: </label></td>
                     <td colspan="3">
                         <input type="text" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="250">
                     </td>
@@ -52,14 +52,14 @@
                     <td>
                         <span id="div_carrera" name="div_carrera" ng-open="carga_combo_carrera()"></span>
                     </td>
-                    <td><label>Ciclo o Semestre que cursa: </label></td>
+                    <td><label>Ciclo o Semestre<br>que cursa: </label></td>
                     <td>
                         <span id="div_ciclos" name="div_ciclos" ng-open="carga_combo_ciclo()"></span>
                     </td>
                 </tr>
             </table>
-        </fieldset>
-        <fieldset><legend style="color:#DF0101;font-size: 100%;font-weight: bold;">Descripción Estratégica de Intervención</legend>
+        </fieldset><br><br>
+        <fieldset class="legendas2"><legend class="legendas opcion_iluminada">Descripción Estratégica de Intervención</legend>
             <table class="table table-hover table-responsive">
                 <tr>
                     <td>
@@ -85,7 +85,15 @@
                                     <label>Fecha Inicio: </label>
                                 </td>
                                 <td>
-                                    <input type="text" class="text-primary form-control" id="txt_fecha_inicio" name="txt_fecha_inicio" maxlength="100">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker6'>
+                                            <input type="text" class="form-control" id="txt_fecha_ini" name="txt_fecha_ini" ng-model="txt_fecha_ini"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div> 
+                                    <!-- <input type="text" class="text-primary form-control" id="txt_fecha_inicio" name="txt_fecha_inicio" maxlength="100">-->
                                 </td>
                             </tr>
                             <tr>
@@ -93,7 +101,15 @@
                                     <label>Fecha Final: </label>
                                 </td>
                                 <td>
-                                    <input type="text" class="text-primary form-control" id="txt_fecha_fin" name="txt_fecha_fin" maxlength="100">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker7'>
+                                            <input type="text" class="form-control" id="txt_fecha_fin" name="txt_fecha_fin" ng-model="txt_fecha_fin" ng-click="calendarios()"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!--<input type="text" class="text-primary form-control" id="txt_fecha_fin" name="txt_fecha_fin" maxlength="100">-->
                                 </td>
                             </tr>
                             <tr>
@@ -274,8 +290,8 @@
                 </tr>
 
             </table>
-        </fieldset>
-        <fieldset><legend style="color:#DF0101;font-size: 100%;font-weight: bold;">Aceptación y Legalización</legend>
+        </fieldset><br><br>
+        <fieldset class="legendas2"><legend class="legendas opcion_iluminada">Aceptación y Legalización</legend>
             <table class="table table-hover table-responsive">
                 <tr>
                     <td><label>Apellidos y Nombres <br>del Representante Legal: </label></td>
@@ -324,5 +340,6 @@
         <div class="form-group center-block text-center">
             <button ng-click="guarda_carta_comp()" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-saved"></span> Grabar</button>
         </div>
+        <div id="llenaDato"></div>
     </form>               
 </div>

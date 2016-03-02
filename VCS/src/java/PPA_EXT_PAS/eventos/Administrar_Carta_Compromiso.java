@@ -188,17 +188,32 @@ public class Administrar_Carta_Compromiso {
         response.sendRedirect(response.encodeRedirectURL("Home.jsp"));
         return res;
     }
-    public static List<Carta_Compromiso> consulta_cc() {
+    public static List<Carta_Compromiso> consulta_cc(String cc_carrera, String cc_actividad) {
         List<Carta_Compromiso> codigo = new LinkedList<Carta_Compromiso>();
 
-        String sql = "select id_carta_comp, (max(secuencial)+1) from \"VCS_CARTA_COMPROMISO\" where id_carta_comp = 'CC001.PA-GIS' group by id_carta_comp";
+        String sql = "select coalesce(to_number(substr(substr(cc_id, strpos(cc_id, '-') + 1),\n" +
+                     "                        (strpos(substr(cc_id, strpos(cc_id, '-') + 1), '-') + 1)),\n" +
+                     "                 '099999') + 1, 1) AS Numero_cc,\n" +
+                     "       coalesce(substr(cc_id, 1, length(cc_id) - 4),'nada') Carta_Compromiso\n" +
+                     "  from \"MPP_CARTA_COMPROMISO\"\n" +
+                     " where substr(cc_id,\n" +
+                     "              strpos(cc_id, '.') + 1,\n" +
+                     "              strpos(substr(cc_id, strpos(cc_id, '.') + 1), '-') - 1) = ? \n" +
+                     "   AND substr(substr(cc_id, strpos(cc_id, '-') + 1),\n" +
+                     "              1,\n" +
+                     "              strpos(substr(cc_id, strpos(cc_id, '-') + 1), '-') - 1) =\n" +
+                     "       ?";
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1,cc_actividad));
+        lstPar.add(new Parametro(2,cc_carrera));
+        System.out.println("Query: "+ sql);
         Carta_Compromiso adm_cc;
         try {
-            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql,lstPar);
             while (cres.next()) {
                 adm_cc = new Carta_Compromiso();
-                adm_cc.setId_carta_compromiso(cres.getString(0).trim());
-                adm_cc.setNumero(cres.getString(1).trim());
+                adm_cc.setId_carta_compromiso(cres.getString(1).trim());
+                adm_cc.setNumero(cres.getString(0).trim());
                 codigo.add(adm_cc);
             }
         } catch (Exception e) {

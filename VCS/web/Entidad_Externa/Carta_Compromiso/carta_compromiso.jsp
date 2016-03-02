@@ -16,12 +16,14 @@
         <title>Sistema Administrativo VCS - UPS</title>
         <% String ruta = request.getContextPath();%>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link rel="stylesheet" href="../../css/bootstrap.min.css" >
-        <link rel="stylesheet" href="../../css/principal.css" >
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/principal.css">
+        <link rel="stylesheet" href="../../css/sweetalert.css">
         <script src="../../js/angular.min.js"></script>
         <script src="carta_compromiso.js"></script>
         <script src="../../js/jquery.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/sweetalert-dev.js"></script>
 
     </head>
     <body ng-controller="ControladorVCS">
@@ -34,7 +36,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div id="icono" class="col-md-9">
-                <jsp:include page="botonera_carta_compromiso.jsp"/>
+                <jsp:include page="consultar_carta_compromiso.jsp"/>
             </div>
             </div>
             <div class="row">

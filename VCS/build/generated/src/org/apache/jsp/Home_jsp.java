@@ -77,7 +77,9 @@ public final class Home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <div class=\"list-group\" id=\"ajaxResponse\" ng-open=\"carga2()\"></div>\n");
       out.write("                </div>\n");
       out.write("            <div class=\"col-md-9\">\n");
-      out.write("                <div id=\"ajaxIconos\" ng-open=\"carga_iconos()\"></div>\n");
+      out.write("                <center>\n");
+      out.write("                    <div id=\"ajaxIconos\" ng-open=\"carga_iconos()\"></div>\n");
+      out.write("                </center>\n");
       out.write("            </div>\n");
       out.write("            </div>\n");
       out.write("            <div class=\"row\">\n");

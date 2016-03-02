@@ -33,10 +33,17 @@ public class F_graba_Ficha_estudiante extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante(request);
             String accion=request.getParameter("accion_form").toString();
-            String resultado=ficha.procesar_peticion(accion);
+            if (accion.equals("E")){
+                String cc_id=request.getParameter("txt_id_carta_comp").toString();
+                Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante();
+                String resultado=ficha.elimina(cc_id);
                 out.println(resultado);
+            }else{
+                Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante(request);
+                String resultado=ficha.procesar_peticion(accion);
+                out.println(resultado);
+            }
         }
     }
 

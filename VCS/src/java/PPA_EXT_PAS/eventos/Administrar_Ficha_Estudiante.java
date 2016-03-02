@@ -73,7 +73,39 @@ public class Administrar_Ficha_Estudiante {
         }
         return res;
     }
-
+    
+    public String elimina(String cc_id) {
+        ArrayList<Parametro> parametros = new ArrayList<>();
+        String res = "NO";
+        String sql = "delete FROM \"MPP_FICHA_ESTUDIANTE\" where trim(cc_id) = ?";
+        parametros.add(new Parametro(1, cc_id.trim()));
+        try {
+             boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
+             String act=actualiza_estado_cc(cc_id);
+             if (cres){
+                 res="SI";
+             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+    public String actualiza_estado_cc(String cc_id) {
+        ArrayList<Parametro> parametros = new ArrayList<>();
+        String res = "NO";
+        String sql = "update \"MPP_CARTA_COMPROMISO\" set cc_estado='A'\n" +
+                     " where trim(cc_id) = ?";
+        parametros.add(new Parametro(1, cc_id.trim()));
+        try {
+             boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
+             if (cres){
+                 res="SI";
+             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public static List<Carta_Compromiso> mostrar_carta_compromiso(String id_carta_comp) {
         List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
         String sql = "select id_cc, tipo_actividad, dia_ini,\n"

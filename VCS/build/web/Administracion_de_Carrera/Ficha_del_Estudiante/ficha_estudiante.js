@@ -287,13 +287,13 @@ function graba() {
                             closeOnConfirm: false
                         },
                         function() {
-                            document.getElementById("frm_ficha").action=ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
-                            document.frm_ficha.target="_new";
-                            document.frm_ficha.submit();
+                          window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
                         });
-                        window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                        document.getElementById("frm_ficha").action=ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+                        document.frm_ficha.target="_new";
+                        document.frm_ficha.submit();
                     } else {
-                        swal("Error!", "La ficha del estudiante no ha sido ingresada", "error");
+                        swal("Error", "La ficha del estudiante no ha sido ingresada", "error");
                     }
                 }
             });
@@ -305,17 +305,33 @@ function graba() {
 function elimina(cont){
     var id_cc = document.getElementById("cc_id_" + cont).value;
     var ruta = document.getElementById("ruta_principal").value;
-    $.ajax({
-        type: 'POST',
-        data: {id_cc: id_cc, accion_form: 'E'},
-        //data: {id_cmb:'carrera'},
-        //data: $('#formid').serialize(),
-        url: ruta + '/F_muestra_ficha_estudiante',
-        success: function(data) {
-
-        }
+    swal({
+            title: "Está segur@?",
+            text: "Realmente desea eliminar la ficha del estudiante",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#337ab7",
+            confirmButtonText: "Eliminar",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        },
+        function() {
+            $.ajax({
+                type: 'POST',
+                data: {txt_id_carta_comp: id_cc, accion_form: 'E'},
+                //data: {id_cmb:'carrera'},
+                //data: $('#formid').serialize(),
+                url: ruta + '/F_graba_Ficha_estudiante',
+                success: function(data) {
+                    if (data.trim() == "SI") {
+                        swal("Exito", "La ficha del estudiante ha sido eliminada exitosamente", "success");
+                        window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                    }else{
+                        swal("Error", "La ficha del estudiante no pudo ser eliminada", "error");
+                    }
+                }
+            });
     });
-    
     
 }
 function carga_ingreso(cont) {
@@ -341,7 +357,7 @@ function carga_ingreso(cont) {
 }
 function carga_datos(id_cart_comp) {
     var ruta = document.getElementById("ruta_principal").value;
-    alert(id_cart_comp);
+    //alert(id_cart_comp);
     var id_cc = id_cart_comp.trim();
     var accion = document.getElementById("accion_form").value;
     $.ajax({

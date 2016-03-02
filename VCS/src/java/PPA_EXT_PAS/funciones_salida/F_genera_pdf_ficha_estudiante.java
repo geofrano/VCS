@@ -89,8 +89,6 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
                     output.flush();
                     output.close();
                     
-                    RequestDispatcher a=request.getRequestDispatcher("ficha_estudiante.jsp");
-				a.forward(request, response);
                 } catch (DocumentException e) {
                     // No se muestra nada 
                     //output.print("<script>alert('Error Interno')</script>");

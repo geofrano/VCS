@@ -27,17 +27,13 @@ public class Administrar_combos {
     //PINTA EL COMBO DE LAS CARRERAS
     public void obtiene_carreras(HttpServletResponse response, HttpServletRequest request) throws IOException {
         PrintWriter out = response.getWriter();
-        String sql = "SELECT id_carrera, \"Nombre\"\n"
-                + "  FROM \"VCS_CARRERAS\" where estado=?";
-        ArrayList<Parametro> lstPar = new ArrayList<>();
-        lstPar.add(new Parametro(1, "A"));
+        String sql = "SELECT PA_ID, PA_VALOR FROM \"MPP_PARAMETROS\" WHERE PA_TIPO = 'CA'";
         try {
-
-            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql, lstPar);
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
             //out.println("<td><label for=\"cmb_carrera\">Carrera de Grado: </label></td>\n");
-            out.println("<select name=\"cmb_carrera\" id=\"cmb_carrera\" class=\"form-control\" >\n");
+            out.println("<select name=\"cmb_carrera\" id=\"cmb_carrera\" class=\"form-control\" onchange=\"al_cambiar()\">\n");
             while (cres.next()) {
-                out.println("<option  value=\"" + cres.getInt(0) + "\">\n");
+                out.println("<option  value=\"" + cres.getString(0) + "\">\n");
                 out.println(cres.getString(1).trim());
                 out.println("</option>");
             }
@@ -51,15 +47,14 @@ public class Administrar_combos {
     //PINTA EL COMBO DE LOS PROGRAMAS
     public void obtiene_programas(HttpServletResponse response, HttpServletRequest request) throws IOException {
         PrintWriter out = response.getWriter();
-        String sql = "SELECT valor\n"
-                + "  FROM \"VCS_PARAMETROS\" WHERE id_parametro like 'PROGAMA_%'";
+        String sql = "SELECT PA_ID, PA_VALOR FROM \"MPP_PARAMETROS\" WHERE PA_TIPO = 'PR'";
 
         try {
             ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
             out.println("<select name=\"cmb_programas\" id=\"cmb_programas\" class=\"form-control\" >\n");
             while (cres.next()) {
                 out.println("<option  value=\"" + cres.getString(0).trim() + "\">\n");
-                out.println(cres.getString(0).trim());
+                out.println(cres.getString(1).trim());
                 out.println("</option>");
             }
             out.println("</select>");
@@ -71,15 +66,14 @@ public class Administrar_combos {
     //PINTA EL COMBO DE LAS HORAS
     public void obtiene_horas(HttpServletResponse response, HttpServletRequest request) throws IOException {
         PrintWriter out = response.getWriter();
-        String sql = "SELECT descripcion,valor\n"
-                + "  FROM \"VCS_PARAMETROS\" WHERE id_parametro like 'HORAS_%'";
+        String sql = "SELECT PA_ID, PA_VALOR FROM \"MPP_PARAMETROS\" WHERE PA_TIPO = 'HO'";
 
         try {
             ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
             out.println("<select name=\"cmb_horas\" id=\"cmb_horas\" class=\"form-control\" >\n");
             while (cres.next()) {
                 out.println("<option  value=\"" + cres.getString(1).trim() + "\">\n");
-                out.println(cres.getString(0).trim());
+                out.println(cres.getString(1).trim());
                 out.println("</option>");
             }
             out.println("</select>");
@@ -91,15 +85,14 @@ public class Administrar_combos {
     //PINTA EL COMBO DE LOS CICLOS
     public void obtiene_ciclos(HttpServletResponse response, HttpServletRequest request) throws IOException {
         PrintWriter out = response.getWriter();
-        String sql = "SELECT valor\n"
-                + "  FROM \"VCS_PARAMETROS\" WHERE id_parametro like 'CICLO_%'";
+        String sql = "SELECT PA_ID, PA_VALOR FROM \"MPP_PARAMETROS\" WHERE PA_TIPO = 'CI'";
 
         try {
             ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
             out.println("<select name=\"cmb_ciclos\" id=\"cmb_ciclos\" class=\"form-control\" >\n");
             while (cres.next()) {
                 out.println("<option  value=\"" + cres.getString(0).trim() + "\">\n");
-                out.println(cres.getString(0).trim());
+                out.println(cres.getString(1).trim());
                 out.println("</option>");
             }
             out.println("</select>");
@@ -108,18 +101,17 @@ public class Administrar_combos {
             throw new RuntimeException(e);
         }
     }
-    //PINTA EL COMBO DE LOS CICLOS
+    //PINTA EL COMBO DE LAS ACTIVIDADES
     public void obtiene_tipo_actividad(HttpServletResponse response, HttpServletRequest request) throws IOException {
         PrintWriter out = response.getWriter();
-        String sql = "SELECT valor\n"
-                + "  FROM \"VCS_PARAMETROS\" WHERE id_parametro like 'ACTIVIDAD_%'";
+        String sql = "SELECT PA_ID, PA_VALOR FROM \"MPP_PARAMETROS\" WHERE PA_TIPO = 'AC'";
 
         try {
             ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
-            out.println("<select name=\"cmb_tipo_actividad\" id=\"cmb_tipo_actividad\" class=\"form-control\" >\n");
+            out.println("<select name=\"cmb_tipo_actividad\" id=\"cmb_tipo_actividad\" class=\"form-control\" ng-selected=\"llena_datos()\">\n");
             while (cres.next()) {
                 out.println("<option  value=\"" + cres.getString(0).trim() + "\">\n");
-                out.println(cres.getString(0).trim());
+                out.println(cres.getString(1).trim());
                 out.println("</option>");
             }
             out.println("</select>");

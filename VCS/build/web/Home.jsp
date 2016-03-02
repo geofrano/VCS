@@ -34,7 +34,9 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div class="col-md-9">
-                <div id="ajaxIconos" ng-open="carga_iconos()"></div>
+                <center>
+                    <div id="ajaxIconos" ng-open="carga_iconos()"></div>
+                </center>
             </div>
             </div>
             <div class="row">

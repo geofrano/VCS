@@ -74,17 +74,30 @@ app.controller("ControladorVCS", function ($scope, $http) {
          }
          });*/
     };
-
-    $scope.llena_datos = function () {
+    /*$scope.llena_datos = function () {
         var ruta = document.getElementById("ruta_principal").value;
-        $.ajax({
+        document.getElementById("txt_codigo").value = "";
+        document.getElementById("txt_numero").value = "";
+        var cc_car = document.getElementById("cmb_carrera").value;
+        var cc_act = document.getElementById("cmb_tipo_actividad").value;
+        alert("Carrera: "+cc_car);
+        alert("Actividad: "+cc_act);
+        /*var cc_car = 'GIS';
+        var cc_act = 'PA';*/
+        /*$.ajax({
             type: 'POST',
+            dataType: 'json',
+            data: {cc_carrera: cc_car,cc_actividad: cc_act},
             url: ruta + '/F_consulta_codigo_cc',
             success: function (result) {
-                $("#llenaDato").html(result);
+                $("#llenaDato").html("");
+                $.each(result.items, function(index, article) {
+                    document.getElementById("txt_codigo").value = article.codigo;
+                    document.getElementById("txt_numero").value = article.numero;
+                });
             }
         });
-    };
+    };*/
 
     $scope.carga_busca_cc = function () {
         var ruta = document.getElementById("ruta_principal").value;
@@ -100,85 +113,60 @@ app.controller("ControladorVCS", function ($scope, $http) {
          });*/
     };
 
-    $scope.consultar_estudiante = function () {
+    $scope.consultar_estudiante = function() {
         var estudiante = document.getElementById("txt_nombre_est").value;
         var ruta = document.getElementById("ruta_principal").value;
-        
-        alert(estudiante);
-        /*$.ajax({
-         type: 'POST',
-         dataType: 'json',
-         contentType: 'application/json',
-         mimeType: 'application/json',
-         data: {id_est: estudiante},
-         url: ruta + '/F_Consulta_Estudiante',
-         success: function(data) {
-         $("#div_datos").html("");
-         $("#div_datos").append("<table class=\"table table-hover table-responsive\">");
-         $("#div_datos").append("<tr>");
-         $("#div_datos").append("<td>Id Carta Compromiso</td>");
-         $("#div_datos").append("<td>Nombre Estudiante</td>");
-         $("#div_datos").append("<td>Nombre Empresa</td>");
-         $("#div_datos").append("<td>Lugar Suscripción</td>");
-         $("#div_datos").append("<td>Fecha Suscripción</td>");
-         $("#div_datos").append("<td>Estado del Tramite</td>");
-         $("#div_datos").append("<td></td><td></td></tr>");
-         //alert(data.items.id_carta_compromiso);
-         $("#div_datos").append("<tr>");
-         $.each(data.items, function(index, article) {
-         alert(article.id_carta_compromiso);
-         $("#div_datos").append("<td>"+article.id_cc+"</td");
-         $("#div_datos").append("<td>"+article.nomb_est+"</td");
-         $("#div_datos").append("<td>"+article.emp_nombre+"</td");
-         $("#div_datos").append("<td>"+article.lugar_suscrip+"</td");
-         $("#div_datos").append("<td>"+article.fecha_suscrip+"</td");
-         
-         $("#div_datos").append("<td class=\"alineado3\">"
-         + "<img width=\"20px\" height=\"20px\" src=\"../../images/icono_modifica.png\"/>"
-         + "</td>");
-         $("#div_datos").append("<td class=\"alineado3\">"
-         + "<img width=\"20px\" height=\"20px\" src=\"../../images/eliminar.jpg\"/>"
-         + "</td>");
-         });
-         $("#div_datos").append("</table>");
-         }
-         });*/
-        alert("cualquier cosa");
+        var cont = 0;
+        var $tabla = $("#tbl_estudiante");
+        $tabla.find("tr:gt(0)").remove();
+        document.getElementById("existe_data").value = "0";
+        $("#div_consulta").css("display", "none");
+        $("#div_consulta2").css("display", "block");
         $.ajax({
             type: 'POST',
             dataType: 'json',
-
             data: {id_est: estudiante},
-            //data: {id_cmb:'carrera'},
-            //data: $('#formid').serialize(),
             url: ruta + '/F_Consulta_Estudiante',
-            success: function (data) {
+            success: function(data) {
                 $("#div_datos").html("");
-                $("#div_datos").append("<table class=\"table table-hover table-responsive\">\n" +
-                        "                            <tr>\n" +
-                        "                                <th>Id Carta Compromiso</th>\n" +
-                        "                                <th>Nombre Estudiante</th>\n" +
-                        "                                <th>Lugar Suscripción</th>\n" +
-                        "                                <th>Fecha Suscripción</th>\n" +
-                        "                            </tr>\n");
-                
-                $.each(data.items, function (index, article) {
 
-         alert(article.id_carta_compromiso);
-         $("#div_datos").append("<tr><td>"+article.id_cc+"</td");
-         $("#div_datos").append("<td>"+article.nomb_est+"</td");
-         $("#div_datos").append("<td>"+article.emp_nombre+"</td");
-         $("#div_datos").append("<td>"+article.lugar_suscrip+"</td");
-         $("#div_datos").append("<td>"+article.fecha_suscrip+"</td");
-         
-         $("#div_datos").append("<td class=\"alineado3\">"
-         + "<img width=\"20px\" height=\"20px\" src=\"../../images/icono_modifica.png\"/>"
-         + "</td>");
-         $("#div_datos").append("<td class=\"alineado3\">"
-         + "<img width=\"20px\" height=\"20px\" src=\"../../images/eliminar.jpg\"/>"
-         + "</td></tr>");
-         });
-                $("#div_datos").append("</table>");
+                $.each(data.items, function(index, article) {
+                    cont = cont + 1;
+                    $tabla.append("<tr><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\">" + article.id_cc + "</td>\n" +
+                            "<td>" + article.cc_tipo_act + "</td>\n" +
+                            "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
+                            //"<td>" + article.emp_nombre + "</td>\n" +
+                            "<td>" + article.lugar_suscrip + "</td>\n" +
+                            "<td>" + article.fecha_suscrip + "</td>\n" +
+                            /*"<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div></td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
+                            "</td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"carga_ingreso(" + cont + ")\"/>" +
+                            "</td>\n" +*/
+                            "<td class=\"alineado3\"><img width=\"20px\" height=\"20px\" title=\"Modificar\" src=\"../../images/icono_modifica.png\"/></td>\n"+
+                            "<td class=\"alineado3\"><img width=\"20px\" height=\"20px\" title=\"Eliminar\" src=\"../../images/eliminar.jpg\"/></td></tr>\n");
+
+                    if (article.cc_estado.trim() == "A") {
+                        $("#" + "div_eliminar_" + cont).css("display", "none");
+                        $("#" + "div_modificar_" + cont).css("display", "none");
+                        $("#" + "div_inserta_" + cont).css("display", "block");
+                    }
+                    if (article.cc_estado.trim() == "5") {
+                        $("#" + "div_eliminar_" + cont).css("display", "block");
+                        $("#" + "div_modificar_" + cont).css("display", "block");
+                        $("#" + "div_inserta_" + cont).css("display", "none");
+                    }
+                    document.getElementById("existe_data").value = "1";
+                });
+                var v = document.getElementById("existe_data").value;
+
+                if (v == "0") {
+                    $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
+                }
+                $("#div_consulta").css("display", "block");
+                $("#div_consulta2").css("display", "none");
             }
         });
     };
@@ -265,7 +253,18 @@ app.controller("ControladorVCS", function ($scope, $http) {
         });
     };
 
-
+    $(function() {
+        $('#datetimepicker6').datetimepicker();
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false
+        });
+        $("#datetimepicker6").on("dp.change", function(e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function(e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    });
     /*$scope.insertaprueba=function() {
      $http.post("vistas/blank.jsp",{'txt_nombre_empresa':$scope.txt_nombre_empresa})
      .success(function(data,status,headers,config){
@@ -274,5 +273,9 @@ app.controller("ControladorVCS", function ($scope, $http) {
      };*/
 
 });
+
+function al_cambiar(){
+    alert("QUE ES QUE LE PASA A MARIA");
+}
 
 

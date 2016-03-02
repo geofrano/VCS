@@ -47,7 +47,7 @@
             <form action="" method="POST" id="frm_carga" name="frm_carga">
                 <input type="hidden" value="<%=ruta%>" id="ruta_principal" name="ruta_principal" />
                 <input type="hidden" value="blank" id="nombre_pagina" name="nombre_pagina" />
-                <input type="hidden" value="1" id="id_modulo_padre" name="id_modulo_padre" />
+                <input type="hidden" value="7" id="id_modulo_padre" name="id_modulo_padre" />
             </form>
         </div>
 
