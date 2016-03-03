@@ -400,6 +400,7 @@ function carga_datos(id_cart_comp) {
     });
 }
 function imprime(cont) {
+    
     var ruta = document.getElementById("ruta_principal").value;
     var id_cc = document.getElementById("cc_id_" + cont).value;
     document.getElementById("txt_id_carta_comp").value = id_cc;

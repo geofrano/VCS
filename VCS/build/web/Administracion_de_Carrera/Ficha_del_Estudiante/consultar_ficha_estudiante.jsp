@@ -46,3 +46,8 @@
 <div id="div_ingreso" style="display:none">
 
 </div>
+<form method="POST" action="" id="frm_ficha" name="frm_ficha">
+    <input type="hidden" readonly="readonly" id="txt_id_carta_comp" name="txt_id_carta_comp"/>
+    <input type="hidden" readonly="readonly" id="txt_institucion" name="txt_institucion" ng-value="institucion"/>
+    <input type="hidden" readonly="readonly" id="txt_sede" name="txt_sede" ng-value="sede"/>
+</form>
