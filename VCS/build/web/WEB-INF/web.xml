@@ -44,6 +44,10 @@
         <servlet-name>F_genera_pdf_ficha_estudiante</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_ficha_estudiante</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>F_genera_pdf_peticion_aprob</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_peticion_aprob</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>F_genera_pdf_ficha_estudiante</servlet-name>
         <url-pattern>/F_genera_pdf_ficha_estudiante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_genera_pdf_peticion_aprob</servlet-name>
+        <url-pattern>/F_genera_pdf_peticion_aprob</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

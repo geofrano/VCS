@@ -81,7 +81,7 @@ public class Administrar_Ficha_Estudiante {
         parametros.add(new Parametro(1, cc_id.trim()));
         try {
              boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
-             String act=actualiza_estado_cc(cc_id);
+             String act=actualiza_estado_cc(cc_id,"A");
              if (cres){
                  res="SI";
              }
@@ -90,12 +90,13 @@ public class Administrar_Ficha_Estudiante {
         }
         return res;
     }
-    public String actualiza_estado_cc(String cc_id) {
+    public String actualiza_estado_cc(String cc_id,String estado) {
         ArrayList<Parametro> parametros = new ArrayList<>();
         String res = "NO";
-        String sql = "update \"MPP_CARTA_COMPROMISO\" set cc_estado='A'\n" +
+        String sql = "update \"MPP_CARTA_COMPROMISO\" set cc_estado=?\n" +
                      " where trim(cc_id) = ?";
-        parametros.add(new Parametro(1, cc_id.trim()));
+        parametros.add(new Parametro(1, estado));
+        parametros.add(new Parametro(2, cc_id.trim()));
         try {
              boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
              if (cres){
@@ -172,8 +173,9 @@ public class Administrar_Ficha_Estudiante {
                 + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
                 + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, coalesce(fe_nombre_proyecto, 'NA') ,coalesce( b.fe_twitter, 'NA') , "
-                + " coalesce(b.fe_facebook, 'NA'), coalesce(b.fe_linked_in, 'NA'), b.fe_direccion, to_char(a.cc_fecha_suscripcion,'dd/mm/yyyy') \n"
-                + "from view_datos_cc a, \"MPP_FICHA_ESTUDIANTE\" b\n" 
+                + " coalesce(b.fe_facebook, 'NA'), coalesce(b.fe_linked_in, 'NA'), b.fe_direccion, to_char(a.cc_fecha_suscripcion,'dd/mm/yyyy'), \n"
+                + " cc_lugar_suscripcion, cargo_director_carr, director_carrera \n"
+                + " from view_datos_cc a, \"MPP_FICHA_ESTUDIANTE\" b\n" 
                 + " where a.id_cc = b.cc_id and \n"
                 + " trim(a.id_cc) = ? ";
 
@@ -244,6 +246,9 @@ public class Administrar_Ficha_Estudiante {
                     carta_comp.setDireccion_est(cres.getString(31).trim());
                 }
                 carta_comp.setFecha_suscripcion(cres.getString(32).trim());
+                carta_comp.setLugar_suscripcion(cres.getString(33).trim());
+                carta_comp.setCargo_dir_carrera(cres.getString(34).trim());
+                carta_comp.setDir_carrera(cres.getString(35).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {

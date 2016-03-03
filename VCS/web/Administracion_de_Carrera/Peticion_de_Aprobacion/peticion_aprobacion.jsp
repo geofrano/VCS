@@ -21,10 +21,10 @@
 
         <script src="../../js/angular.min.js"></script>
         <!-- This is what you need -->
-  <script src="../../js/sweetalert-dev.js"></script>
-  <link rel="stylesheet" href="../../css/sweetalert.css">
-  <!--.......................-->
-        <script src="ficha_estudiante.js"></script>
+        <script src="../../js/sweetalert-dev.js"></script>
+        <link rel="stylesheet" href="../../css/sweetalert.css">
+        <!--.......................-->
+        <script src="peticion_aprobacion.js"></script>
         <script src="../../js/jquery.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
 
@@ -39,7 +39,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div class="col-md-9">
-                <jsp:include page="consultar_ficha_estudiante.jsp"/>
+                <jsp:include page="consultar_Peticion_aprobacion.jsp"/>
             </div>
             </div>
             <div class="row">

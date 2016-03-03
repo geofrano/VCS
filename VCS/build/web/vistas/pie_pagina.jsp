@@ -5,6 +5,4 @@
 --%>
 
 
-
-
-UNIVERSIDAD SALESIANA - SEDE GUAYAQUIL
+{{institucion}} - SEDE {{sede}}

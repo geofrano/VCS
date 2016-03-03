@@ -71,8 +71,26 @@ public class Carta_Compromiso {
     private String facebook_est;
     private String linked_in_est;
     private String direccion_est;
+    private String cargo_dir_carrera;
+    private String dir_carrera;
     private String estado;
 
+    public String getCargo_dir_carrera() {
+        return cargo_dir_carrera;
+    }
+
+    public void setCargo_dir_carrera(String cargo_dir_carrera) {
+        this.cargo_dir_carrera = cargo_dir_carrera;
+    }
+
+    public String getDir_carrera() {
+        return dir_carrera;
+    }
+
+    public void setDir_carrera(String dir_carrera) {
+        this.dir_carrera = dir_carrera;
+    }
+    
     public String getProyecto() {
         return proyecto;
     }

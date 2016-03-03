@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/web/Administracion_de_Carrera/Ficha_del_Estudiante/cont_ficha_estudiante.jsp</file>
+            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/web/Administracion_de_Carrera/Peticion_de_Aprobacion/peticion_aprobacion.js</file>
+            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/src/java/PPA_EXT_PAS/funciones_salida/F_genera_pdf_peticion_aprob.java</file>
             <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/web/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.js</file>
-            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/web/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp</file>
-            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/src/java/PPA_EXT_PAS/funciones_salida/F_genera_pdf_ficha_estudiante.java</file>
-            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/src/java/PPA_EXT_PAS/eventos/Administrar_Ficha_Estudiante.java</file>
-            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/src/java/PPA_EXT_PAS/funciones_entrada/F_muestra_ficha_estudiante.java</file>
+            <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/web/Administracion_de_Carrera/Peticion_de_Aprobacion/consultar_Peticion_aprobacion.jsp</file>
             <file>file:/C:/Users/Geovanny%20Barrera/Documents/VCS/VCS/src/java/PPA_EXT_PAS/eventos/Genera_pdf.java</file>
         </group>
     </open-files>

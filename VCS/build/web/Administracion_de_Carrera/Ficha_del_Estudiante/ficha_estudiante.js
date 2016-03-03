@@ -37,14 +37,20 @@ app.controller("ControladorVCS", function($scope, $http) {
                             //"<td>" + article.emp_nombre + "</td>\n" +
                             "<td>" + article.lugar_suscrip + "</td>\n" +
                             "<td>" + article.fecha_suscrip + "</td>\n" +
-                            "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div></td>\n" +
+                            "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div>"+
+                            "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
+                            "</td>\n" +
                             "<td class=\"alineado3\">" +
                             "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
                             "</td>\n" +
                             "<td class=\"alineado3\">" +
                             "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
                             "</td></tr>\n");
-
+                    var estado = parseInt(article.cc_estado);
+                    if (estado >= 5) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                        $("#" + "div_imprimir_" + cont).css("display", "block");
+                        $("#" + "div_eliminar_" + cont).css("display", "block");
+                    }
                     if (article.cc_estado.trim() == "A") {
                         $("#" + "div_eliminar_" + cont).css("display", "none");
                         $("#" + "div_modificar_" + cont).css("display", "none");
@@ -55,6 +61,7 @@ app.controller("ControladorVCS", function($scope, $http) {
                         $("#" + "div_modificar_" + cont).css("display", "block");
                         $("#" + "div_inserta_" + cont).css("display", "none");
                     }
+                    
                     document.getElementById("existe_data").value = "1";
                 });
                 var v = document.getElementById("existe_data").value;
@@ -231,21 +238,6 @@ app.controller("ControladorVCS", function($scope, $http) {
         });
     };
 
-
-
-    $(function() {
-        $('#datetimepicker6').datetimepicker();
-        $('#datetimepicker7').datetimepicker({
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker6").on("dp.change", function(e) {
-            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker7").on("dp.change", function(e) {
-            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-        });
-    });
-
 });
 function graba() {
     var ruta = document.getElementById("ruta_principal").value;
@@ -407,3 +399,11 @@ function carga_datos(id_cart_comp) {
         }
     });
 }
+function imprime(cont) {
+    var ruta = document.getElementById("ruta_principal").value;
+    var id_cc = document.getElementById("cc_id_" + cont).value;
+    document.getElementById("txt_id_carta_comp").value = id_cc;
+    document.getElementById("frm_ficha").action=ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+    document.frm_ficha.target="_new";
+    document.frm_ficha.submit();
+}//FIN imprime
