@@ -52,6 +52,10 @@
         <servlet-name>F_genera_pdf_of_not_tutor</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_of_not_tutor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>F_genera_pdf_informe_seguimiento</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_informe_seguimiento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>F_genera_pdf_of_not_tutor</servlet-name>
         <url-pattern>/F_genera_pdf_of_not_tutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_genera_pdf_informe_seguimiento</servlet-name>
+        <url-pattern>/F_genera_pdf_informe_seguimiento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

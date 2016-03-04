@@ -14,12 +14,12 @@
             function genera_pdf()
             {
                 var ruta = document.getElementById("ruta_principal").value;
-                document.getElementById("frm_imprime").action = ruta + "/F_genera_pdf_of_not_tutor";
+                document.getElementById("frm_imprime").action = ruta + "/F_genera_pdf_informe_seguimiento";
                 document.frm_imprime.submit();
             }
 
         </script>
-        <title>Peticion de Aprobacion - Impresion</title>
+        <title>Informe de Seguimiento - Impresion</title>
         <% String id_cc = request.getParameter("txt_id_carta_comp").toString();
             String sede = request.getParameter("txt_sede").toString();
             String universidad = request.getParameter("txt_institucion").toString();%>

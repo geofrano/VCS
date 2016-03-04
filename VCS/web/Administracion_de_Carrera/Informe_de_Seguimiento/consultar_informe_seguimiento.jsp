@@ -6,11 +6,11 @@
 <div id="frm_consulta" name="frm_consulta">
 <form id="frm_datos" name="frm_datos" action="" method="POST">
 <fieldset>
-    <legend><h1 class="alineado3">Consultar Notificacion al Tutor</h1></legend>
+    <legend><h1 class="alineado3">Consultar Informe de Seguimiento</h1></legend>
     <br>
     <div class="list-group" id="div_datos"></div>
     <table class="table table-hover table-responsive">
-        <tr title="Si no ha ingresado la ficha del estudiante no podra generar el oficio de notificacion al tutor">
+        <tr title="Si no ha ingresado la ficha del estudiante no podra generar el Informe de Seguimiento">
             <td><label>Nombre del Estudiante:</label></td>
             <td>
                 <input type="text" class="text-primary form-control" id="txt_nombre_est" title="Nombre del estudiante" name="txt_nombre_est" maxlength="800">

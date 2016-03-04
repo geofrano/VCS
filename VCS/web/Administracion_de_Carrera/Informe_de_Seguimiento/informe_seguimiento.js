@@ -31,7 +31,7 @@ app.controller("ControladorVCS", function($scope, $http) {
 
                 $.each(data.items, function(index, article) {
                     cont = cont + 1;
-                    $tabla.append("<tr title=\"Si no ha ingresado la ficha del estudiante no podra generar el oficio de notificacion al tutor\"><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\" >" + article.id_cc + "</td>\n" +
+                    $tabla.append("<tr title=\"Si no ha ingresado la ficha del estudiante no podra generar el el Informe de Seguimiento\"><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\" >" + article.id_cc + "</td>\n" +
                             "<td>" + article.cc_tipo_act + "</td>\n" +
                             "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
                             //"<td>" + article.emp_nombre + "</td>\n" +
@@ -139,7 +139,7 @@ function imprime(cont) {
     var ruta = document.getElementById("ruta_principal").value;
     var id_cc = document.getElementById("cc_id_" + cont).value;
     document.getElementById("txt_id_carta_comp").value = id_cc;
-    document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Oficio_Notificacion_Tutor/imprime_notificacion_tutor.jsp";
+    document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Informe_de_Seguimiento/imprime_informe_seguimiento.jsp";
     document.frm_ficha.target = "_new";
     document.frm_ficha.submit();
 }//FIN imprime

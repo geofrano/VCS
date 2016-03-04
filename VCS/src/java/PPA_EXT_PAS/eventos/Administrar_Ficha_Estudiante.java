@@ -258,7 +258,34 @@ public class Administrar_Ficha_Estudiante {
         }
         return opciones;
     }
+    public static List<Carta_Compromiso> obtiene_elemento(String id_carta_comp, String tipo_elemento) {
+        List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
+        String sql = "SELECT ae_orden||'. '||ae_descripcion elemento,b.ca_num_hora\n" +
+                        "  FROM \"MPP_ASIGNAR_ELEMENTO\" a,\n" +
+                        "      \"MPP_CRONOGRAMA_ACT\" b \n" +
+                        " where a.ae_id=b.ae_id\n" +
+                        "   AND trim(a.cc_id) = trim(?)\n" +
+                        "   AND a.ae_tipo = ? order by a.ae_orden";
 
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1, id_carta_comp));
+        lstPar.add(new Parametro(2, tipo_elemento));
+        Carta_Compromiso carta_comp;
+        try {
+            ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, lstPar);
+            while (cres.next()) {
+                carta_comp = new Carta_Compromiso();
+                carta_comp.setActividad_1(cres.getString(0));
+                carta_comp.setActividad_2(cres.getString(1));
+                System.out.println("ACT "+cres.getString(0));
+                opciones.add(carta_comp);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return opciones;
+    }
     public static JSONObject toJSONObject(Carta_Compromiso carta_comp,String accion) {
         JSONObject json = new JSONObject();
         try {

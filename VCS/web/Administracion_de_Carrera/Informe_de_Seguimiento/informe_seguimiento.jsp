@@ -24,7 +24,7 @@
         <script src="../../js/sweetalert-dev.js"></script>
         <link rel="stylesheet" href="../../css/sweetalert.css">
         <!--.......................-->
-        <script src="notificacion_tutor.js"></script>
+        <script src="informe_seguimiento.js"></script>
         <script src="../../js/jquery.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
 
@@ -39,7 +39,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div class="col-md-9">
-                <jsp:include page="consultar_notificacion_tutor.jsp"/>
+                <jsp:include page="consultar_informe_seguimiento.jsp"/>
             </div>
             </div>
             <div class="row">
