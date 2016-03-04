@@ -73,8 +73,26 @@ public class Carta_Compromiso {
     private String direccion_est;
     private String cargo_dir_carrera;
     private String dir_carrera;
+    private String cargo_dir_tec;
+    private String dir_tecnico;
     private String estado;
 
+    public String getCargo_dir_tec() {
+        return cargo_dir_tec;
+    }
+
+    public void setCargo_dir_tec(String cargo_dir_tec) {
+        this.cargo_dir_tec = cargo_dir_tec;
+    }
+
+    public String getDir_tecnico() {
+        return dir_tecnico;
+    }
+
+    public void setDir_tecnico(String dir_tecnico) {
+        this.dir_tecnico = dir_tecnico;
+    }
+    
     public String getCargo_dir_carrera() {
         return cargo_dir_carrera;
     }

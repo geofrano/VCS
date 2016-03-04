@@ -372,6 +372,105 @@ public class Genera_pdf {
             Logger.getLogger(Genera_pdf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    //reporte Ficha del Estudiante
+    public void dibujaPdfNotificacionTutor(Document document, String ruta_imagen, float dimension[], List< Carta_Compromiso> carta_comp, String ruta, String cod_cc,String institucion, String sede) {
+
+        float[] widths = new float[dimension.length];
+
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + "Oficio_notificacion_Tutor.pdf"));
+            document.open();
+            
+            Image imagen = Image.getInstance(ruta_imagen + "/Logo_UPS.png");
+            Image imagen2 = Image.getInstance(ruta_imagen + "/logo_vinculacion.png");
+
+            imagen2.scalePercent(59f);
+            imagen.scalePercent(5f);
+
+            imagen2.setAbsolutePosition(380f, 763f);
+
+            document.add(imagen);
+            document.add(imagen2);
+ 
+            String tipo_doc;
+            for (Iterator<Carta_Compromiso> it = carta_comp.iterator(); it.hasNext();) {
+                Carta_Compromiso opciones = it.next();
+                if (opciones.getCed_estudiante().length() > 10) {
+                    tipo_doc = "PASAPORTE";
+                } else {
+                    tipo_doc = "CÉDULA DE CIUDADANÍA";
+                }
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy",new Locale("es_ES"));
+                Date fecha_suscripcion = fmt.parse(opciones.getFecha_suscripcion());
+                
+                SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                String fecha=formateador.format(fecha_suscripcion);
+                String fecha_suscrip=fecha.replace(fecha.substring(2,fecha.length()-4).replace(" de ",""),initcap(fecha.substring(2,fecha.length()-4).replace(" de ","")));
+                //document.add(chunkSeparador);
+                Paragraph titulo = new Paragraph(initcap(opciones.getLugar_suscripcion()) + ", " + fecha_suscrip, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK));
+                titulo.setAlignment(Element.ALIGN_RIGHT);
+                document.add(titulo);
+                
+                document.add(new Paragraph("\n\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+
+                document.add(new Paragraph("Señor (a) ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                document.add(new Paragraph(opciones.getNombre_tutor().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                document.add(new Paragraph("Docente de la Carrera de "+opciones.getCarrera_grado(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                document.add(new Paragraph("Presente.-", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                
+                document.add(new Paragraph("\n\nDe mis consideraciones: \n\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                Paragraph paraf1 = new Paragraph("Por medio de la presente comunico a usted, "+
+                        "que ha sido designado por parte de la Dirección de Carrera como TUTOR "+
+                        "de las actividades de "+opciones.getTipo_actividad().toUpperCase()+" del estudiante "+opciones.getNomb_estudiante().toUpperCase()+" "+
+                        "con "+tipo_doc+" Nº "+opciones.getCed_estudiante()+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK));
+                paraf1.setAlignment(Element.ALIGN_JUSTIFIED);
+                document.add(paraf1);
+                
+                Paragraph paraf = new Paragraph("\nCabe destacar que su función es recibir el criterio "+
+                            "del responsable de la institución durante el proceso en mención, "+
+                            "y así proceder a acreditar las actividades realizadas por el estudiante en:\n\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK));
+                paraf.setAlignment(Element.ALIGN_JUSTIFIED);
+                document.add(paraf);
+                
+                document.add(new Paragraph("Nombre de Institución: "+opciones.getNomb_empresa().toUpperCase()+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                document.add(new Paragraph("Departamento o área: "+opciones.getArea_actividad()+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                document.add(new Paragraph("Responsable en la institución: "+opciones.getResponsable_area()+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                document.add(new Paragraph("Carta Compromiso: "+cod_cc+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                document.add(new Paragraph("Fecha de Inicio: "+opciones.getDia_inicio() + "-" + opciones.getMes_inicio() + "-" + opciones.getAnio_inicio()+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                document.add(new Paragraph("Fecha de Fin: "+opciones.getDia_fin() + "-" + opciones.getMes_fin() + "-" + opciones.getAnio_fin()+".", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                
+                Paragraph paraf2 = new Paragraph("\nPara este efecto se adjunta la Ficha del Estudiante con "
+                           + "toda la información relacionada a dicha actividad. "
+                           + "Por lo expuesto anteriormente, reiteramos nuestro agradecimiento y "
+                           + "le solicitamos brindar las facilidades necesarias para el "
+                           + "cumplimiento de este objetivo.", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK));
+                paraf2.setAlignment(Element.ALIGN_JUSTIFIED);
+                document.add(paraf2);
+                                
+                document.add(new Paragraph("\nAtentamente,\n\n\n\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                
+
+                Paragraph comb20 = new Paragraph();
+                comb20.add(new Chunk("_____________________________", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                document.add(comb20);
+                
+                document.add(new Paragraph(opciones.getDir_tecnico(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                document.add(new Paragraph(opciones.getCargo_dir_tec(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                document.add(new Paragraph(institucion+", "+"Sede "+sede, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                
+            }	
+            document.close();
+        } catch (FileNotFoundException | DocumentException e) {
+
+            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(Genera_pdf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Genera_pdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private Paragraph getInformation(String informacion) {
         Paragraph paragraph = new Paragraph();
