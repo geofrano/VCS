@@ -69,3 +69,10 @@ padding: 6px;
     text-decoration:none;
     padding: 10px;
   }
+.titulos {
+    font-size: 50px;
+    font-style: italic;
+    color: #333;
+    padding: 10px;
+    text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
+  }

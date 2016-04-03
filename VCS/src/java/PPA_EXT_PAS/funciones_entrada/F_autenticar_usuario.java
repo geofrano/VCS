@@ -9,7 +9,6 @@ package PPA_EXT_PAS.funciones_entrada;
 import PPA_EXT_PAS.eventos.Autentificar_Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +68,9 @@ public class F_autenticar_usuario extends HttpServlet {
                     sesion.setAttribute("direccion_usuario", null);
                     sesion.setAttribute("apellido_usuario", null);
                     sesion.setAttribute("cargo_usuario", null);
+                    sesion.setAttribute("MENSAJE", "Usuario o clave incorrectos");
                     //response.getWriter().write("NO");
+                    response.sendRedirect(response.encodeRedirectURL("Login/login.jsp"));
                 }
                 
                 

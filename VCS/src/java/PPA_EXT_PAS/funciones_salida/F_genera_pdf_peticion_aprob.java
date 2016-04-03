@@ -42,27 +42,29 @@ public class F_genera_pdf_peticion_aprob extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String cod_carta_comp=request.getParameter("txt_id_carta_comp").toString();
-        String institucion=request.getParameter("txt_institucion").toString();
-        String sede=request.getParameter("txt_sede").toString();
-        ServletContext servletContext = request.getSession().getServletContext();
-        String relativeWebPath = "images";
-        String ruta_imagenes = servletContext.getRealPath(relativeWebPath);
-        System.out.println("ruta_imagenes: " + ruta_imagenes);
-        Administrar_Ficha_Estudiante ficha_est = new Administrar_Ficha_Estudiante();
-        List< Carta_Compromiso> carta_comp= ficha_est.mostrar_carta_compromiso2(cod_carta_comp);
-        float[] ls_dimension = new float[1];
-         ls_dimension[0]=0.9f;
-        if ((carta_comp.size() != 0)) {
+        try {
+
+            String cod_carta_comp = request.getParameter("txt_id_carta_comp").toString();
+            String institucion = request.getParameter("txt_institucion").toString();
+            String sede = request.getParameter("txt_sede").toString();
+            ServletContext servletContext = request.getSession().getServletContext();
+            String relativeWebPath = "images";
+            String relativeWebPathArchivos = "archivos";
+            String ruta_imagenes = servletContext.getRealPath(relativeWebPath);
+            System.out.println("ruta_imagenes: " + ruta_imagenes);
+            Administrar_Ficha_Estudiante ficha_est = new Administrar_Ficha_Estudiante();
+            List< Carta_Compromiso> carta_comp = ficha_est.mostrar_carta_compromiso2(cod_carta_comp);
+            float[] ls_dimension = new float[1];
+            ls_dimension[0] = 0.9f;
+            if ((carta_comp.size() != 0)) {
                 try {
                     response.setContentType("application/pdf");
-                    
+
                     //Para que se muestre
                     response.setHeader("Content-Disposition", "inline; filename=Peticion_Aprobacion.pdf");
 
                     // Creamos el documento con formato A4 veritical
-                    Document document = new Document(PageSize.A4,100, 100, 100, 100);
+                    Document document = new Document(PageSize.A4, 100, 100, 100, 100);
 
                     // Asignamos a un buffer temporal el documento
                     ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -70,35 +72,41 @@ public class F_genera_pdf_peticion_aprob extends HttpServlet {
 
                     //Llamo a la clase que genera el pdf
                     Genera_pdf objTable = new Genera_pdf();
-                    File directorio = new File("c:\\VCS\\");//Se guarda el documento en el repositorio local
-                    if (!directorio.exists()){
-                        directorio.mkdir();
-                    }
-                    
-                    objTable.dibujaPdfPeticionAprob(document,ruta_imagenes, ls_dimension, carta_comp, "c:\\VCS\\",institucion,sede);
-                    
+                    /*File directorio = new File("c:\\VCS\\");//Se guarda el documento en el repositorio local
+                     if (!directorio.exists()){
+                     directorio.mkdir();
+                     }*/
+
+                    objTable.dibujaPdfPeticionAprob(document, ruta_imagenes, ls_dimension, carta_comp, relativeWebPathArchivos, institucion, sede);
+
                     //Abrimos el pdf en el navegador para que se pueda visualizar
                     byte[] bytes = buffer.toByteArray();
                     response.setContentLength(bytes.length);
-                    
+
                     ServletOutputStream output = response.getOutputStream();
                     output.write(bytes, 0, bytes.length);
-                    
+
                     output.flush();
                     output.close();
                     Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante();
-                    String actualiza=ficha.actualiza_estado_cc(cod_carta_comp, "6");
+                    
+                    String estado=ficha.obtiene_estadoCartaCompromiso(cod_carta_comp);
+                    if (estado.equals("5")){
+                        String actualiza = ficha.actualiza_estado_cc(cod_carta_comp, "6");
+                    }
                 } catch (DocumentException e) {
                     // No se muestra nada 
                     //output.print("<script>alert('Error Interno')</script>");
                     e.printStackTrace();
-                    System.out.println("ERROR "+e);
+                    System.out.println("ERROR " + e);
                 }
             } else {
                 System.out.println("ERROR");
                 //out.print("<div align = \"center\" > <font size = \"4\" face = \"Arial\" color = \"black\" > <b> < font size = \"2\" > No se encontró ningún registro</font > < / b > < / font > < / div>");
             }
-        
+        } catch (Exception e) {
+            response.sendRedirect(response.encodeRedirectURL("/VCS/Administracion_de_Carrera/Peticion_de_Aprobacion/peticion_aprobacion.jsp"));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

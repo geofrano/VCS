@@ -14,7 +14,6 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -42,9 +41,11 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try {
         String cod_carta_comp=request.getParameter("txt_id_carta_comp").toString();
         ServletContext servletContext = request.getSession().getServletContext();
         String relativeWebPath = "images";
+        String relativeWebPathArchivos = "archivos";
         String ruta_imagenes = servletContext.getRealPath(relativeWebPath);
         System.out.println("ruta_imagenes: " + ruta_imagenes);
         Administrar_Ficha_Estudiante ficha_est = new Administrar_Ficha_Estudiante();
@@ -68,12 +69,12 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
 
                     //Llamo a la clase que genera el pdf
                     Genera_pdf objTable = new Genera_pdf();
-                    File directorio = new File("c:\\VCS\\");//Se guarda el documento en el repositorio local
+                    /*File directorio = new File("c:\\VCS\\");//Se guarda el documento en el repositorio local
                     if (!directorio.exists()){
                         directorio.mkdir();
-                    }
+                    }*/
                     
-                    objTable.dibujaPdfFichaEstudiante(document,ruta_imagenes, ls_dimension, carta_comp, "c:\\VCS\\");
+                    objTable.dibujaPdfFichaEstudiante(document,ruta_imagenes, ls_dimension, carta_comp, relativeWebPathArchivos);
                     
                     //Abrimos el pdf en el navegador para que se pueda visualizar
                     byte[] bytes = buffer.toByteArray();
@@ -85,6 +86,11 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
                     output.flush();
                     output.close();
                     
+                    Administrar_Ficha_Estudiante ficha = new Administrar_Ficha_Estudiante();
+                    String estado=ficha.obtiene_estadoCartaCompromiso(cod_carta_comp);
+                    if (estado.equals("4")){
+                        String actualiza = ficha.actualiza_estado_cc(cod_carta_comp, "5");
+                    }
                 } catch (DocumentException e) {
                     // No se muestra nada 
                     //output.print("<script>alert('Error Interno')</script>");
@@ -95,6 +101,9 @@ public class F_genera_pdf_ficha_estudiante extends HttpServlet {
                 System.out.println("ERROR");
                 //out.print("<div align = \"center\" > <font size = \"4\" face = \"Arial\" color = \"black\" > <b> < font size = \"2\" > No se encontró ningún registro</font > < / b > < / font > < / div>");
             }
+        } catch (Exception e) {
+            response.sendRedirect(response.encodeRedirectURL("/VCS/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp"));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

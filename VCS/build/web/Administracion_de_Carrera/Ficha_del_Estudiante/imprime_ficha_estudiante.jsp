@@ -15,6 +15,7 @@
         <script>
             function imprime()
             {
+                window.opener.recarga();
                 var ruta=document.getElementById("ruta_principal").value; 
                 document.getElementById("frm_imprime").action=ruta+"/F_genera_pdf_ficha_estudiante";
                 document.frm_imprime.submit();

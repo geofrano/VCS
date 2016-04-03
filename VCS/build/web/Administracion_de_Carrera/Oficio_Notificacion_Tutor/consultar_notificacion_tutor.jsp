@@ -28,7 +28,7 @@
 
 <div id="div_datos"></div>
 <table id="tbl_estudiante" class="table table-hover table-responsive">
-    <tr title="Si no ha ingresado la ficha del estudiante no podra generar la peticion de aprobacion">
+    <tr title="Si no ha ingresado la ficha del estudiante no podra generar el oficio de notificacion al tutor">
         <th>Id Carta Compromiso</th>
         <th>Tipo de Actividad</th>
         <th colspan="2">Nombre Estudiante</th>

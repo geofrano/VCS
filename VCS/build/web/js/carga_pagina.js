@@ -80,13 +80,7 @@ app.controller("ControladorVCS", function($scope, $http) {
         document.frm_carta_comp.submit();
         $scope.submitted = true;
     };
-
-    $scope.prueba = function() {
-        $scope.carrera = $scope.carrera_grado.carreras_grado;
-        var prueba = document.getElementById("carrera_selected").value;
-        $scope.muestra_carrera = true;
-        alert(prueba);
-    };
+    
     $scope.carga_combo_carrera = function() {
         var ruta = document.getElementById("ruta_principal").value;
         //var fullname = $('#fullname').val();

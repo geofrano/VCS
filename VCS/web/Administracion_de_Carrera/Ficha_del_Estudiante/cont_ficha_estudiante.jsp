@@ -4,7 +4,7 @@
     Author     : Geovanny Barrera
 --%>
 <br>
-<form method="POST" action="" id="frm_ficha" name="frm_ficha">
+<form method="POST" id="frm_ficha" name="frm_ficha" target="_new">
 <fieldset>
     <legend><h1 class="alineado3">FICHA DEL ESTUDIANTE PARA EL TUTOR</h1></legend>
 

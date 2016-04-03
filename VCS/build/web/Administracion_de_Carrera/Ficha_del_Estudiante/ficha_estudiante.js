@@ -37,7 +37,7 @@ app.controller("ControladorVCS", function($scope, $http) {
                             //"<td>" + article.emp_nombre + "</td>\n" +
                             "<td>" + article.lugar_suscrip + "</td>\n" +
                             "<td>" + article.fecha_suscrip + "</td>\n" +
-                            "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div>"+
+                            "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div>" +
                             "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
                             "</td>\n" +
                             "<td class=\"alineado3\">" +
@@ -47,7 +47,7 @@ app.controller("ControladorVCS", function($scope, $http) {
                             "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
                             "</td></tr>\n");
                     var estado = parseInt(article.cc_estado);
-                    if (estado >= 5) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                    if (estado >= 4) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
                         $("#" + "div_imprimir_" + cont).css("display", "block");
                         $("#" + "div_eliminar_" + cont).css("display", "block");
                     }
@@ -56,12 +56,17 @@ app.controller("ControladorVCS", function($scope, $http) {
                         $("#" + "div_modificar_" + cont).css("display", "none");
                         $("#" + "div_inserta_" + cont).css("display", "block");
                     }
-                    if (article.cc_estado.trim() == "5") {//La ficha del estudiante ya fue ingresada
+                    if (estado >= 0 && estado <=4) {
+                        $("#" + "div_eliminar_" + cont).css("display", "none");
+                        $("#" + "div_modificar_" + cont).css("display", "none");
+                        $("#" + "div_inserta_" + cont).css("display", "block");
+                    }
+                    if (estado >= 4) {//La ficha del estudiante ya fue ingresada
                         $("#" + "div_eliminar_" + cont).css("display", "block");
                         $("#" + "div_modificar_" + cont).css("display", "block");
                         $("#" + "div_inserta_" + cont).css("display", "none");
                     }
-                    
+
                     document.getElementById("existe_data").value = "1";
                 });
                 var v = document.getElementById("existe_data").value;
@@ -243,7 +248,7 @@ function graba() {
     var ruta = document.getElementById("ruta_principal").value;
     var direccion = document.getElementById("txt_direccion_est").value;
     var cod_proy = document.getElementById("cod_proy").value;
-   
+
     if (direccion == "") {
         swal("Error!", "Favor ingrese la direccion del estudiante", "info");
         document.getElementById("txt_direccion_est").focus();
@@ -279,11 +284,14 @@ function graba() {
                             closeOnConfirm: false
                         },
                         function() {
-                          window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                            document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+                            //document.frm_ficha.target="_new";
+                            //alert(document.getElementById("frm_ficha").action);
+                            $("#frm_ficha").submit();
+                            //location.reload();
+                            //window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
                         });
-                        document.getElementById("frm_ficha").action=ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
-                        document.frm_ficha.target="_new";
-                        document.frm_ficha.submit();
+
                     } else {
                         swal("Error", "La ficha del estudiante no ha sido ingresada", "error");
                     }
@@ -294,37 +302,40 @@ function graba() {
 
     }
 }//FIN GRABA
-function elimina(cont){
+function recarga() {
+    location.reload();
+}
+function elimina(cont) {
     var id_cc = document.getElementById("cc_id_" + cont).value;
     var ruta = document.getElementById("ruta_principal").value;
     swal({
-            title: "Está segur@?",
-            text: "Realmente desea eliminar la ficha del estudiante",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#337ab7",
-            confirmButtonText: "Eliminar",
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true
-        },
-        function() {
-            $.ajax({
-                type: 'POST',
-                data: {txt_id_carta_comp: id_cc, accion_form: 'E'},
-                //data: {id_cmb:'carrera'},
-                //data: $('#formid').serialize(),
-                url: ruta + '/F_graba_Ficha_estudiante',
-                success: function(data) {
-                    if (data.trim() == "SI") {
-                        swal("Exito", "La ficha del estudiante ha sido eliminada exitosamente", "success");
-                        window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
-                    }else{
-                        swal("Error", "La ficha del estudiante no pudo ser eliminada", "error");
-                    }
+        title: "Está segur@?",
+        text: "Realmente desea eliminar la ficha del estudiante",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#337ab7",
+        confirmButtonText: "Eliminar",
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+    },
+    function() {
+        $.ajax({
+            type: 'POST',
+            data: {txt_id_carta_comp: id_cc, accion_form: 'E'},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_graba_Ficha_estudiante',
+            success: function(data) {
+                if (data.trim() == "SI") {
+                    swal("Exito", "La ficha del estudiante ha sido eliminada exitosamente", "success");
+                    window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                } else {
+                    swal("Error", "La ficha del estudiante no pudo ser eliminada", "error");
                 }
-            });
+            }
+        });
     });
-    
+
 }
 function carga_ingreso(cont) {
     var id_cc = document.getElementById("cc_id_" + cont).value;
@@ -400,11 +411,11 @@ function carga_datos(id_cart_comp) {
     });
 }
 function imprime(cont) {
-    
+
     var ruta = document.getElementById("ruta_principal").value;
     var id_cc = document.getElementById("cc_id_" + cont).value;
     document.getElementById("txt_id_carta_comp").value = id_cc;
-    document.getElementById("frm_ficha").action=ruta+"/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
-    document.frm_ficha.target="_new";
+    document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+    document.frm_ficha.target = "_new";
     document.frm_ficha.submit();
 }//FIN imprime

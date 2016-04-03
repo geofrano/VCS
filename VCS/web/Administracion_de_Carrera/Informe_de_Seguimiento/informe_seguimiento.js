@@ -31,7 +31,7 @@ app.controller("ControladorVCS", function($scope, $http) {
 
                 $.each(data.items, function(index, article) {
                     cont = cont + 1;
-                    $tabla.append("<tr title=\"Si no ha ingresado la ficha del estudiante no podra generar el el Informe de Seguimiento\"><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\" >" + article.id_cc + "</td>\n" +
+                    $tabla.append("<tr title=\"Si no ha ingresado la ficha del estudiante no podra generar el Informe de Seguimiento\"><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\" >" + article.id_cc + "</td>\n" +
                             "<td>" + article.cc_tipo_act + "</td>\n" +
                             "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
                             //"<td>" + article.emp_nombre + "</td>\n" +

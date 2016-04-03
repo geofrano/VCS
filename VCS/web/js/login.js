@@ -33,5 +33,22 @@ app.controller("ControladorLogin", function($scope) {
         document.getElementById("frm_login").action = ruta + "/F_autenticar_usuario.jsp";
         $scope.submitted = true;
     };
-
 });
+function logout() {
+        var ruta = "/VCS";
+        window.open(ruta + "/FLogout","_self");
+}
+window.onload=function(){
+   var ruta = "/VCS";
+   var usuario_sesion = document.getElementById("usuario_sesion").value;
+   
+   if (usuario_sesion != ""){
+       window.open(ruta+"/Home.jsp");
+   }
+   
+//   window.location.hash="no-back-button";
+//
+//   window.location.hash="Again-No-back-button"; //chrome
+//
+//   window.onhashchange=function(){window.location.hash="no-back-button";};
+};

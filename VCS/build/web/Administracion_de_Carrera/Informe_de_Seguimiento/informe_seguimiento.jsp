@@ -1,5 +1,5 @@
 <%-- 
-    Document   : ficha_estudiante
+    Document   : informe_seguimiento
     Created on : 09/01/2016, 09:14:29 PM
     Author     : Geovanny Barrera
 --%>

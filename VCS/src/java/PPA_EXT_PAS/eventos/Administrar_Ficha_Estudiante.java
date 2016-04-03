@@ -114,7 +114,9 @@ public class Administrar_Ficha_Estudiante {
                 + " ced_est, nombre_estudiante, cel_est, correo_est,\n"
                 + " carrera_est, ciclo_est, institucion, rep_leg, cc_area_actividad, cc_responsable_area,\n"
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
-                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy\n"
+                + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, to_char(cc_fecha_suscripcion,'dd/mm/yyyy'), \n"
+                + " cc_lugar_suscripcion, cargo_director_carr, director_carrera, cargo_dir_tecnico, director_tecnico, total_horas,cc_objetivo_actividad, \n"
+                + " resp_vcs,resp_act \n"
                 + "from view_datos_cc\n"
                 + "where trim(id_cc) = ? ";
 
@@ -157,6 +159,16 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setNombre_tutor(cres.getString(24).trim());
                 carta_comp.setActividad_1(cres.getString(25).trim());
                 carta_comp.setActividad_2(cres.getString(26).trim());
+                carta_comp.setFecha_suscripcion(cres.getString(27).trim());
+                carta_comp.setLugar_suscripcion(cres.getString(28).trim());
+                carta_comp.setCargo_dir_carrera(cres.getString(29).trim());
+                carta_comp.setDir_carrera(cres.getString(30).trim());
+                carta_comp.setCargo_dir_tec(cres.getString(31).trim());
+                carta_comp.setDir_tecnico(cres.getString(32).trim());
+                carta_comp.setTotal_horas(cres.getString(33).trim());
+                carta_comp.setObjetivo_actividad(cres.getString(34).trim());
+                carta_comp.setNombre_delegado(cres.getString(35).trim());
+                carta_comp.setActividad_3(cres.getString(36).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
@@ -164,7 +176,23 @@ public class Administrar_Ficha_Estudiante {
         }
         return opciones;
     }
-    
+    public static String obtiene_estadoCartaCompromiso(String id_carta_comp){
+        String sql="SELECT cc_estado\n" +
+                    "  FROM \"MPP_CARTA_COMPROMISO\" where trim(cc_id) = trim(?)";
+        String estado="0" ;
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1, id_carta_comp));
+        try {
+            ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, lstPar);
+            while (cres.next()) {
+                estado=cres.getString(0).trim();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return estado;
+    }
     public static List<Carta_Compromiso> mostrar_carta_compromiso2(String id_carta_comp) {
         List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
         String sql = "select id_cc, tipo_actividad, dia_ini,\n"
@@ -174,7 +202,8 @@ public class Administrar_Ficha_Estudiante {
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
                 + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, coalesce(fe_nombre_proyecto, 'NA') ,coalesce( b.fe_twitter, 'NA') , "
                 + " coalesce(b.fe_facebook, 'NA'), coalesce(b.fe_linked_in, 'NA'), b.fe_direccion, to_char(a.cc_fecha_suscripcion,'dd/mm/yyyy'), \n"
-                + " cc_lugar_suscripcion, cargo_director_carr, director_carrera, cargo_dir_tecnico, director_tecnico \n"
+                + " cc_lugar_suscripcion, cargo_director_carr, director_carrera, cargo_dir_tecnico, director_tecnico, total_horas,cc_objetivo_actividad, \n"
+                + " resp_vcs \n"
                 + " from view_datos_cc a, \"MPP_FICHA_ESTUDIANTE\" b\n" 
                 + " where a.id_cc = b.cc_id and \n"
                 + " trim(a.id_cc) = ? ";
@@ -251,6 +280,9 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setDir_carrera(cres.getString(35).trim());
                 carta_comp.setCargo_dir_tec(cres.getString(36).trim());
                 carta_comp.setDir_tecnico(cres.getString(37).trim());
+                carta_comp.setTotal_horas(cres.getString(38).trim());
+                carta_comp.setObjetivo_actividad(cres.getString(39).trim());
+                carta_comp.setNombre_delegado(cres.getString(40).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
@@ -260,13 +292,13 @@ public class Administrar_Ficha_Estudiante {
     }
     public static List<Carta_Compromiso> obtiene_elemento(String id_carta_comp, String tipo_elemento) {
         List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
-        String sql = "SELECT ae_orden||'. '||ae_descripcion elemento,b.ca_num_hora\n" +
+        String sql = "SELECT ae_orden||'. '||ae_descripcion elemento,sum(b.ca_num_hora) as tot_hora\n" +
                         "  FROM \"MPP_ASIGNAR_ELEMENTO\" a,\n" +
                         "      \"MPP_CRONOGRAMA_ACT\" b \n" +
                         " where a.ae_id=b.ae_id\n" +
                         "   AND trim(a.cc_id) = trim(?)\n" +
-                        "   AND a.ae_tipo = ? order by a.ae_orden";
-
+                        "   AND a.ae_tipo = ? group by ae_orden,ae_descripcion order by a.ae_orden";
+        
         ArrayList<Parametro> lstPar = new ArrayList<>();
         lstPar.add(new Parametro(1, id_carta_comp));
         lstPar.add(new Parametro(2, tipo_elemento));
@@ -278,7 +310,32 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp = new Carta_Compromiso();
                 carta_comp.setActividad_1(cres.getString(0));
                 carta_comp.setActividad_2(cres.getString(1));
-                System.out.println("ACT "+cres.getString(0));
+                //System.out.println("ACT "+cres.getString(0));
+                opciones.add(carta_comp);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return opciones;
+    }
+    public static List<Carta_Compromiso> obtiene_elemento2(String id_carta_comp, String tipo_elemento) {
+        List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
+        String sql = "SELECT ae_orden||'. '||ae_descripcion elemento\n" +
+                        "  FROM \"MPP_ASIGNAR_ELEMENTO\" a\n" +
+                        " where trim(a.cc_id) = trim(?)\n" +
+                        "   AND a.ae_tipo = ? order by a.ae_orden";
+        
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1, id_carta_comp));
+        lstPar.add(new Parametro(2, tipo_elemento));
+        Carta_Compromiso carta_comp;
+        try {
+            ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, lstPar);
+            while (cres.next()) {
+                carta_comp = new Carta_Compromiso();
+                carta_comp.setActividad_1(cres.getString(0));
+                //System.out.println("ACT "+cres.getString(0));
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {

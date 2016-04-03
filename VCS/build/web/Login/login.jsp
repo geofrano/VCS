@@ -9,8 +9,16 @@
 <html ng-app="VCS">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="pragma" content="no-cache" />
         <title>Sistema único de autenticación VCS</title>
-        <% String ruta = request.getContextPath();%>
+        <% String ruta = request.getContextPath();
+           HttpSession sesion = request.getSession();
+           String mensaje = (String) session.getAttribute("MENSAJE");
+           String usuario = (String) session.getAttribute("usuario");
+        %>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="../css/bootstrap.min.css" >
         <link rel="stylesheet" href="../css/login.css" >
@@ -19,7 +27,7 @@
         <script src="../js/jquery.js"></script>
         <script src="../js/bootstrap.min.js"></script>
     </head>
-    <body  ng-controller="ControladorLogin">
+    <body ng-controller="ControladorLogin">
         <header>
             <div class="container">
                 <h1>Sistema único de Autenticación VCS</h1>
@@ -59,6 +67,9 @@
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-star"></span></span>
                                         <input type="password" class="form-control" id="txt_clave" name="txt_clave" maxlength="20" placeholder="Ingrese su contraseña" ng-model="txt_clave" required="" >
                                     </div>
+                                    <font color="red">
+                                            <%=mensaje==null?"":mensaje%>
+                                    </font>
                                 </div>
                                 <hr/>
                                 <%--<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span> Back</button>--%>
@@ -69,8 +80,9 @@
                     </div>
                 </div>
             </div>
-        </div>{{institucion}}
+        </div>
         <input type="hidden" value="<%=ruta%>" id="ruta_principal" name="ruta_principal" />
+        <input type="hidden" value="<%=usuario==null?"":usuario%>" id="usuario_sesion" name="usuario_sesion" />
         
     </body>
 </html>
