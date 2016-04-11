@@ -18,10 +18,14 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="../../css/bootstrap.min.css" >
         <link rel="stylesheet" href="../../css/principal.css" >
+        <link rel="stylesheet" href="../../css/bootstrap-theme.min.css" >
+        <link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css" >
         <script src="../../js/angular.min.js"></script>
         <script src="carta_compromiso.js"></script>
         <script src="../../js/jquery.js"></script>
         <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/moment.js"></script>
+        <script src="../../js/bootstrap-datetimepicker.min.js"></script>
 
     </head>
     <body ng-controller="ControladorVCS">
@@ -34,7 +38,6 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div id="icono" class="col-md-9">
-                <div class="list-group" id="llenaDato" ng-open="llena_datos()"></div>
                 <jsp:include page="cont_carta_compromiso.jsp"/>
             </div>
             </div>

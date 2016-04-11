@@ -31,7 +31,9 @@ import java.util.logging.Logger;
 public class Administrar_Carta_Compromiso {
 
     private Carta_Compromiso carta_compromiso;
-
+    public Administrar_Carta_Compromiso(){
+        super();
+    }
     public Administrar_Carta_Compromiso(HttpServletRequest request) {
         SimpleDateFormat formato_fecha = new SimpleDateFormat("DD/MM/YYYY");
         this.carta_compromiso = new Carta_Compromiso();
@@ -44,11 +46,9 @@ public class Administrar_Carta_Compromiso {
             this.carta_compromiso.setCarrera_grado((String) request.getParameter("cmb_carrera"));
             this.carta_compromiso.setCiclo_curso((String) request.getParameter("cmb_ciclos").trim());
             this.carta_compromiso.setTipo_actividad((String) request.getParameter("cmb_tipo_actividad").trim());
-            System.out.println("cmb_tipo_actividad "+(String) request.getParameter("cmb_tipo_actividad"));
+            System.out.println("cmb_tipo_actividad:::::::::::: "+(String) request.getParameter("cmb_tipo_actividad"));
             this.carta_compromiso.setTotal_horas((String) request.getParameter("cmb_horas"));
             this.carta_compromiso.setObjetivo_actividad((String) request.getParameter("txt_obj_act_academica").trim());
-            //this.carta_compromiso.setFecha_inicio(formato_fecha.parse(/*(String)*/request.getParameter("txt_fecha_inicio")));
-            //this.carta_compromiso.setFecha_fin(formato_fecha.parse(/*(String)*/request.getParameter("txt_fecha_fin")));
             this.carta_compromiso.setFecha_inicio((String) request.getParameter("txt_fecha_inicio"));
             this.carta_compromiso.setFecha_fin((String) request.getParameter("txt_fecha_fin"));
             this.carta_compromiso.setHorario_previsto((String) request.getParameter("txt_horario").trim());
@@ -98,85 +98,36 @@ public class Administrar_Carta_Compromiso {
         String cod_actividad="";
         String codigo_cc="";
         
-        switch (this.carta_compromiso.getTipo_actividad()) {
-            case "EXTENSIONES":
-                cod_actividad="EX";
-                break;
-            case "PASANTÍAS":
-                cod_actividad="PA";
-                break;
-            case "PRÁCTICAS PRE PROFESIONALES":
-                cod_actividad="PP";
-                break;
-        }
-        codigo_cc="'CC'||nextval(\"secuencial)||'.'||'"+cod_actividad+"-GIS'";
-        sql="INSERT INTO \"VCS_CARTA_COMPROMISO\"(\n"
-                + "            id_carta_comp, nomb_empresa, \"Dir_empresa\", \"Act_empresa\", \n"
-                + "            \"Nomb_estudiante\", \"Carrera_grado\", \"Ciclo_curso\", \"Tipo_actividad\", \n"
-                + "            \"Total_horas\", \"Objetivo_actividad\", \"Fecha_inicio\", \"Fecha_fin\", \n"
-                + "            \"Horario_previsto\", \"Nombre_programa\", \"Area_actividad\", \"Responsable_area\", \n"
-                + "            \"Actividad_1\", \"Actividad_2\", \"Actividad_3\", \"Actividad_4\", \"Actividad_5\", \n"
-                + "            \"Actividad_6\", \"Resultado_1\", \"Resultado_2\", \"Resultado_3\", \"Resultado_4\", \n"
-                + "            \"Resultado_5\", \"Resultado_6\", \"Producto_1\", \"Producto_2\", \"Producto_3\", \n"
-                + "            \"Producto_4\", \"Producto_5\", \"Producto_6\", \"Nombre_tutor\", \"Nombre_representante\", \n"
-                + "            \"Cargo_representante\", \"Telf_representante\", \"Nombre_delegado\", \n"
-                + "            \"Cargo_delegado\", \"Telf_delegado\", \"Lugar_suscripcion\", \"Fecha_suscripcion\", \n"
-                + "            \"Estado\")\n"
+        //codigo_cc="'CC'||nextval(\"secuencial)||'.'||'"+cod_actividad+"-GIS'";
+        sql="INSERT INTO \"MPP_CARTA_COMPROMISO\"(\n"
+                + "            cc_id, es_id, cc_tipo_actividad, cc_total_horas, \n"
+                + "            cc_objetivo_actividad, cc_fecha_inicio, cc_fecha_fin, cc_horario_previsto, \n"
+                + "            cc_id_programa, cc_area_actividad, cc_responsable_area, cc_id_tutor, \n"
+                + "            cc_id_director_tecnico, cc_fecha_sistema, cc_lugar_suscripcion, cc_fecha_suscripcion, \n"
+                + "            cc_estado, ue_id)\n"
                 + "    VALUES (?, ?, ?, ?, \n"
+                + "            ?, to_date(?,'dd/mm/yyyy'), to_date(?,'dd/mm/yyyy'), ?, \n"
                 + "            ?, ?, ?, ?, \n"
-                + "            ?, ?, to_date(?,'dd/mm/yyyy'), to_date(?,'dd/mm/yyyy'), \n"
-                + "            ?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?, ?, \n"
-                + "            ?, ?, ?, ?, ?, \n"
-                + "            ?, ?, ?, \n"
-                + "            ?, ?, ?, to_date(?,'dd/mm/yyyy'), \n"
-                + "            ?)";
-        parametro.add(new Parametro(1, "CC03.EX-GIS"));
-        parametro.add(new Parametro(2, this.carta_compromiso.getNomb_empresa()));
-        parametro.add(new Parametro(3, this.carta_compromiso.getDir_empresa()));
-        parametro.add(new Parametro(4, this.carta_compromiso.getAct_empresa()));
-        parametro.add(new Parametro(5, this.carta_compromiso.getNomb_estudiante()));
-        parametro.add(new Parametro(6, this.carta_compromiso.getCarrera_grado()));
-        parametro.add(new Parametro(7, this.carta_compromiso.getCiclo_curso()));
-        parametro.add(new Parametro(8, this.carta_compromiso.getTipo_actividad()));
-        parametro.add(new Parametro(9, this.carta_compromiso.getTotal_horas()));
-        parametro.add(new Parametro(10, this.carta_compromiso.getObjetivo_actividad()));
-        parametro.add(new Parametro(11, this.carta_compromiso.getFecha_inicio()));
-        parametro.add(new Parametro(12, this.carta_compromiso.getFecha_fin()));
-        parametro.add(new Parametro(13, this.carta_compromiso.getHorario_previsto()));
-        parametro.add(new Parametro(14, this.carta_compromiso.getNombre_programa()));
-        parametro.add(new Parametro(15, this.carta_compromiso.getArea_actividad()));
-        parametro.add(new Parametro(16, this.carta_compromiso.getResponsable_area()));
-        parametro.add(new Parametro(17, this.carta_compromiso.getActividad_1()));
-        parametro.add(new Parametro(18, this.carta_compromiso.getActividad_2()));
-        parametro.add(new Parametro(19, this.carta_compromiso.getActividad_3()));
-        parametro.add(new Parametro(20, this.carta_compromiso.getActividad_4()));
-        parametro.add(new Parametro(21, this.carta_compromiso.getActividad_5()));
-        parametro.add(new Parametro(22, this.carta_compromiso.getActividad_6()));
-        parametro.add(new Parametro(23, this.carta_compromiso.getResultado_1()));
-        parametro.add(new Parametro(24, this.carta_compromiso.getResultado_2()));
-        parametro.add(new Parametro(25, this.carta_compromiso.getResultado_3()));
-        parametro.add(new Parametro(26, this.carta_compromiso.getResultado_4()));
-        parametro.add(new Parametro(27, this.carta_compromiso.getResultado_5()));
-        parametro.add(new Parametro(28, this.carta_compromiso.getResultado_6()));
-        parametro.add(new Parametro(29, this.carta_compromiso.getProducto_1()));
-        parametro.add(new Parametro(30, this.carta_compromiso.getProducto_2()));
-        parametro.add(new Parametro(31, this.carta_compromiso.getProducto_3()));
-        parametro.add(new Parametro(32, this.carta_compromiso.getProducto_4()));
-        parametro.add(new Parametro(33, this.carta_compromiso.getProducto_5()));
-        parametro.add(new Parametro(34, this.carta_compromiso.getProducto_6()));
-        parametro.add(new Parametro(35, this.carta_compromiso.getNombre_tutor()));
-        parametro.add(new Parametro(36, this.carta_compromiso.getNombre_representante()));
-        parametro.add(new Parametro(37, this.carta_compromiso.getCargo_representante()));
-        parametro.add(new Parametro(38, this.carta_compromiso.getTelf_representante()));
-        parametro.add(new Parametro(39, this.carta_compromiso.getNombre_delegado()));
-        parametro.add(new Parametro(40, this.carta_compromiso.getCargo_delegado()));
-        parametro.add(new Parametro(41, this.carta_compromiso.getTelf_delegado()));
-        parametro.add(new Parametro(42, this.carta_compromiso.getLugar_suscripcion()));
-        parametro.add(new Parametro(43, this.carta_compromiso.getFecha_suscripcion()));
-        parametro.add(new Parametro(44, this.carta_compromiso.getEstado()));
+                + "            ?, to_date(?,'dd/mm/yyyy'), ?, to_date(?,'dd/mm/yyyy'), \n"
+                + "            ?, ? )";
+        parametro.add(new Parametro(1, "CC001.EX-GIS-001"));
+        parametro.add(new Parametro(2, "1"));
+        parametro.add(new Parametro(3, this.carta_compromiso.getTipo_actividad()));
+        parametro.add(new Parametro(4, this.carta_compromiso.getTotal_horas()));
+        parametro.add(new Parametro(5, this.carta_compromiso.getObjetivo_actividad()));
+        parametro.add(new Parametro(6, this.carta_compromiso.getFecha_inicio()));
+        parametro.add(new Parametro(7, this.carta_compromiso.getFecha_fin()));
+        parametro.add(new Parametro(8, this.carta_compromiso.getHorario_previsto()));
+        parametro.add(new Parametro(9, "PROGRAMA_3"));
+        parametro.add(new Parametro(10, this.carta_compromiso.getArea_actividad()));
+        parametro.add(new Parametro(11, this.carta_compromiso.getResponsable_area()));
+        parametro.add(new Parametro(12, "2"));
+        parametro.add(new Parametro(13, "3"));
+        parametro.add(new Parametro(14, "02/03/2016"));
+        parametro.add(new Parametro(15, "Guayaquil"));
+        parametro.add(new Parametro(16, "02/03/2016"));
+        parametro.add(new Parametro(17, "A"));
+        parametro.add(new Parametro(18, "1"));
         try {
             res = AccesoDatos.ejecutaComando(sql, parametro);
         } catch (Exception e) {
@@ -188,34 +139,101 @@ public class Administrar_Carta_Compromiso {
         response.sendRedirect(response.encodeRedirectURL("Home.jsp"));
         return res;
     }
+    
+    public String devuelveSecuencia(String id_carrera){
+        String sql="SELECT to_number(max(trim(substr(cc_id,14))),'099999999') + 1 sec\n" +
+                    "  FROM \"MPP_CARTA_COMPROMISO\" \n" +
+                    " WHERE trim(substr(cc_id,10,3)) = ?";
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1,id_carrera.trim()));
+        String secuencia="";
+        
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql,lstPar);
+            
+            if (cres.next()) {
+                secuencia=cres.getString(0).trim();
+            }else{
+                secuencia="001";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return secuencia;
+    }
+    
+    private String devuelveParametroCC(String id_parametro){
+        String sql="SELECT pa_valor \n" +
+                    "  FROM \"MPP_PARAMETROS\" \n" +
+                    " WHERE trim(pa_id) = ?";
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1,id_parametro.trim()));
+        String parametro="";
+        
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql,lstPar);
+            
+            if (cres.next()) {
+                parametro=cres.getString(0).trim();
+            }else{
+                parametro="";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return parametro;
+    }
+    
+    public String devuelveFechaSuscripcion(){
+        String sql="select (select extract(day from current_date)) || ' de ' || to_char(now(), 'TMMonth') || ' del ' || (select extract(year from current_date))";
+        
+        String parametro="";
+        
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
+            
+            if (cres.next()) {
+                parametro=cres.getString(0).trim();
+            }else{
+                parametro="";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return parametro;
+    }
+    
+    
     public static List<Carta_Compromiso> consulta_cc(String cc_carrera, String cc_actividad) {
         List<Carta_Compromiso> codigo = new LinkedList<Carta_Compromiso>();
 
-        String sql = "select coalesce(to_number(substr(substr(cc_id, strpos(cc_id, '-') + 1),\n" +
-                     "                        (strpos(substr(cc_id, strpos(cc_id, '-') + 1), '-') + 1)),\n" +
-                     "                 '099999') + 1, 1) AS Numero_cc,\n" +
-                     "       coalesce(substr(cc_id, 1, length(cc_id) - 4),'nada') Carta_Compromiso\n" +
-                     "  from \"MPP_CARTA_COMPROMISO\"\n" +
-                     " where substr(cc_id,\n" +
-                     "              strpos(cc_id, '.') + 1,\n" +
-                     "              strpos(substr(cc_id, strpos(cc_id, '.') + 1), '-') - 1) = ? \n" +
-                     "   AND substr(substr(cc_id, strpos(cc_id, '-') + 1),\n" +
-                     "              1,\n" +
-                     "              strpos(substr(cc_id, strpos(cc_id, '-') + 1), '-') - 1) =\n" +
-                     "       ?";
-        ArrayList<Parametro> lstPar = new ArrayList<>();
-        lstPar.add(new Parametro(1,cc_actividad));
-        lstPar.add(new Parametro(2,cc_carrera));
-        System.out.println("Query: "+ sql);
-        Carta_Compromiso adm_cc;
+        Administrar_Carta_Compromiso admCC = new Administrar_Carta_Compromiso();
+        
+        Carta_Compromiso cartaCompromiso;
+        String nombre_delegadoUPS="";
+        String cargo_delegadoUPS="";
+        String telefono_delegadoUPS="";
+        String fecha_suscripcion="";
+        
         try {
-            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql,lstPar);
-            while (cres.next()) {
-                adm_cc = new Carta_Compromiso();
-                adm_cc.setId_carta_compromiso(cres.getString(1).trim());
-                adm_cc.setNumero(cres.getString(0).trim());
-                codigo.add(adm_cc);
-            }
+            
+            cartaCompromiso = new Carta_Compromiso();
+            
+            String secuencia_cc=admCC.devuelveSecuencia(cc_carrera);
+            String secuencia_completa="CC001."+cc_actividad+"-"+cc_carrera+"-"+secuencia_cc;
+            nombre_delegadoUPS=admCC.devuelveParametroCC("DIR_TEC_VCS");
+            cargo_delegadoUPS=admCC.devuelveParametroCC("CARGO_DIR_TEC_VCS");
+            telefono_delegadoUPS=admCC.devuelveParametroCC("TELEF_DIR_TEC_VCS");
+            fecha_suscripcion=admCC.devuelveFechaSuscripcion();
+            
+            cartaCompromiso.setId_carta_compromiso(secuencia_completa);
+            cartaCompromiso.setNumero(secuencia_cc);
+            cartaCompromiso.setNombre_delegado(nombre_delegadoUPS);
+            cartaCompromiso.setCargo_delegado(cargo_delegadoUPS);
+            cartaCompromiso.setTelf_delegado(telefono_delegadoUPS);
+            cartaCompromiso.setFecha_suscripcion(fecha_suscripcion);
+            codigo.add(cartaCompromiso);
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -226,7 +244,11 @@ public class Administrar_Carta_Compromiso {
         try {
             json.put("codigo", cc.getId_carta_compromiso());
             json.put("numero", cc.getNumero());
-            
+            json.put("nombre_delegado", cc.getNombre_delegado());
+            json.put("cargo_delegado", cc.getCargo_delegado());
+            json.put("telefono_delegado", cc.getTelf_delegado());
+            json.put("fecha", cc.getFecha_suscripcion());
+            System.out.println("Fecha de suscripcion:   "+cc.getFecha_suscripcion());
         } catch (JSONException ex) {
             Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
         }

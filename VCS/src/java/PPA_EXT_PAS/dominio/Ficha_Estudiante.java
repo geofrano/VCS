@@ -13,6 +13,7 @@ package PPA_EXT_PAS.dominio;
 public class Ficha_Estudiante {
     
     // <editor-fold defaultstate="collapsed" desc="Atributos">
+    private String id_estudiante;           //Identificador del estudiante
     private String id_carta_compromiso;     //Identificador de la Ficha del Estudiante
     private String direccion;               //Direccion del Estudiante
     private String telefono;                //Número de Telefono del Estudiante
@@ -31,7 +32,9 @@ public class Ficha_Estudiante {
     private String cedula;                  //Cedula del estudiante
     private String nombre_estudiante;       //Nombre del estudiante
     private String carrera;                 //Carrera del estudiante
+    private String id_carrera;              //Identificador de la carrera
     private String ciclo;                   //Ciclo o semestre del estudiante
+    private String id_ciclo;                //Identificador del ciclo
     private String empresa;                 //Nombre de la empresa
     private String responsable_emp;         //Responsable de la empresa
     private String area_interes;            //Area de interes de la actividad
@@ -45,11 +48,16 @@ public class Ficha_Estudiante {
     private String cod_proy;                //Codigo del proyecto
     
     
+    public String getId_estudiante() {
+        return id_estudiante;
+    }
+
     // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Setters & Getters">    
-    
-    
+    // <editor-fold defaultstate="collapsed" desc="Setters & Getters">
+    public void setId_estudiante(String id_estudiante) {
+        this.id_estudiante = id_estudiante;
+    }
+
     public String getCod_proy() {
         return cod_proy;
     }
@@ -290,6 +298,20 @@ public class Ficha_Estudiante {
         this.nomb_tutor = nomb_tutor;
     }
     
+    public String getId_carrera() {
+        return id_carrera;
+    }
+
+    public void setId_carrera(String id_carrera) {
+        this.id_carrera = id_carrera;
+    }
+
+    public String getId_ciclo() {
+        return id_ciclo;
+    }
+
+    public void setId_ciclo(String id_ciclo) {
+        this.id_ciclo = id_ciclo;
+    }
     // </editor-fold>
-        
 }

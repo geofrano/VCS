@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package PPA_EXT_PAS.funciones_salida;
 
-import PPA_EXT_PAS.eventos.Administrar_Estudiantes;
+import PPA_EXT_PAS.eventos.Administrar_Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -17,9 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Geovanny Barrera
+ * @author lpita
  */
-public class F_carga_estudiantes extends HttpServlet {
+public class F_Consulta_Empresa_mod extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,16 +31,16 @@ public class F_carga_estudiantes extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json; charset=UTF-8");
-        //Administrar_Menu_Principal adm_menu = new Administrar_Menu_Principal();
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         try {
-            //adm_menu.recorre_paginas(0, response,request);
-            
             PrintWriter out = response.getWriter();
-            out.print(Administrar_Estudiantes.toJSON(Administrar_Estudiantes.mostrar_estudiantes()));
+            String id_ue=(String)request.getParameter("id_ue");
+            String id_ar=(String)request.getParameter("id_ar");
+            System.out.println("ue: "+id_ue +" ar: "+id_ar);
+            out.print(Administrar_Empresa.toJSON(Administrar_Empresa.datos_empresa(id_ue,id_ar)));
             out.flush();
             out.close();
-            
         } catch (IOException e) {
             RequestDispatcher a=request.getRequestDispatcher("Home.jsp");//pagina principal
             a.forward(request, response);

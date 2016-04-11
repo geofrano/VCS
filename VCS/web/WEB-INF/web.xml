@@ -33,10 +33,6 @@
         <servlet-class>PPA_EXT_PAS.funciones_entrada.F_autenticar_usuario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>F_informe_peticion_verbal</servlet-name>
-        <servlet-class>PPA_EXT_PAS.funciones_salida.F_informe_peticion_verbal</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>F_Menu_principal</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_Menu_principal</servlet-class>
     </servlet>
@@ -71,6 +67,22 @@
     <servlet>
         <servlet-name>F_genera_pdf_ficha_estudiante</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_ficha_estudiante</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_Consulta_Empresa</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Consulta_Empresa</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_grabar_empresa</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_entrada.F_grabar_empresa</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_Muestra_tipo_empresa</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Muestra_tipo_empresa</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_Consulta_Empresa_mod</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Consulta_Empresa_mod</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>F_genera_pdf_peticion_aprob</servlet-name>
@@ -112,13 +124,13 @@
         <servlet-name>FLogout</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_entrada.FLogout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>F_Consulta_EstudianteCC</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Consulta_EstudianteCC</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>F_informe_peticion_verbal</servlet-name>
-        <url-pattern>/F_informe_peticion_verbal.jsp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>F_Menu_principal</servlet-name>
@@ -155,6 +167,26 @@
     <servlet-mapping>
         <servlet-name>F_genera_pdf_ficha_estudiante</servlet-name>
         <url-pattern>/F_genera_pdf_ficha_estudiante</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Consulta_Empresa</servlet-name>
+        <url-pattern>/F_Consulta_Empresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_grabar_empresa</servlet-name>
+        <url-pattern>/F_grabar_empresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Muestra_tipo_empresa</servlet-name>
+        <url-pattern>/F_Muestra_tipo_empresa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Consulta_Empresa_mod</servlet-name>
+        <url-pattern>/F_Consulta_Empresa_mod</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Consulta_EstudianteCC</servlet-name>
+        <url-pattern>/F_Consulta_EstudianteCC</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>F_genera_pdf_peticion_aprob</servlet-name>

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package PPA_EXT_PAS.funciones_salida;
 
 import PPA_EXT_PAS.eventos.Administrar_combos;
@@ -31,27 +30,31 @@ public class F_Muestra_programas extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        Administrar_combos adm_combos=new Administrar_combos();
-        String tipo_cmb=(String)request.getParameter("id_cmb");
-        String txt_nombre_empresa=(String)request.getParameter("txt_nombre_empresa");
-        System.out.println("EMPRESA"+txt_nombre_empresa);
-        switch (tipo_cmb) {
-            case "programas":
-                adm_combos.obtiene_programas(response, request);
-                break;
-            case "horas":
-                adm_combos.obtiene_horas(response, request);
-                break;
-           case "ciclos":
-                adm_combos.obtiene_ciclos(response, request);
-                break;
-           case "tipo_actividad":
-                adm_combos.obtiene_tipo_actividad(response, request);
-                break;
+        response.setContentType("application/json; charset=UTF-8");
+        try {
+            PrintWriter out = response.getWriter();
+            Administrar_combos adm_combos = new Administrar_combos();
+            String tipo_cmb = (String) request.getParameter("id_cmb");
+            switch (tipo_cmb) {
+                case "programas":
+                    out.print(adm_combos.toJSON(adm_combos.obtiene_programas()));
+                    break;
+                case "horas":
+                    out.print(adm_combos.toJSON(adm_combos.obtiene_horas()));
+                    break;
+                case "ciclos":
+                    out.print(adm_combos.toJSON(adm_combos.obtiene_ciclos()));
+                    break;
+                case "tipo_actividad":
+                    out.print(adm_combos.toJSON(adm_combos.obtiene_tipo_actividad()));
+                    break;
+            }
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

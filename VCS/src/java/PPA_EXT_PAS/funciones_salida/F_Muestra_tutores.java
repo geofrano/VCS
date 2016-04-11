@@ -3,21 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package PPA_EXT_PAS.funciones_salida;
 
+import PPA_EXT_PAS.eventos.Administrar_Menu_Principal;
+import PPA_EXT_PAS.eventos.Administrar_combos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import PPA_EXT_PAS.eventos.Administrar_Estudiante;
-import javax.servlet.RequestDispatcher;
+
 /**
  *
- * @author lpita
+ * @author Hp
  */
-public class F_Consulta_Estudiante extends HttpServlet {
+public class F_Muestra_tutores extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +36,13 @@ public class F_Consulta_Estudiante extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         try {
             PrintWriter out = response.getWriter();
-            String nombre_estudiante=(String)request.getParameter("id_est");
-            out.print(Administrar_Estudiante.toJSON(Administrar_Estudiante.consulta_carta_compro(nombre_estudiante)));
-            //out.print(Administrar_Menu_Principal.toJSON(Administrar_Menu_Principal.mostrar_menu()));
+            Administrar_combos adm_combos=new Administrar_combos();
+            String st_carrera = (String)request.getParameter("carrera");
+            out.print(adm_combos.toJSON(adm_combos.obtiene_tutores(st_carrera)));
             out.flush();
             out.close();
-        } catch (IOException e) {
-            RequestDispatcher a=request.getRequestDispatcher("Home.jsp");//pagina principal
-            a.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

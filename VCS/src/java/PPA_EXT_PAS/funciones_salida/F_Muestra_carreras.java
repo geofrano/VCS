@@ -8,6 +8,7 @@ package PPA_EXT_PAS.funciones_salida;
 
 import PPA_EXT_PAS.eventos.Administrar_combos;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServlet;
@@ -31,11 +32,16 @@ public class F_Muestra_carreras extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        Administrar_combos adm_combos=new Administrar_combos();
-        //String tipo_cmb=(String)request.getParameter("id_cmb");
-        adm_combos.obtiene_carreras(response, request);
-        
+        response.setContentType("application/json; charset=UTF-8");
+        try {
+            PrintWriter out = response.getWriter();
+            Administrar_combos adm_combos=new Administrar_combos();
+            out.print(adm_combos.toJSON(adm_combos.obtiene_carreras()));
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

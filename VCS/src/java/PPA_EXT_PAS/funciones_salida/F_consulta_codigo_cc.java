@@ -35,9 +35,10 @@ public class F_consulta_codigo_cc extends HttpServlet {
         try {
             PrintWriter out = response.getWriter();
             //out.print(Administrar_Carta_Compromiso.consulta_cc());
-            String cc_carreca=(String)request.getParameter("cc_carrera");
+            String cc_carrera=(String)request.getParameter("cc_carrera");
             String cc_actividad=(String)request.getParameter("cc_actividad");
-            out.print(Administrar_Carta_Compromiso.toJSON(Administrar_Carta_Compromiso.consulta_cc(cc_carreca,cc_actividad)));
+            
+            out.print(Administrar_Carta_Compromiso.toJSON(Administrar_Carta_Compromiso.consulta_cc(cc_carrera,cc_actividad)));
             out.flush();
             out.close();
             

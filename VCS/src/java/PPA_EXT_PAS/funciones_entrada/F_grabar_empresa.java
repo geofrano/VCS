@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PPA_EXT_PAS.funciones_salida;
+package PPA_EXT_PAS.funciones_entrada;
 
+import PPA_EXT_PAS.eventos.Administrar_Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import PPA_EXT_PAS.eventos.Administrar_Estudiante;
-import javax.servlet.RequestDispatcher;
+
 /**
  *
- * @author lpita
+ * @author Hp
  */
-public class F_Consulta_Estudiante extends HttpServlet {
+public class F_grabar_empresa extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,17 +30,23 @@ public class F_Consulta_Estudiante extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json; charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try {
             PrintWriter out = response.getWriter();
-            String nombre_estudiante=(String)request.getParameter("id_est");
-            out.print(Administrar_Estudiante.toJSON(Administrar_Estudiante.consulta_carta_compro(nombre_estudiante)));
-            //out.print(Administrar_Menu_Principal.toJSON(Administrar_Menu_Principal.mostrar_menu()));
+            //String id_ue = request.getParameter("id_ue").toString();
+            //String id_ar = request.getParameter("id_ar").toString();
+            //System.out.println("Entrada de codigos: "+id_ue+"    "+id_ar);
+            Administrar_Empresa empresa = new Administrar_Empresa(request);
+            String accion=request.getParameter("accion").toString();
+            System.out.println("Accion: |"+accion+"| ");
+     
+            String resultado = empresa.procesar_empresa(accion);
+            
+            out.println(resultado);
             out.flush();
             out.close();
-        } catch (IOException e) {
-            RequestDispatcher a=request.getRequestDispatcher("Home.jsp");//pagina principal
-            a.forward(request, response);
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

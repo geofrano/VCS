@@ -5,19 +5,20 @@
  */
 package PPA_EXT_PAS.funciones_salida;
 
+import PPA_EXT_PAS.eventos.Administrar_Empresa;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import PPA_EXT_PAS.eventos.Administrar_Estudiante;
-import javax.servlet.RequestDispatcher;
+
 /**
  *
  * @author lpita
  */
-public class F_Consulta_Estudiante extends HttpServlet {
+public class F_Consulta_Empresa extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,12 +31,11 @@ public class F_Consulta_Estudiante extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json; charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         try {
             PrintWriter out = response.getWriter();
-            String nombre_estudiante=(String)request.getParameter("id_est");
-            out.print(Administrar_Estudiante.toJSON(Administrar_Estudiante.consulta_carta_compro(nombre_estudiante)));
-            //out.print(Administrar_Menu_Principal.toJSON(Administrar_Menu_Principal.mostrar_menu()));
+            String empresa=(String)request.getParameter("empresa");
+            out.print(Administrar_Empresa.toJSON(Administrar_Empresa.consulta_empresa(empresa)));
             out.flush();
             out.close();
         } catch (IOException e) {

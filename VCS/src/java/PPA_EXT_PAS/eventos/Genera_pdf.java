@@ -6,46 +6,29 @@
 package PPA_EXT_PAS.eventos;
 
 import PPA_EXT_PAS.dominio.Carta_Compromiso;
-import PPA_EXT_PAS.dominio.Informe_Peticion_Verbal_cab;
-import static PPA_EXT_PAS.eventos.Administrar_Ficha_Estudiante.toJSONObject;
-import com.lowagie.text.BadElementException;
 import com.lowagie.text.Chunk;
-import static com.lowagie.text.Chunk.NEWLINE;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
-import com.lowagie.text.HeaderFooter;
 import com.lowagie.text.Image;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPageEvent;
-import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
-import com.lowagie.text.pdf.draw.DrawInterface;
 import java.awt.Color;
-import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.servlet.ServletContext;
 
 /**
  *
