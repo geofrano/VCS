@@ -7,7 +7,6 @@ package PPA_EXT_PAS.funciones_entrada;
 
 import PPA_EXT_PAS.eventos.Administrar_Carta_Compromiso;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

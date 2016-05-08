@@ -65,15 +65,6 @@ app.controller("ControladorVCS", function ($scope, $http) {
     $scope.carga_ingreso = function () {
         var ruta = document.getElementById("ruta_principal").value;
         window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp", target = "_self");
-        //var fullname = $('#fullname').val();
-        /*$.ajax({
-         type: 'POST',
-         //data: {id_cmb:'carrera'},
-         url: ruta + '/F_carta_compromiso_ing.jsp',
-         success: function(result) {
-         $('#icono').html(result);
-         }
-         });*/
     };
 
     /*$scope.llena_datos = function () {
@@ -106,63 +97,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
         window.open(ruta + "/Entidad_Externa/Carta_Compromiso/consultar_carta_compromiso.jsp", target = "_self");
     };
 
-    $scope.consultar_estudiante = function () {
-        var estudiante = document.getElementById("txt_nombre_est").value;
-        var ruta = document.getElementById("ruta_principal").value;
-        var cont = 0;
-        var $tabla = $("#tbl_estudiante");
-        $tabla.find("tr:gt(0)").remove();
-        document.getElementById("existe_data").value = "0";
-        $("#div_consulta").css("display", "none");
-        $("#div_consulta2").css("display", "block");
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {id_est: estudiante},
-            url: ruta + '/F_Consulta_Estudiante',
-            success: function (data) {
-                $("#div_datos").html("");
-
-                $.each(data.items, function (index, article) {
-                    cont = cont + 1;
-                    $tabla.append("<tr><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\">" + article.id_cc + "</td>\n" +
-                            "<td>" + article.cc_tipo_act + "</td>\n" +
-                            "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
-                            //"<td>" + article.emp_nombre + "</td>\n" +
-                            "<td>" + article.lugar_suscrip + "</td>\n" +
-                            "<td>" + article.fecha_suscrip + "</td>\n" +
-                            /*"<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div></td>\n" +
-                             "<td class=\"alineado3\">" +
-                             "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
-                             "</td>\n" +
-                             "<td class=\"alineado3\">" +
-                             "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"carga_ingreso(" + cont + ")\"/>" +
-                             "</td>\n" +*/
-                            "<td class=\"alineado3\"><img width=\"20px\" height=\"20px\" title=\"Modificar\" src=\"../../images/icono_modifica.png\"/></td>\n" +
-                            "<td class=\"alineado3\"><img width=\"20px\" height=\"20px\" title=\"Eliminar\" src=\"../../images/eliminar.jpg\"/></td></tr>\n");
-
-                    if (article.cc_estado.trim() == "A") {
-                        $("#" + "div_eliminar_" + cont).css("display", "none");
-                        $("#" + "div_modificar_" + cont).css("display", "none");
-                        $("#" + "div_inserta_" + cont).css("display", "block");
-                    }
-                    if (article.cc_estado.trim() == "5") {
-                        $("#" + "div_eliminar_" + cont).css("display", "block");
-                        $("#" + "div_modificar_" + cont).css("display", "block");
-                        $("#" + "div_inserta_" + cont).css("display", "none");
-                    }
-                    document.getElementById("existe_data").value = "1";
-                });
-                var v = document.getElementById("existe_data").value;
-
-                if (v == "0") {
-                    $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
-                }
-                $("#div_consulta").css("display", "block");
-                $("#div_consulta2").css("display", "none");
-            }
-        });
-    };
+    
 
     $scope.guarda_carta_comp = function () {
         var ruta = document.getElementById("ruta_principal").value;
@@ -213,29 +148,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
                 console.log("Se cargo exitosamente el combo carreras");
             }
         });
-        carga_combo_tutor();
     };
-
-    /*$scope.carga_combo_tutor = function () {
-     var ruta = document.getElementById("ruta_principal").value;
-     var carrera = document.getElementById("cmb_carrera").value;
-     //var carrera = "GIS";
-     var $cmb = $("#cmb_tutor");
-     $.ajax({
-     type: 'POST',
-     dataType: 'json',
-     data: {carrera:carrera},
-     url: ruta + '/F_Muestra_tutores',
-     success: function (result) {
-     $cmb.find('option').remove();
-     $.each(result.items, function (index, article) {
-     $cmb.append("<option  value=\"" + article.valor + "\">\n" + article.descripcion +
-     "</option>");
-     });
-     console.log("Se cargo exitosamente el combo carreras");
-     }
-     });
-     };*/
 
     $scope.carga_combo_programas = function () {
         var ruta = document.getElementById("ruta_principal").value;
@@ -516,6 +429,8 @@ function carga_codigo() {
     var cc_car = document.getElementById("cmb_carrera").value;
     var cc_act = document.getElementById("cmb_tipo_actividad").value;
     var fecha_suscrip=document.getElementById("txt_lugar_fecha_suscrip").value;
+    var id_carrera_act=cod_cc.substring(9);
+    alert(id_carrera_act);
     //alert("cc_car "+cc_car);
     //alert("cc_act "+cc_act);
     if (cod_cc == ""){
@@ -534,12 +449,14 @@ function carga_codigo() {
                     document.getElementById("txt_fono_deleg_ups").value = article.telefono_delegado;
                     document.getElementById("txt_lugar_fecha_suscrip").value = fecha_suscrip+", "+article.fecha;
                 });
+               carga_combo_tutores();
+
             }
         });
     }else{
         cod_cc2=cod_cc.substring(9);
         cod_cc=cod_cc.substring(0, 8);
-        var cod_cc_new = "CC001."+cc_act+"-"+cod_cc2
+        var cod_cc_new = "CC001."+cc_act+"-"+cod_cc2;
         document.getElementById("txt_codigo").value=cod_cc_new;
     }
 }
@@ -562,7 +479,7 @@ function llena_dato_empresa(seleccionado) {
     document.getElementById("txt_fono_repr_legal").value = tele_repre;
 }
 
-function carga_combo_tutor() {
+function carga_combo_tutores() {
     var ruta = document.getElementById("ruta_principal").value;
     var carrera = document.getElementById("cmb_carrera").value;
     //var carrera = "GIS";
@@ -571,11 +488,11 @@ function carga_combo_tutor() {
         type: 'POST',
         dataType: 'json',
         data: {carrera: carrera},
-        url: ruta + '/F_Muestra_tutores',
+        url: ruta + '/F_muestra_tutor',
         success: function (result) {
             $cmb.find('option').remove();
             $.each(result.items, function (index, article) {
-                $cmb.append("<option  value=\"" + article.valor + "\">\n" + article.descripcion +
+                $cmb.append("<option  value=\"" + article.descripcion + "\">\n" + article.valor +
                         "</option>");
             });
             console.log("Se cargo exitosamente el combo carreras");
@@ -628,7 +545,7 @@ function carga_ingreso_empr(cont) {
         document.getElementById("txt_fono_repr_legal_ing").focus();
     } else {
         swal({
-            title: "Est� segur@?",
+            title: "Está segur@?",
             text: "Favor confirme que los datos ingresados son los correctos",
             type: "warning",
             showCancelButton: true,
@@ -675,7 +592,7 @@ function modif_empr() {
     //window.parent.opener.document.getElementById("txt_nombre_empresa").value = "si funco";
 }
 function carga_modifica_empr2() {
-    var tipo_accion = window.parent.opener.document.getElementById("tipo_accion").value;
+    //var tipo_accion = window.parent.opener.document.getElementById("tipo_accion").value;
     var cont = window.parent.opener.document.getElementById("cont").value;
     //alert(tipo_accion);
     

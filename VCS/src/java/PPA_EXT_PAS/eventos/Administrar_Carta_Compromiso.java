@@ -38,7 +38,7 @@ public class Administrar_Carta_Compromiso {
         SimpleDateFormat formato_fecha = new SimpleDateFormat("DD/MM/YYYY");
         this.carta_compromiso = new Carta_Compromiso();
         try {
-            //this.carta_compromiso.setId_carta_compromiso((String) request.getParameter("txt_codigo"));
+            this.carta_compromiso.setId_carta_compromiso((String) request.getParameter("txt_codigo"));
             this.carta_compromiso.setNomb_empresa((String) request.getParameter("txt_nombre_empresa").trim());
             this.carta_compromiso.setDir_empresa((String) request.getParameter("txt_direccion").trim());
             this.carta_compromiso.setAct_empresa((String) request.getParameter("txt_actividad_empresa").trim());
@@ -103,14 +103,14 @@ public class Administrar_Carta_Compromiso {
                 + "            cc_id, es_id, cc_tipo_actividad, cc_total_horas, \n"
                 + "            cc_objetivo_actividad, cc_fecha_inicio, cc_fecha_fin, cc_horario_previsto, \n"
                 + "            cc_id_programa, cc_area_actividad, cc_responsable_area, cc_id_tutor, \n"
-                + "            cc_id_director_tecnico, cc_fecha_sistema, cc_lugar_suscripcion, cc_fecha_suscripcion, \n"
+                + "            cc_id_director_tecnico, cc_lugar_suscripcion, cc_fecha_suscripcion, \n"
                 + "            cc_estado, ue_id)\n"
                 + "    VALUES (?, ?, ?, ?, \n"
                 + "            ?, to_date(?,'dd/mm/yyyy'), to_date(?,'dd/mm/yyyy'), ?, \n"
                 + "            ?, ?, ?, ?, \n"
-                + "            ?, to_date(?,'dd/mm/yyyy'), ?, to_date(?,'dd/mm/yyyy'), \n"
-                + "            ?, ? )";
-        parametro.add(new Parametro(1, "CC001.EX-GIS-001"));
+                + "            ?, ?, to_date(?,'dd/mm/yyyy'), ?, \n"
+                + "            ? )";
+        parametro.add(new Parametro(1, this.carta_compromiso.getId_carta_compromiso()));
         parametro.add(new Parametro(2, "1"));
         parametro.add(new Parametro(3, this.carta_compromiso.getTipo_actividad()));
         parametro.add(new Parametro(4, this.carta_compromiso.getTotal_horas()));
@@ -141,7 +141,7 @@ public class Administrar_Carta_Compromiso {
     }
     
     public String devuelveSecuencia(String id_carrera){
-        String sql="SELECT to_number(max(trim(substr(cc_id,14))),'099999999') + 1 sec\n" +
+        String sql="SELECT to_number(COALESCE(max(trim(substr(cc_id,14))),'0'),'099999999') + 1 sec\n" +
                     "  FROM \"MPP_CARTA_COMPROMISO\" \n" +
                     " WHERE trim(substr(cc_id,10,3)) = ?";
         ArrayList<Parametro> lstPar = new ArrayList<>();

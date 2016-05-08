@@ -128,6 +128,10 @@
         <servlet-name>F_Consulta_EstudianteCC</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_Consulta_EstudianteCC</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>F_muestra_tutor</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_muestra_tutor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
@@ -227,6 +231,10 @@
     <servlet-mapping>
         <servlet-name>FLogout</servlet-name>
         <url-pattern>/FLogout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_muestra_tutor</servlet-name>
+        <url-pattern>/F_muestra_tutor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

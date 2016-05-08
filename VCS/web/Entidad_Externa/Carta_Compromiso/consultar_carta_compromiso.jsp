@@ -1,5 +1,5 @@
 <%-- 
-    Document   : principal
+    Document   : consultar_carta_compromiso.jsp
     Created on : 09/01/2016, 09:14:29 PM
     Author     : Geovanny Barrera
 --%>

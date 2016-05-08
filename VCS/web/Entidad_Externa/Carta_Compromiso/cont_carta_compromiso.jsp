@@ -23,7 +23,7 @@
                 <tr>
                     <td><label>Nombre de la Empresa<br>o Institución: </label></td>
                     <td colspan="3">
-                        <input type="text" title="Seleccione la empresa dando clic sobre este campo" data-toggle="modal" data-target="#consultar_empresa" class="text-primary form-control" id="txt_nombre_empresa" name="txt_nombre_empresa" readonly="readonly" maxlength="250" ng-click="consultar_empresa()"/>
+                        <input type="text" title="Seleccione la empresa dando clic sobre este campo" data-toggle="modal" data-target="#consultar_empresa" class="text-primary form-control" id="txt_nombre_empresa" name="txt_nombre_empresa" readonly="readonly" maxlength="250" />
                         <!-- Modal content-->
                         <div class="modal fade" id="consultar_empresa" role="dialog">
                             <div class="modal-dialog modal-lg">
@@ -96,7 +96,7 @@
                     <td><label>Apellidos y Nombres del<br>Estudiante: </label></td>
                     <td colspan="3">
                         <input type="hidden" id="txt_id_est" name="txt_id_est" />
-                        <input type="text" title="Seleccione el estudiante dando clic sobre este campo" readonly="readonly" data-toggle="modal" data-target="#consultar_estudiante" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="250" ng-click="consultar_estudiante()">
+                        <input type="text" title="Seleccione el estudiante dando clic sobre este campo" readonly="readonly" data-toggle="modal" data-target="#consultar_estudiante" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="250" >
                         <!-- Modal content-->
                         <div class="modal fade" id="consultar_estudiante" role="dialog">
                             <div class="modal-dialog modal-lg">
@@ -163,7 +163,7 @@
                         <label>Tipo de Actividad Académica: </label>
                     </td>
                     <td>
-                        <select name="cmb_tipo_actividad" id="cmb_tipo_actividad" class="form-control" onchange="carga_codigo()"></select>
+                        <select name="cmb_tipo_actividad" id="cmb_tipo_actividad" class="form-control" onchange="carga_codigos()"></select>
                     </td>
                     <td><label>Duración: </label></td>
                     <td>

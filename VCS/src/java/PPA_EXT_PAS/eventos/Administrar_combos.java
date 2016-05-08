@@ -139,7 +139,7 @@ public class Administrar_combos {
     }
     //PINTA EL COMBO DE LAS CARRERAS
     public List<Parametros> obtiene_tutores(String carrera) throws IOException {
-        String sql = "select us_nombre || ' ' || us_apellido as nombre, us_cargo from \"MAU_USUARIO\" where trim(us_cargo) = 'TUTOR_' || trim(?)";
+        String sql = "select trim(pa_valor),trim(pa_id) from \"MPP_PARAMETROS\" where trim(pa_tipo) = 'TUTOR_' || trim(?)";
         List< Parametros > opciones = new LinkedList< Parametros >();
         ArrayList<Parametro> parametro = new ArrayList<>();
         parametro.add(new Parametro(1, carrera));
@@ -148,8 +148,8 @@ public class Administrar_combos {
             Parametros p;
             while (cres.next()) {
                 p = new Parametros();
-                p.setDescripcion(cres.getString(0).trim());
-                p.setValor(cres.getString(1).trim());
+                p.setDescripcion(cres.getString(1).trim());
+                p.setValor(cres.getString(0).trim());
                 opciones.add(p);
             }
         } catch (Exception e) {

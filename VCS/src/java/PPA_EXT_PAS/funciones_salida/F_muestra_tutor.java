@@ -6,7 +6,7 @@
 
 package PPA_EXT_PAS.funciones_salida;
 
-import PPA_EXT_PAS.eventos.Administrar_Menu_Principal;
+
 import PPA_EXT_PAS.eventos.Administrar_combos;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Hp
+ * @author Geovanny Barrera
  */
-public class F_Muestra_tutores extends HttpServlet {
+public class F_muestra_tutor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
