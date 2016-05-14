@@ -175,6 +175,43 @@ public class Administrar_combos {
         }
         return opciones;
     }
+    //PINTA EL COMBO DE LOS TIPOS DE PARAMETROS
+    public List<Parametros> tipo_parametro() throws IOException {
+        String sql = "select pt_tipo, pt_descripcion from \"MPP_PARAMETROS_TIPOS\" where pt_tipo in (select distinct pa_tipo from \"MPP_PARAMETROS\" where pa_tipo <> 'TT') order by pt_descripcion";
+        List< Parametros > opciones = new LinkedList< Parametros >();
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
+            Parametros p;
+            while (cres.next()) {
+                p = new Parametros();
+                p.setDescripcion(cres.getString(1).trim());
+                p.setValor(cres.getString(0).trim());//poner 1 con la descripcion
+                opciones.add(p);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return opciones;
+    }
+    //PINTA EL COMBO DE LAS CARRERAS DE PARAMETROS
+    public List<Parametros> carrera_parametro() throws IOException {
+        String sql = "select pa_id, trim(pa_descripcion) from \"MPP_PARAMETROS\" where pa_tipo = 'CA'";
+        List< Parametros > opciones = new LinkedList< Parametros >();
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql);
+            Parametros p;
+            while (cres.next()) {
+                p = new Parametros();
+                p.setDescripcion(cres.getString(1).trim());
+                p.setValor(cres.getString(0).trim());//poner 1 con la descripcion
+                opciones.add(p);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return opciones;
+    }
+    //
     public static JSONObject toJSONObject(Parametros parametro) {
         JSONObject json = new JSONObject();
         try {

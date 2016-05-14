@@ -28,6 +28,10 @@
         <filter-name>FiltroAutorizacion</filter-name>
         <url-pattern>/Administracion_de_Carrera/*</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>FiltroAutorizacion</filter-name>
+        <url-pattern>/Mantenimiento/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_entrada.F_autenticar_usuario</servlet-class>
@@ -132,6 +136,22 @@
         <servlet-name>F_muestra_tutor</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_muestra_tutor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>F_Mantenimiento_parametro</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Mantenimiento_parametro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_Consulta_Parametro</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Consulta_Parametro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_grabar_parametro</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_entrada.F_grabar_parametro</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_Muestra_tutores</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Muestra_tutores</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
@@ -227,6 +247,22 @@
     <servlet-mapping>
         <servlet-name>F_genera_pdf_peticion_verbal</servlet-name>
         <url-pattern>/F_genera_pdf_peticion_verbal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Mantenimiento_parametro</servlet-name>
+        <url-pattern>/F_Mantenimiento_parametro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Consulta_Parametro</servlet-name>
+        <url-pattern>/F_Consulta_Parametro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_grabar_parametro</servlet-name>
+        <url-pattern>/F_grabar_parametro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Muestra_tutores</servlet-name>
+        <url-pattern>/F_Muestra_tutores</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FLogout</servlet-name>
