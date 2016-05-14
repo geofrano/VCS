@@ -67,37 +67,10 @@ app.controller("ControladorVCS", function ($scope, $http) {
         window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp", target = "_self");
     };
 
-    /*$scope.llena_datos = function () {
-     var ruta = document.getElementById("ruta_principal").value;
-     document.getElementById("txt_codigo").value = "";
-     document.getElementById("txt_numero").value = "";
-     var cc_car = document.getElementById("cmb_carrera").value;
-     var cc_act = document.getElementById("cmb_tipo_actividad").value;
-     alert("Carrera: "+cc_car);
-     alert("Actividad: "+cc_act);
-     /*var cc_car = 'GIS';
-     var cc_act = 'PA';
-     $.ajax({
-     type: 'POST',
-     dataType: 'json',
-     data: {cc_carrera: cc_car,cc_actividad: cc_act},
-     url: ruta + '/F_consulta_codigo_cc',
-     success: function (result) {
-     $("#llenaDato").html("");
-     $.each(result.items, function(index, article) {
-     document.getElementById("txt_codigo").value = article.codigo;
-     document.getElementById("txt_numero").value = article.numero;
-     });
-     }
-     });
-     };*/
-
     $scope.carga_busca_cc = function () {
         var ruta = document.getElementById("ruta_principal").value;
         window.open(ruta + "/Entidad_Externa/Carta_Compromiso/consultar_carta_compromiso.jsp", target = "_self");
     };
-
-    
 
     $scope.guarda_carta_comp = function () {
         var ruta = document.getElementById("ruta_principal").value;
@@ -133,15 +106,21 @@ app.controller("ControladorVCS", function ($scope, $http) {
                 if (nombre_est_form == ""){
                     $scope.carga_combo_tipo_actividad();
                 }else{
+                    
                     var cod_cc=document.getElementById("txt_codigo").value ;
                     var cc_car = document.getElementById("cmb_carrera").value;
                     var num_cc = document.getElementById("txt_numero").value;
+                    var id_carrera_ant=cod_cc.substring(9,12);
                     var cod_cc_new="";
                     
-                    cod_cc=cod_cc.substring(0,9);
-                    cod_cc_new=cod_cc+cc_car+"-"+num_cc;
+                    if (id_carrera_ant == id_carrera){//Si el estudiante seleccionado es de la misma carrera no tengo que cambiar la secuencia
+                        cod_cc=cod_cc.substring(0,9);
+                        cod_cc_new=cod_cc+cc_car+"-"+num_cc;
+                        document.getElementById("txt_codigo").value=cod_cc_new;
+                    }else{
+                        carga_codigo2();//Carga el codigo de la carta compromiso
+                    }
                     
-                    document.getElementById("txt_codigo").value=cod_cc_new;
                     
                 }
                 
@@ -230,7 +209,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
                     $cmb.append("<option value=\"" + article.valor + "\">\n" + article.descripcion +
                             "</option>");
                 });
-                carga_codigo();//Carga el codigo de la carta compromiso
+                carga_codigo2();//Carga el codigo de la carta compromiso
                 console.log("Se cargo exitosamente el combo tipo de actividad");
             }
         });
@@ -259,9 +238,12 @@ app.controller("ControladorVCS", function ($scope, $http) {
     };
     
     $(function () {
-        $('#datetimepicker6').datetimepicker();
+        $('#datetimepicker6').datetimepicker({
+            format: 'L'
+        });
         $('#datetimepicker7').datetimepicker({
-            useCurrent: false
+            useCurrent: false,
+            format: 'L'
         });
         $("#datetimepicker6").on("dp.change", function (e) {
             $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
@@ -269,12 +251,14 @@ app.controller("ControladorVCS", function ($scope, $http) {
         $("#datetimepicker7").on("dp.change", function (e) {
             $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
         });
+        
     });
     
     $scope.consultar_estudiante = function () {
         var estudiante = document.getElementById("txt_nombre_est_mod").value;
         var ruta = document.getElementById("ruta_principal").value;
         var cont = 0;
+        
         $("#btn_aceptar_est").attr('disabled','disabled');
         var $tabla = $("#tbl_estudiante");
         $tabla.find("tr:gt(0)").remove();
@@ -409,28 +393,41 @@ app.controller("ControladorVCS", function ($scope, $http) {
         
         
     };
-
     $scope.ventana_ing_empresa = function () {
         var ruta = document.getElementById("ruta_principal").value;
         document.getElementById("tipo_accion").value = "I";
         window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_empresa.jsp", target = "name", 'top=65, left=450, width=700, height=775,scrollbars=1');
     };
 });
+    function controltag(e,valida) {
+            tecla = (document.all) ? e.keyCode : e.which; 
+            if (tecla==8) return true; // para la tecla de retroseso
+            if (tecla==0||tecla==9)  return true; //<-- PARA EL TABULADOR-> su keyCode es 9 pero en tecla se esta transformando a 0 asi que porsiacaso los dos
+            if (valida != 1) {
+                if (tecla>=1) return false; // para todo lo que se ingrese
+                else if (tecla==8) return false; // para la tecla de retroseso
+            }
+            //else 
+            if (tecla==0||tecla==9)  return true;//Habilitamos el tab
+            patron =/[0-9\s]/;// -> solo letras
+           // patron =/[0-9\s]/;// -> solo numeros
+            te = String.fromCharCode(tecla);
+            return patron.test(te); 
+        }
+        
 function habilita_btn() {
     $("#btn_aceptar_emp").removeAttr('disabled');
     $("#btn_aceptar_est").removeAttr('disabled');
 }
 
 function carga_codigo() {
-    //alert("asda");
     var cod_cc=document.getElementById("txt_codigo").value ;
     var cod_cc2=document.getElementById("txt_codigo").value ;
     var ruta = document.getElementById("ruta_principal").value;
     var cc_car = document.getElementById("cmb_carrera").value;
     var cc_act = document.getElementById("cmb_tipo_actividad").value;
     var fecha_suscrip=document.getElementById("txt_lugar_fecha_suscrip").value;
-    var id_carrera_act=cod_cc.substring(9);
-    alert(id_carrera_act);
+
     //alert("cc_car "+cc_car);
     //alert("cc_act "+cc_act);
     if (cod_cc == ""){
@@ -460,7 +457,38 @@ function carga_codigo() {
         document.getElementById("txt_codigo").value=cod_cc_new;
     }
 }
+//Siempre cargara el codigo desde la base si cambia de estudiante de diferente carrera
+function carga_codigo2() {
+    //var cod_cc=document.getElementById("txt_codigo").value ;
+    //var cod_cc2=document.getElementById("txt_codigo").value ;
+    var ruta = document.getElementById("ruta_principal").value;
+    var cc_car = document.getElementById("cmb_carrera").value;
+    var cc_act = document.getElementById("cmb_tipo_actividad").value;
+    var fecha_suscrip=document.getElementById("txt_lugar_fecha_suscrip").value;
 
+    //alert("cc_car "+cc_car);
+    //alert("cc_act "+cc_act);
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {cc_carrera: cc_car, cc_actividad: cc_act},
+            url: ruta + '/F_consulta_codigo_cc',
+            success: function (result) {
+                $("#llenaDato").html("");
+                $.each(result.items, function (index, article) {
+                    document.getElementById("txt_codigo").value = article.codigo;
+                    document.getElementById("txt_numero").value = article.numero;
+                    document.getElementById("txt_nombre_deleg_ups").value = article.nombre_delegado;
+                    document.getElementById("txt_cargo_deleg_ups").value = article.cargo_delegado;
+                    document.getElementById("txt_fono_deleg_ups").value = article.telefono_delegado;
+                    document.getElementById("txt_lugar_fecha_suscrip").value = fecha_suscrip+", "+article.fecha;
+                });
+               carga_combo_tutores();
+
+            }
+        });
+
+}
 function llena_dato_empresa(seleccionado) {
     var nombre_empresa = document.getElementById("nombre_empresa_" + seleccionado).value;
     var direccion = document.getElementById("direccion_" + seleccionado).value;

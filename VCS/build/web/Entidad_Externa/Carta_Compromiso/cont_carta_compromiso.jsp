@@ -40,7 +40,7 @@
                                             <tr>
                                                 <td><label>Empresa o Institución:</label></td>
                                                 <td>
-                                                    <input type="text" class="text-primary form-control" id="txt_nombre_emp" title="Empresa o Institución" name="txt_nombre_emp" maxlength="250">
+                                                    <input type="text" class="text-primary form-control" id="txt_nombre_emp" title="Empresa o Institución" name="txt_nombre_emp" maxlength="1000" onkeypress="return controltag(event)">
                                                 </td>
                                                 <td>
                                                     <div id="div_consulta" name="div_consulta">
@@ -96,7 +96,7 @@
                     <td><label>Apellidos y Nombres del<br>Estudiante: </label></td>
                     <td colspan="3">
                         <input type="hidden" id="txt_id_est" name="txt_id_est" />
-                        <input type="text" title="Seleccione el estudiante dando clic sobre este campo" readonly="readonly" data-toggle="modal" data-target="#consultar_estudiante" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="250" >
+                        <input type="text" title="Seleccione el estudiante dando clic sobre este campo" data-toggle="modal" data-target="#consultar_estudiante" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="1000" onkeypress="return controltag(event)" readonly="readonly" >
                         <!-- Modal content-->
                         <div class="modal fade" id="consultar_estudiante" role="dialog">
                             <div class="modal-dialog modal-lg">
@@ -113,7 +113,11 @@
                                             <tr>
                                                 <td><label>Estudiante:</label></td>
                                                 <td>
-                                                    <input type="text" class="text-primary form-control" id="txt_nombre_est_mod" name="txt_nombre_est_mod" title="Estudiante" maxlength="250">
+                                                    <input type="text" class="text-primary form-control" id="txt_nombre_est_mod" name="txt_nombre_est_mod" title="Estudiante" maxlength="1000">
+                                                </td>
+                                                <td><label>Cedula:</label></td>
+                                                <td>
+                                                    <input type="text" class="text-primary form-control" id="txt_ced_est_mod" name="txt_ced_est_mod" title="Cedula" maxlength="10" onkeypress="return controltag(event,1)" >
                                                 </td>
                                                 <td>
                                                     <div id="div_consulta_est" name="div_consulta_est">
@@ -163,7 +167,7 @@
                         <label>Tipo de Actividad Académica: </label>
                     </td>
                     <td>
-                        <select name="cmb_tipo_actividad" id="cmb_tipo_actividad" class="form-control" onchange="carga_codigos()"></select>
+                        <select name="cmb_tipo_actividad" id="cmb_tipo_actividad" class="form-control" onchange="carga_codigo()"></select>
                     </td>
                     <td><label>Duración: </label></td>
                     <td>
@@ -184,8 +188,8 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker6'>
-                                            <input type="text" class="form-control" id="txt_fecha_ini" name="txt_fecha_ini" ng-model="txt_fecha_ini"/>
+                                        <div class='input-group date' id='datetimepicker6' ng-disabled="true">
+                                            <input type="text" class="form-control" id="txt_fecha_ini" name="txt_fecha_ini" ng-model="txt_fecha_ini" onkeypress="return controltag(event)" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -201,7 +205,7 @@
                                 <td>
                                     <div class="form-group">
                                         <div class='input-group date' id='datetimepicker7'>
-                                            <input type="text" class="form-control" id="txt_fecha_fin" name="txt_fecha_fin" ng-model="txt_fecha_fin" />
+                                            <input type="text" class="form-control" id="txt_fecha_fin" name="txt_fecha_fin" ng-model="txt_fecha_fin" onkeypress="return controltag(event)" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
