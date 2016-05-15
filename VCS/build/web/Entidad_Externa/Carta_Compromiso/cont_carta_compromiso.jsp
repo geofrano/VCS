@@ -7,6 +7,7 @@
 <h1 class="alineado3">Carta Compromiso Interinstitucional</h1>
 <div class="form-group">
     <form id="frm_carta_comp" name="frm_carta_comp" action="" method="POST">
+        <input type="hidden" id="accion_form" name="accion_form" value="M" />
         <fieldset class="legendas2"><legend class="legendas opcion_iluminada">Información General</legend>
             <table class="table table-hover table-responsive">
                 <tr>
@@ -23,6 +24,7 @@
                 <tr>
                     <td><label>Nombre de la Empresa<br>o Institución: </label></td>
                     <td colspan="3">
+                        <input type="hidden" id="id_empresa" name="id_empresa"/>
                         <input type="text" title="Seleccione la empresa dando clic sobre este campo" data-toggle="modal" data-target="#consultar_empresa" class="text-primary form-control" id="txt_nombre_empresa" name="txt_nombre_empresa" readonly="readonly" maxlength="250" />
                         <!-- Modal content-->
                         <div class="modal fade" id="consultar_empresa" role="dialog">
@@ -40,7 +42,7 @@
                                             <tr>
                                                 <td><label>Empresa o Institución:</label></td>
                                                 <td>
-                                                    <input type="text" class="text-primary form-control" id="txt_nombre_emp" title="Empresa o Institución" name="txt_nombre_emp" maxlength="1000" onkeypress="return controltag(event)">
+                                                    <input type="text" class="text-primary form-control" id="txt_nombre_emp" title="Empresa o Institución" name="txt_nombre_emp" maxlength="1000">
                                                 </td>
                                                 <td>
                                                     <div id="div_consulta" name="div_consulta">
@@ -96,7 +98,7 @@
                     <td><label>Apellidos y Nombres del<br>Estudiante: </label></td>
                     <td colspan="3">
                         <input type="hidden" id="txt_id_est" name="txt_id_est" />
-                        <input type="text" title="Seleccione el estudiante dando clic sobre este campo" data-toggle="modal" data-target="#consultar_estudiante" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="1000" onkeypress="return controltag(event)" readonly="readonly" >
+                        <input type="text" title="Seleccione el estudiante dando clic sobre este campo" data-toggle="modal" data-target="#consultar_estudiante" class="text-primary form-control" id="txt_nombre_estudiante" name="txt_nombre_estudiante" maxlength="1000" readonly="readonly" >
                         <!-- Modal content-->
                         <div class="modal fade" id="consultar_estudiante" role="dialog">
                             <div class="modal-dialog modal-lg">
@@ -117,7 +119,7 @@
                                                 </td>
                                                 <td><label>Cedula:</label></td>
                                                 <td>
-                                                    <input type="text" class="text-primary form-control" id="txt_ced_est_mod" name="txt_ced_est_mod" title="Cedula" maxlength="10" onkeypress="return controltag(event,1)" >
+                                                    <input type="text" class="text-primary form-control" id="txt_ced_est_mod" name="txt_ced_est_mod" title="Cedula" maxlength="15" onkeypress="return controltag(event,1)" >
                                                 </td>
                                                 <td>
                                                     <div id="div_consulta_est" name="div_consulta_est">
@@ -234,11 +236,11 @@
                 <tr>
                     <td><label>Área que Requiere la Actividad Académica: </label></td>
                     <td>
-                        <input type="text" class="text-primary form-control" id="txt_area_academica" name="txt_area_academica" maxlength="50">
+                        <input type="text" class="text-primary form-control" id="txt_area_academica" name="txt_area_academica" maxlength="300">
                     </td>
                     <td><label>Responsable del Área: </label></td>
                     <td>
-                        <input type="text" class="text-primary form-control" id="txt_respon_area" name="txt_respon_area">
+                        <input type="text" class="text-primary form-control" id="txt_respon_area" name="txt_respon_area" maxlength="600">
                     </td>
                 </tr>
                 <tr>
@@ -427,6 +429,7 @@
                 <tr>
                     <td><label>Lugar y Fecha <br>de Suscripción: </label></td>
                     <td colspan="5">
+                        <input type="hidden" id="txt_ciudad" name="txt_ciudad" ng-value="{{sede}}"/>
                         <input type="text" class="text-primary form-control" 
                                readonly="readonly" id="txt_lugar_fecha_suscrip" 
                                name="txt_lugar_fecha_suscrip" maxlength="500"

@@ -27,7 +27,7 @@ import org.json.JSONObject;
  */
 public class Administrar_Estudiantes {
 
-    public static List<Ficha_Estudiante> mostrar_estudiantes(String estudiante) {
+    public static List<Ficha_Estudiante> mostrar_estudiantes(String estudiante,String cedula) {
         List< Ficha_Estudiante> estudiantes = new LinkedList< Ficha_Estudiante>();
 
         String sql= "SELECT es_id, es_nombre, es_apellido, es_cedula, \n" +
@@ -41,10 +41,17 @@ public class Administrar_Estudiantes {
                     "   and (\n" +
                     "	UPPER(trim(a.es_nombre)) like UPPER('%' || ? || '%') or\n" +
                     "	UPPER(trim(a.es_apellido)) like UPPER('%' || ? || '%')\n" +
-                    "        )";
+                    "        )\n"+
+                    "   and es_cedula = case when COALESCE(?,es_cedula) = '' then es_cedula else COALESCE(?,es_cedula) end";
+        
+        //System.out.println("SQL: " +sql);
+        //System.out.println("CEDULA "+cedula);
+
         ArrayList<Parametro> lstPar = new ArrayList<>();
         lstPar.add(new Parametro(1, estudiante));
         lstPar.add(new Parametro(2, estudiante));
+        lstPar.add(new Parametro(3, cedula));
+        lstPar.add(new Parametro(4, cedula));
         Ficha_Estudiante adm_est;
         try {
             ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql, lstPar);

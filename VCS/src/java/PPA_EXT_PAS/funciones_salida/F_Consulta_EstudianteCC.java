@@ -30,7 +30,8 @@ public class F_Consulta_EstudianteCC extends HttpServlet {
         try {
             try (PrintWriter out = response.getWriter()) {
                 String estudiante=(String)request.getParameter("estudiante");
-                out.print(Administrar_Estudiantes.toJSON(Administrar_Estudiantes.mostrar_estudiantes(estudiante)));
+                String cedula=(String)request.getParameter("cedula_est");
+                out.print(Administrar_Estudiantes.toJSON(Administrar_Estudiantes.mostrar_estudiantes(estudiante,cedula)));
                 out.flush();
             }
         } catch (IOException e) {

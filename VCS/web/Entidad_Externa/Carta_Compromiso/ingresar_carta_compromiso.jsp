@@ -26,7 +26,10 @@
         <script src="../../js/bootstrap.min.js"></script>
         <script src="../../js/moment.js"></script>
         <script src="../../js/bootstrap-datetimepicker.min.js"></script>
-
+        <!-- This is what you need -->
+        <script src="../../js/sweetalert-dev.js"></script>
+        <link rel="stylesheet" href="../../css/sweetalert.css">
+        <!--.......................-->
     </head>
     <body ng-controller="ControladorVCS">
         <div class="container">

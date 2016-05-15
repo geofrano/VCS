@@ -6,7 +6,9 @@
 package PPA_EXT_PAS.funciones_entrada;
 
 import PPA_EXT_PAS.eventos.Administrar_Carta_Compromiso;
+import PPA_EXT_PAS.eventos.Administrar_Ficha_Estudiante;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,11 +32,19 @@ public class F_carta_compromiso extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        Administrar_Carta_Compromiso carta_comp= new Administrar_Carta_Compromiso(request);
-        carta_comp.ingresar_carta(response);
-        
-        
+        try (PrintWriter out = response.getWriter()) {
+            String accion=request.getParameter("accion_form").toString();
+            if (accion.equals("E")){
+                String cc_id=request.getParameter("txt_id_carta_comp").toString();
+                Administrar_Carta_Compromiso carta_comp = new Administrar_Carta_Compromiso();
+                String resultado=carta_comp.elimina(cc_id);
+                out.println(resultado);
+            }else{
+                Administrar_Carta_Compromiso carta_comp = new Administrar_Carta_Compromiso(request);
+                String resultado=carta_comp.procesar_peticion(accion);
+                out.println(resultado);
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

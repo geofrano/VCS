@@ -39,20 +39,19 @@ public class Administrar_Carta_Compromiso {
         this.carta_compromiso = new Carta_Compromiso();
         try {
             this.carta_compromiso.setId_carta_compromiso((String) request.getParameter("txt_codigo"));
-            this.carta_compromiso.setNomb_empresa((String) request.getParameter("txt_nombre_empresa").trim());
-            this.carta_compromiso.setDir_empresa((String) request.getParameter("txt_direccion").trim());
-            this.carta_compromiso.setAct_empresa((String) request.getParameter("txt_actividad_empresa").trim());
-            this.carta_compromiso.setNomb_estudiante((String) request.getParameter("txt_nombre_estudiante").trim());
-            this.carta_compromiso.setCarrera_grado((String) request.getParameter("cmb_carrera"));
-            this.carta_compromiso.setCiclo_curso((String) request.getParameter("cmb_ciclos").trim());
+            this.carta_compromiso.setNomb_empresa((String) request.getParameter("id_empresa").trim());
+            //this.carta_compromiso.setDir_empresa((String) request.getParameter("txt_direccion").trim());
+            //this.carta_compromiso.setAct_empresa((String) request.getParameter("txt_actividad_empresa").trim());
+            this.carta_compromiso.setNomb_estudiante((String) request.getParameter("txt_id_est").trim());
+            //this.carta_compromiso.setCarrera_grado((String) request.getParameter("cmb_carrera"));
+            //this.carta_compromiso.setCiclo_curso((String) request.getParameter("cmb_ciclos").trim());
             this.carta_compromiso.setTipo_actividad((String) request.getParameter("cmb_tipo_actividad").trim());
-            System.out.println("cmb_tipo_actividad:::::::::::: "+(String) request.getParameter("cmb_tipo_actividad"));
             this.carta_compromiso.setTotal_horas((String) request.getParameter("cmb_horas"));
             this.carta_compromiso.setObjetivo_actividad((String) request.getParameter("txt_obj_act_academica").trim());
-            this.carta_compromiso.setFecha_inicio((String) request.getParameter("txt_fecha_inicio"));
+            this.carta_compromiso.setFecha_inicio((String) request.getParameter("txt_fecha_ini"));
             this.carta_compromiso.setFecha_fin((String) request.getParameter("txt_fecha_fin"));
             this.carta_compromiso.setHorario_previsto((String) request.getParameter("txt_horario").trim());
-            this.carta_compromiso.setNombre_programa((String) request.getParameter("cmb_programas").trim());
+            this.carta_compromiso.setNombre_programa((String) request.getParameter("cmb_programa").trim());
             this.carta_compromiso.setArea_actividad((String) request.getParameter("txt_area_academica").trim());
             this.carta_compromiso.setResponsable_area((String) request.getParameter("txt_respon_area").trim());
             this.carta_compromiso.setActividad_1((String) request.getParameter("txt_actividad_1").trim());
@@ -73,73 +72,119 @@ public class Administrar_Carta_Compromiso {
             this.carta_compromiso.setProducto_4((String) request.getParameter("txt_producto_4").trim());
             this.carta_compromiso.setProducto_5((String) request.getParameter("txt_producto_5").trim());
             this.carta_compromiso.setProducto_6((String) request.getParameter("txt_producto_6").trim());
-            this.carta_compromiso.setNombre_tutor((String) request.getParameter("txt_nombre_tutor").trim());
-            this.carta_compromiso.setNombre_representante((String) request.getParameter("txt_nombre_repr_legal").trim());
-            this.carta_compromiso.setCargo_representante((String) request.getParameter("txt_cargo_repr_legal").trim());
-            this.carta_compromiso.setTelf_representante((String) request.getParameter("txt_fono_repr_legal").trim());
-            this.carta_compromiso.setNombre_delegado((String) request.getParameter("txt_nombre_deleg_ups").trim());
-            this.carta_compromiso.setCargo_delegado((String) request.getParameter("txt_cargo_deleg_ups").trim());
-            this.carta_compromiso.setTelf_delegado((String) request.getParameter("txt_fono_deleg_ups").trim());
-            this.carta_compromiso.setLugar_suscripcion("Guayaquil");
+            this.carta_compromiso.setNombre_tutor((String) request.getParameter("cmb_tutor").trim());
+            //this.carta_compromiso.setNombre_delegado((String) request.getParameter("txt_nombre_deleg_ups").trim());
+            this.carta_compromiso.setLugar_suscripcion((String) request.getParameter("txt_ciudad").trim());
             //this.carta_compromiso.setFecha_suscripcion("15/01/2016");
-            this.carta_compromiso.setFecha_suscripcion((String)request.getParameter("txt_lugar_fecha_suscrip"));
+            //this.carta_compromiso.setFecha_suscripcion((String)request.getParameter("txt_lugar_fecha_suscrip"));
             this.carta_compromiso.setEstado("A");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-    public boolean ingresar_carta(HttpServletResponse response) throws IOException {
-        PrintWriter out = response.getWriter();
- 
-        ArrayList<Parametro> parametro = new ArrayList<>();
-        boolean res = false;
-        String sql;
-        String cod_actividad="";
-        String codigo_cc="";
-        
-        //codigo_cc="'CC'||nextval(\"secuencial)||'.'||'"+cod_actividad+"-GIS'";
-        sql="INSERT INTO \"MPP_CARTA_COMPROMISO\"(\n"
-                + "            cc_id, es_id, cc_tipo_actividad, cc_total_horas, \n"
-                + "            cc_objetivo_actividad, cc_fecha_inicio, cc_fecha_fin, cc_horario_previsto, \n"
-                + "            cc_id_programa, cc_area_actividad, cc_responsable_area, cc_id_tutor, \n"
-                + "            cc_id_director_tecnico, cc_lugar_suscripcion, cc_fecha_suscripcion, \n"
-                + "            cc_estado, ue_id)\n"
-                + "    VALUES (?, ?, ?, ?, \n"
-                + "            ?, to_date(?,'dd/mm/yyyy'), to_date(?,'dd/mm/yyyy'), ?, \n"
-                + "            ?, ?, ?, ?, \n"
-                + "            ?, ?, to_date(?,'dd/mm/yyyy'), ?, \n"
-                + "            ? )";
-        parametro.add(new Parametro(1, this.carta_compromiso.getId_carta_compromiso()));
-        parametro.add(new Parametro(2, "1"));
-        parametro.add(new Parametro(3, this.carta_compromiso.getTipo_actividad()));
-        parametro.add(new Parametro(4, this.carta_compromiso.getTotal_horas()));
-        parametro.add(new Parametro(5, this.carta_compromiso.getObjetivo_actividad()));
-        parametro.add(new Parametro(6, this.carta_compromiso.getFecha_inicio()));
-        parametro.add(new Parametro(7, this.carta_compromiso.getFecha_fin()));
-        parametro.add(new Parametro(8, this.carta_compromiso.getHorario_previsto()));
-        parametro.add(new Parametro(9, "PROGRAMA_3"));
-        parametro.add(new Parametro(10, this.carta_compromiso.getArea_actividad()));
-        parametro.add(new Parametro(11, this.carta_compromiso.getResponsable_area()));
-        parametro.add(new Parametro(12, "2"));
-        parametro.add(new Parametro(13, "3"));
-        parametro.add(new Parametro(14, "02/03/2016"));
-        parametro.add(new Parametro(15, "Guayaquil"));
-        parametro.add(new Parametro(16, "02/03/2016"));
-        parametro.add(new Parametro(17, "A"));
-        parametro.add(new Parametro(18, "1"));
+    public String procesar_peticion(String accion) {
+        ArrayList<Parametro> parametros = new ArrayList<>();
+        Administrar_Carta_Compromiso adm_cc= new Administrar_Carta_Compromiso();
+        String res = "";
+        String sql = "SELECT f_inserta_carta_comp(\n" +
+                                            "    ?,\n" +//ID_CC
+                                            "    ?,\n" +//ID DEL ESTUDIANTE
+                                            "    ?,\n" +//TIPO DE ACTIVIDAD
+                                            "    ?,\n" +//NUMERO DE HORAS
+                                            "    ?,\n" +//OBJETIVO DE LA ACTIVIDAD
+                                            "    ?,\n" +//FECHA DE INICIO
+                                            "    ?,\n" +//FECHA DE FIN
+                                            "    ?,\n" +//HORARIO
+                                            "    ?,\n" +//ID DEL PROGRAMA
+                                            "    ?,\n" +//AREA
+                                            "    ?,\n" +//RESPONASABLE DE AREA
+                                            "    ?,\n" +//CIUDAD
+                                            "    ?,\n" +//ESTADO DE LA CC
+                                            "    ?,\n" +//ID DE LA EMPRESA
+                                            "    ?,\n" +//ID DEL TUTOR RESPECTO A LA TABLA DE USUARIOS
+                                            "    ?,\n" +//ACTIVIDAD 1
+                                            "    ?,\n" +//RECURSO 1
+                                            "    ?,\n" +//RESULTADO 1
+                                            "    ?,\n" +//ACTIVIDAD 2
+                                            "    ?,\n" +//RECURSO 2
+                                            "    ?,\n" +//RESULTADO 2
+                                            "    ?,\n" +//ACTIVIDAD 3
+                                            "    ?,\n" +//RECURSO 3
+                                            "    ?,\n" +//RESULTADO 3
+                                            "    ?,\n" +//ACTIVIDAD 4
+                                            "    ?,\n" +//RECURSO 4
+                                            "    ?,\n" +//RESULTADO 4
+                                            "    ?,\n" +//ACTIVIDAD 5
+                                            "    ?,\n" +//RECURSO 5
+                                            "    ?,\n" +//RESULTADO 5
+                                            "    ?,\n" +//ACTIVIDAD 6
+                                            "    ?,\n" +//RECURSO 6
+                                            "    ?,\n" +//RESULTADO 6
+                                            "    ? \n" +//ACCION
+                                            ")";
+        parametros.add(new Parametro(1, this.carta_compromiso.getId_carta_compromiso()));
+        parametros.add(new Parametro(2, this.carta_compromiso.getNomb_estudiante()));
+        parametros.add(new Parametro(3, this.carta_compromiso.getTipo_actividad()));
+        parametros.add(new Parametro(4, adm_cc.devuelveParametroCC(this.carta_compromiso.getTotal_horas())));
+        parametros.add(new Parametro(5, this.carta_compromiso.getObjetivo_actividad()));
+        parametros.add(new Parametro(6, this.carta_compromiso.getFecha_inicio()));
+        parametros.add(new Parametro(7, this.carta_compromiso.getFecha_fin()));
+        parametros.add(new Parametro(8, this.carta_compromiso.getHorario_previsto()));
+        parametros.add(new Parametro(9, this.carta_compromiso.getNombre_programa()));
+        parametros.add(new Parametro(10, this.carta_compromiso.getArea_actividad()));
+        parametros.add(new Parametro(11, this.carta_compromiso.getResponsable_area()));
+        parametros.add(new Parametro(12, this.carta_compromiso.getLugar_suscripcion()));
+        parametros.add(new Parametro(13, "A"));
+        parametros.add(new Parametro(14, this.carta_compromiso.getNomb_empresa()));
+        parametros.add(new Parametro(15, this.carta_compromiso.getNombre_tutor()));
+        parametros.add(new Parametro(16, this.carta_compromiso.getActividad_1()));
+        parametros.add(new Parametro(17, this.carta_compromiso.getProducto_1()));
+        parametros.add(new Parametro(18, this.carta_compromiso.getResultado_1()));
+        parametros.add(new Parametro(19, this.carta_compromiso.getActividad_2()));
+        parametros.add(new Parametro(20, this.carta_compromiso.getProducto_2()));
+        parametros.add(new Parametro(21, this.carta_compromiso.getResultado_2()));
+        parametros.add(new Parametro(22, this.carta_compromiso.getActividad_3()));
+        parametros.add(new Parametro(23, this.carta_compromiso.getProducto_3()));
+        parametros.add(new Parametro(24, this.carta_compromiso.getResultado_3()));
+        parametros.add(new Parametro(25, this.carta_compromiso.getActividad_4()));
+        parametros.add(new Parametro(26, this.carta_compromiso.getProducto_4()));
+        parametros.add(new Parametro(27, this.carta_compromiso.getResultado_4()));
+        parametros.add(new Parametro(28, this.carta_compromiso.getActividad_5()));
+        parametros.add(new Parametro(29, this.carta_compromiso.getProducto_5()));
+        parametros.add(new Parametro(30, this.carta_compromiso.getResultado_5()));
+        parametros.add(new Parametro(31, this.carta_compromiso.getActividad_6()));
+        parametros.add(new Parametro(32, this.carta_compromiso.getProducto_6()));
+        parametros.add(new Parametro(33, this.carta_compromiso.getResultado_6()));
+        parametros.add(new Parametro(34, accion));
         try {
-            res = AccesoDatos.ejecutaComando(sql, parametro);
+             ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, parametros);
+            while (cres.next()) {
+                res = cres.getString(0);
+            }
+            
         } catch (Exception e) {
-            out.println("<script>alert(\"No se pudo insertar el registro\")</script>");
-            response.sendRedirect(response.encodeRedirectURL("Home.jsp"));
             throw new RuntimeException(e);
         }
-        out.println("<script>alert(\"Se inserto el registro\")</script>");
-        response.sendRedirect(response.encodeRedirectURL("Home.jsp"));
         return res;
     }
     
+    public String elimina(String cc_id) {
+        ArrayList<Parametro> parametros = new ArrayList<>();
+        String res = "NO";
+        String sql = "delete FROM \"MPP_FICHA_ESTUDIANTE\" where trim(cc_id) = ?";
+        parametros.add(new Parametro(1, cc_id.trim()));
+        try {
+             boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
+             //String act=actualiza_estado_cc(cc_id,"A");
+             if (cres){
+                 res="SI";
+             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public String devuelveSecuencia(String id_carrera){
         String sql="SELECT to_number(COALESCE(max(trim(substr(cc_id,14))),'0'),'099999999') + 1 sec\n" +
                     "  FROM \"MPP_CARTA_COMPROMISO\" \n" +

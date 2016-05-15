@@ -76,8 +76,189 @@ app.controller("ControladorVCS", function ($scope, $http) {
         var ruta = document.getElementById("ruta_principal").value;
         $scope.user = {};
         document.getElementById("frm_carta_comp").action = ruta + "/F_carta_compromiso.jsp";
-        document.frm_carta_comp.submit();
-        $scope.submitted = true;
+        
+        
+        var cod_cc           = document.getElementById("txt_codigo").value;
+        var empresa_nomb     = document.getElementById("txt_nombre_empresa").value;
+        var est_nomb         = document.getElementById("txt_nombre_estudiante").value;
+        var objetivo_act     = document.getElementById("txt_obj_act_academica").value;
+        var fecha_inicio     = document.getElementById("txt_fecha_ini").value;
+        var fecha_fin        = document.getElementById("txt_fecha_fin").value;
+        var horario_act      = document.getElementById("txt_horario").value;
+        var area_academica   = document.getElementById("txt_area_academica").value;
+        var responsable_area = document.getElementById("txt_respon_area").value;
+        var actividad_1      = document.getElementById("txt_actividad_1").value;
+        var resultado_1      = document.getElementById("txt_resultado_1").value;
+        var producto_1       = document.getElementById("txt_producto_1").value;
+        var actividad_2      = document.getElementById("txt_actividad_2").value;
+        var resultado_2      = document.getElementById("txt_resultado_2").value;
+        var producto_2       = document.getElementById("txt_producto_2").value;
+        var actividad_3      = document.getElementById("txt_actividad_3").value;
+        var resultado_3      = document.getElementById("txt_resultado_3").value;
+        var producto_3       = document.getElementById("txt_producto_3").value;
+        var actividad_4      = document.getElementById("txt_actividad_1").value;
+        var resultado_4      = document.getElementById("txt_resultado_1").value;
+        var producto_4       = document.getElementById("txt_producto_1").value;
+        var actividad_5      = document.getElementById("txt_actividad_2").value;
+        var resultado_5      = document.getElementById("txt_resultado_2").value;
+        var producto_5       = document.getElementById("txt_producto_2").value;
+        var actividad_6      = document.getElementById("txt_actividad_3").value;
+        var resultado_6      = document.getElementById("txt_resultado_3").value;
+        var producto_6       = document.getElementById("txt_producto_3").value;
+        var represent_legal  = document.getElementById("txt_nombre_repr_legal").value;
+        var delegado_ups     = document.getElementById("txt_nombre_deleg_ups").value;
+        var tutor            = document.getElementById("cmb_tutor").value;
+
+        if (cod_cc == "") {
+            swal("Error!", "El codigo no ha podido ser generado. Favor comuníquese con el administrador o el Dpto. de sistemas", "info");
+        }else if (empresa_nomb == "") {
+            document.getElementById("txt_nombre_empresa").focus();
+            swal("Error!", "Favor verifique no ha seleccionado ninguna empresa. Debe dar clic sobre el campo empresa para acceder a una ventana de búsqueda", "info");
+        }else if (est_nomb == "") {
+            document.getElementById("txt_nombre_estudiante").focus();
+            swal("Error!", "Favor verifique no ha seleccionado ningun estudiante. Debe dar clic sobre el campo estudiante para acceder a una ventana de búsqueda", "info");
+        }else if (objetivo_act == "") {
+            document.getElementById("txt_obj_act_academica").focus();
+            swal("Error!", "Favor verifique no ha ingresado el objetivo de la actividad académica", "info");
+        }else if (fecha_inicio == "") {
+            document.getElementById("txt_fecha_ini").focus();
+            swal("Error!", "Favor ingrese la fecha de inicio de la actividad académica", "info");
+        }else if (fecha_fin == "") {
+            document.getElementById("txt_fecha_fin").focus();
+            swal("Error!", "Favor ingrese la fecha de finalización de la actividad académica", "info");
+        }else if (fecha_fin == fecha_inicio) {
+            document.getElementById("txt_fecha_fin").focus();
+            swal("Error!", "Favor verifique la fecha de inicio no puede ser igual que la fecha de finalización", "info");
+        }else if (horario_act == "") {
+            document.getElementById("txt_horario").focus();
+            swal("Error!", "Favor ingrese el horario en el que se desarrollará la actividad académica", "info");
+        }else if (area_academica == "") {
+            document.getElementById("txt_area_academica").focus();
+            swal("Error!", "Favor ingrese el área donde desarrollará la actividad académica", "info");
+        }else if (responsable_area == "") {
+            document.getElementById("txt_respon_area").focus();
+            swal("Error!", "Favor ingrese el responsable del área donde desarrollará la actividad académica", "info");
+        }else if (represent_legal == "") {
+            document.getElementById("txt_nombre_empresa").focus();
+            swal("Error!", "Favor verifique que la empresa seleccionada tiene un representante legal asignado", "info");
+        }else if (tutor == "") {
+            document.getElementById("cmb_tutor").focus();
+            swal("Error!", "Los tutores no pudieron ser cargados. Favor comunicarse con el administrador o con el Dpto. de sistemas", "info");
+        }else if (delegado_ups == "") {
+            document.getElementById("txt_nombre_deleg_ups").focus();
+            swal("Error!", "El delegado de la UPS no pudo ser cargado. Favor comuníquese con el administrador o el Dpto. de sistemas", "info");
+        }else if (actividad_1 == "") {
+            document.getElementById("txt_actividad_1").focus();
+            swal("Error!", "Favor ingresar por lo menos la primera actividad", "info");
+        }else if (resultado_1 == "") {
+            document.getElementById("txt_resultado_1").focus();
+            swal("Error!", "Favor ingresar por lo menos el resultado de la primera actividad", "info");
+        }else if (producto_1 == "") {
+            document.getElementById("txt_producto_1").focus();
+            swal("Error!", "Favor ingresar por lo menos el producto de la primera actividad", "info");
+        }else if ( (actividad_2 == "" && producto_2 == "" && resultado_2 != "")
+                || (actividad_2 == "" && producto_2 != "" && resultado_2 == "")
+                || (actividad_2 != "" && producto_2 == "" && resultado_2 == "")
+                || (actividad_2 != "" && producto_2 != "" && resultado_2 == "")
+                || (actividad_2 != "" && producto_2 == "" && resultado_2 != "")
+                || (actividad_2 == "" && producto_2 != "" && resultado_2 != "")
+                 ) {
+            document.getElementById("txt_actividad_2").focus();
+            swal("Error!", "Ha ingresado la actividad 2 incompleta. Favor verifique que se encuentren llenos los campos actividad 2, producto 2, resultado 2", "info");
+        }else if ( (actividad_3 == "" && producto_3 == "" && resultado_3 != "")
+                || (actividad_3 == "" && producto_3 != "" && resultado_3 == "")
+                || (actividad_3 != "" && producto_3 == "" && resultado_3 == "")
+                || (actividad_3 != "" && producto_3 != "" && resultado_3 == "")
+                || (actividad_3 != "" && producto_3 == "" && resultado_3 != "")
+                || (actividad_3 == "" && producto_3 != "" && resultado_3 != "")
+                 ) {
+            document.getElementById("txt_actividad_3").focus();
+            swal("Error!", "Ha ingresado la actividad 3 incompleta. Favor verifique que se encuentren llenos los campos actividad 3, producto 3, resultado 3", "info");
+        }else if ( (actividad_4 == "" && producto_4 == "" && resultado_4 != "")
+                || (actividad_4 == "" && producto_4 != "" && resultado_4 == "")
+                || (actividad_4 != "" && producto_4 == "" && resultado_4 == "")
+                || (actividad_4 != "" && producto_4 != "" && resultado_4 == "")
+                || (actividad_4 != "" && producto_4 == "" && resultado_4 != "")
+                || (actividad_4 == "" && producto_4 != "" && resultado_4 != "")
+                 ) {
+            document.getElementById("txt_actividad_4").focus();
+            swal("Error!", "Ha ingresado la actividad 4 incompleta. Favor verifique que se encuentren llenos los campos actividad 4, producto 4, resultado 4", "info");
+        }else if ( (actividad_5 == "" && producto_5 == "" && resultado_5 != "")
+                || (actividad_5 == "" && producto_5 != "" && resultado_5 == "")
+                || (actividad_5 != "" && producto_5 == "" && resultado_5 == "")
+                || (actividad_5 != "" && producto_5 != "" && resultado_5 == "")
+                || (actividad_5 != "" && producto_5 == "" && resultado_5 != "")
+                || (actividad_5 == "" && producto_5 != "" && resultado_5 != "")
+                 ) {
+            document.getElementById("txt_actividad_5").focus();
+            swal("Error!", "Ha ingresado la actividad 5 incompleta. Favor verifique que se encuentren llenos los campos actividad 5, producto 5, resultado 5", "info");
+        }else if ( (actividad_6 == "" && producto_6 == "" && resultado_6 != "")
+                || (actividad_6 == "" && producto_6 != "" && resultado_6 == "")
+                || (actividad_6 != "" && producto_6 == "" && resultado_6 == "")
+                || (actividad_6 != "" && producto_6 != "" && resultado_6 == "")
+                || (actividad_6 != "" && producto_6 == "" && resultado_6 != "")
+                || (actividad_6 == "" && producto_6 != "" && resultado_6 != "")
+                 ) {
+            document.getElementById("txt_actividad_6").focus();
+            swal("Error!", "Ha ingresado la actividad 6 incompleta. Favor verifique que se encuentren llenos los campos actividad 6, producto 6, resultado 6", "info");
+        }else {
+            document.getElementById("accion_form").value="I";
+            //document.frm_carta_comp.submit();
+            //$scope.submitted = true;
+            swal({
+                title: "Está segur@?",
+                text: "Favor confirme que los datos ingresados son los correctos",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#337ab7",
+                confirmButtonText: "Si,Guardar!",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function() {
+                $.ajax({
+                    type: 'POST',
+                    //dataType: 'json',
+                    //data: {id_cc: id_cc},
+                    //data: {id_cmb:'carrera'},
+                    data: $('#frm_carta_comp').serialize(),
+                    url: ruta + '/F_carta_compromiso.jsp',
+                    success: function(data) {
+                        if (data.trim() == "SI") {
+                            //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
+                            swal({
+                                title: "Exito!",
+                                text: "La carta compromiso ha sido ingresada",
+                                type: "success",
+                                showCancelButton: false,
+                                confirmButtonColor: "#337ab7",
+                                confirmButtonText: "Ok",
+                                closeOnConfirm: true
+                            },
+                            function() {
+                                //ESTA SI//document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+                                //document.frm_ficha.target="_new";
+                                //alert(document.getElementById("frm_ficha").action);
+                                //ESTA SI//$("#frm_ficha").submit();
+                                //location.reload();
+                                //window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                            });
+
+                        } else {
+                            swal("Error", "La carta compromiso no pudo ser ingresada", "error");
+                        }
+                    }
+                });
+
+            });
+
+        }
+        
+        
+        
+        
+        
+        
     };
 
     $scope.carga_combo_carreras = function (id_carrera) {
@@ -256,6 +437,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
     
     $scope.consultar_estudiante = function () {
         var estudiante = document.getElementById("txt_nombre_est_mod").value;
+        var cedula = document.getElementById("txt_ced_est_mod").value;
         var ruta = document.getElementById("ruta_principal").value;
         var cont = 0;
         
@@ -268,7 +450,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            data: {estudiante: estudiante},
+            data: {estudiante: estudiante, cedula_est: cedula},
             url: ruta + '/F_Consulta_EstudianteCC',
             success: function (data) {
                 $.each(data.items, function (index, article) {
@@ -497,7 +679,8 @@ function llena_dato_empresa(seleccionado) {
     var representante = document.getElementById("representante_" + seleccionado).value;
     var cargo = document.getElementById("cargo_" + seleccionado).value;
     var tele_repre = document.getElementById("tele_repre_" + seleccionado).value;
-
+    var unidad_ext = document.getElementById("ue_id_" + seleccionado).value;
+    
     document.getElementById("txt_nombre_empresa").value = nombre_empresa;
     document.getElementById("txt_direccion").value = direccion;
     document.getElementById("txt_telefono").value = telefono;
@@ -505,6 +688,8 @@ function llena_dato_empresa(seleccionado) {
     document.getElementById("txt_nombre_repr_legal").value = representante;
     document.getElementById("txt_cargo_repr_legal").value = cargo;
     document.getElementById("txt_fono_repr_legal").value = tele_repre;
+    document.getElementById("id_empresa").value = unidad_ext;
+
 }
 
 function carga_combo_tutores() {
