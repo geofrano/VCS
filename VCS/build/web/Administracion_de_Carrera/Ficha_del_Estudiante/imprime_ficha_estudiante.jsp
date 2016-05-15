@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Informe_Peticion_Verbal
+    Document   : Imprime el pdf de la ficha del estudiante
     Created on : 07-ene-2016, 9:25:10
-    Author     : lpita
+    Author     : gbarrera
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

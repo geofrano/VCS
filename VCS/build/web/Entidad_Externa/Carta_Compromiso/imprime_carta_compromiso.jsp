@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Imprime el pdf de la ficha del estudiante
-    Created on : 07-ene-2016, 9:25:10
-    Author     : gbarrera
+    Document   : Imprime la Carta Compromiso
+    Created on : 07-feb-2016, 11:25:10
+    Author     : lpita
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,13 +11,13 @@
         <% String ruta=request.getContextPath(); %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ficha del Estudiante - Impresion</title>
-        <% String id_cc = request.getParameter("txt_id_carta_comp").toString();%>
+        <% String id_cc = request.getParameter("txt_codigo").toString();%>
         <script>
             function imprime()
             {
                 window.opener.recarga();
                 var ruta=document.getElementById("ruta_principal").value; 
-                document.getElementById("frm_imprime").action=ruta+"/F_genera_pdf_ficha_estudiante";
+                document.getElementById("frm_imprime").action=ruta+"/F_genera_pdf_carta_compromiso";
                 document.frm_imprime.submit();
             }
         </script>

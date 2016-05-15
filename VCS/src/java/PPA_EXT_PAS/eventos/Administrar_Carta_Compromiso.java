@@ -121,8 +121,23 @@ public class Administrar_Carta_Compromiso {
                                             "    ?,\n" +//RECURSO 6
                                             "    ?,\n" +//RESULTADO 6
                                             "    ? \n" +//ACCION
-                                            ")";
-        parametros.add(new Parametro(1, this.carta_compromiso.getId_carta_compromiso()));
+                                            ")";//CC001.PA-GIS-2
+        String id_cart_comp=this.carta_compromiso.getId_carta_compromiso().substring(0,13);
+        String id_carrera = this.carta_compromiso.getId_carta_compromiso().substring(9,12);
+        String secuencia_real ="";
+        try {
+             ConjuntoResultado cres2
+                    = AccesoDatos.ejecutaQuery("select nextval('sec_cc_"+id_carrera+"')");
+            while (cres2.next()) {
+                secuencia_real = cres2.getString(0);//Obtengo la secuencia real que le corresponde
+            }
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        id_cart_comp=id_cart_comp+secuencia_real;
+        
+        parametros.add(new Parametro(1, id_cart_comp));
         parametros.add(new Parametro(2, this.carta_compromiso.getNomb_estudiante()));
         parametros.add(new Parametro(3, this.carta_compromiso.getTipo_actividad()));
         parametros.add(new Parametro(4, adm_cc.devuelveParametroCC(this.carta_compromiso.getTotal_horas())));

@@ -236,10 +236,10 @@ app.controller("ControladorVCS", function ($scope, $http) {
                                 closeOnConfirm: true
                             },
                             function() {
-                                //ESTA SI//document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+                                document.getElementById("frm_carta_comp").action = ruta + "/Entidad_Externa/Carta_Compromiso/imprime_carta_compromiso.jsp";
                                 //document.frm_ficha.target="_new";
                                 //alert(document.getElementById("frm_ficha").action);
-                                //ESTA SI//$("#frm_ficha").submit();
+                                $("#frm_carta_comp").submit();
                                 //location.reload();
                                 //window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
                             });

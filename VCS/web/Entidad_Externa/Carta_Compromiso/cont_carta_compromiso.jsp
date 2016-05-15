@@ -429,7 +429,7 @@
                 <tr>
                     <td><label>Lugar y Fecha <br>de Suscripción: </label></td>
                     <td colspan="5">
-                        <input type="hidden" id="txt_ciudad" name="txt_ciudad" ng-value="{{sede}}"/>
+                        <input type="hidden" id="txt_ciudad" name="txt_ciudad" ng-value="sede"/>
                         <input type="text" class="text-primary form-control" 
                                readonly="readonly" id="txt_lugar_fecha_suscrip" 
                                name="txt_lugar_fecha_suscrip" maxlength="500"
