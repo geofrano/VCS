@@ -183,7 +183,8 @@ app.controller("ControladorVCS", function ($scope, $http) {
         var represent_legal  = document.getElementById("txt_nombre_repr_legal").value;
         var delegado_ups     = document.getElementById("txt_nombre_deleg_ups").value;
         var tutor            = document.getElementById("cmb_tutor").value;
-
+        var accion_realiza   = document.getElementById("accion_form").value;
+        
         if (cod_cc == "") {
             swal("Error!", "El codigo no ha podido ser generado. Favor comuníquese con el administrador o el Dpto. de sistemas", "info");
         }else if (empresa_nomb == "") {
@@ -277,57 +278,122 @@ app.controller("ControladorVCS", function ($scope, $http) {
             document.getElementById("txt_actividad_6").focus();
             swal("Error!", "Ha ingresado la actividad 6 incompleta. Favor verifique que se encuentren llenos los campos actividad 6, producto 6, resultado 6", "info");
         }else {
-            //document.getElementById("accion_form").value="I";
-            //document.frm_carta_comp.submit();
-            //$scope.submitted = true;
-            swal({
-                title: "Está segur@?",
-                text: "Favor confirme que los datos ingresados son los correctos",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#337ab7",
-                confirmButtonText: "Si,Guardar!",
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true
-            },
-            function() {
+            
+            if (accion_realiza == "I"){
                 $.ajax({
                     type: 'POST',
                     //dataType: 'json',
                     //data: {id_cc: id_cc},
                     //data: {id_cmb:'carrera'},
                     data: $('#frm_carta_comp').serialize(),
-                    url: ruta + '/F_carta_compromiso.jsp',
+                    url: ruta + '/F_valida_cc',
                     success: function(data) {
-                        if (data.trim().substring(0,2) == "SI") {
-                            //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
+                        if (data.trim() == "NO") {//NO HAY INGRESADO duplicados
                             swal({
-                                title: "Exito!",
-                                text: "La carta compromiso ha sido ingresada",
-                                type: "success",
-                                showCancelButton: false,
+                                title: "Está segur@?",
+                                text: "Favor confirme que los datos ingresados son los correctos",
+                                type: "warning",
+                                showCancelButton: true,
                                 confirmButtonColor: "#337ab7",
-                                confirmButtonText: "Ok",
-                                closeOnConfirm: true
+                                confirmButtonText: "Si,Guardar!",
+                                closeOnConfirm: false,
+                                showLoaderOnConfirm: true
                             },
                             function() {
-                                document.getElementById("txt_codigo").value=data.trim().substring(3);
-                                document.getElementById("frm_carta_comp").action = ruta + "/Entidad_Externa/Carta_Compromiso/imprime_carta_compromiso.jsp";
-                                document.frm_carta_comp.target="_new";
-                                //alert(document.getElementById("frm_ficha").action);
-                                $("#frm_carta_comp").submit();
-                                //location.reload();
-                                //window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
-                            });
+                                $.ajax({
+                                    type: 'POST',
+                                    //dataType: 'json',
+                                    //data: {id_cc: id_cc},
+                                    //data: {id_cmb:'carrera'},
+                                    data: $('#frm_carta_comp').serialize(),
+                                    url: ruta + '/F_carta_compromiso.jsp',
+                                    success: function(data) {
+                                        if (data.trim().substring(0,2) == "SI") {
+                                            //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
+                                            swal({
+                                                title: "Exito!",
+                                                text: "La carta compromiso ha sido ingresada",
+                                                type: "success",
+                                                showCancelButton: false,
+                                                confirmButtonColor: "#337ab7",
+                                                confirmButtonText: "Ok",
+                                                closeOnConfirm: true
+                                                },
+                                                function() {
+                                                    document.getElementById("txt_codigo").value=data.trim().substring(3);
+                                                    document.getElementById("frm_carta_comp").action = ruta + "/Entidad_Externa/Carta_Compromiso/imprime_carta_compromiso.jsp";
+                                                    document.frm_carta_comp.target="_new";
+                                                    //alert(document.getElementById("frm_ficha").action);
+                                                    $("#frm_carta_comp").submit();
+                                                    //location.reload();
+                                                    //window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                                                });
+
+                                            } else {
+                                                swal("Error", "La carta compromiso no pudo ser ingresada", "error");
+                                            }
+                                        }
+                                    });
+
+                                });
 
                         } else {
-                            swal("Error", "La carta compromiso no pudo ser ingresada", "error");
+                            swal("Error", "El estudiante ya posee dicha actividad en el sistema. Favor verifique", "error");
                         }
                     }
                 });
+            }else if (accion_realiza == "M"){
+            //document.getElementById("accion_form").value="I";
+            //document.frm_carta_comp.submit();
+            //$scope.submitted = true;
+                swal({
+                    title: "Está segur@?",
+                    text: "Favor confirme que los datos ingresados son los correctos",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#337ab7",
+                    confirmButtonText: "Si,Guardar!",
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function() {
+                    $.ajax({
+                        type: 'POST',
+                        //dataType: 'json',
+                        //data: {id_cc: id_cc},
+                        //data: {id_cmb:'carrera'},
+                        data: $('#frm_carta_comp').serialize(),
+                        url: ruta + '/F_carta_compromiso.jsp',
+                        success: function(data) {
+                            if (data.trim().substring(0,2) == "SI") {
+                                //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
+                                swal({
+                                    title: "Exito!",
+                                    text: "La carta compromiso ha sido ingresada",
+                                    type: "success",
+                                    showCancelButton: false,
+                                    confirmButtonColor: "#337ab7",
+                                    confirmButtonText: "Ok",
+                                    closeOnConfirm: true
+                                },
+                                function() {
+                                    document.getElementById("txt_codigo").value=data.trim().substring(3);
+                                    document.getElementById("frm_carta_comp").action = ruta + "/Entidad_Externa/Carta_Compromiso/imprime_carta_compromiso.jsp";
+                                    document.frm_carta_comp.target="_new";
+                                    //alert(document.getElementById("frm_ficha").action);
+                                    $("#frm_carta_comp").submit();
+                                    //location.reload();
+                                    //window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                                });
 
-            });
+                            } else {
+                                swal("Error", "La carta compromiso no pudo ser ingresada", "error");
+                            }
+                        }
+                    });
 
+                });
+            }
         }
     };
 
@@ -652,7 +718,9 @@ app.controller("ControladorVCS", function ($scope, $http) {
     };
 });
 function recarga() {
-    location.reload();
+    //location.reload();
+    var ruta = document.getElementById("ruta_principal").value;
+    window.open(ruta + "/Entidad_Externa/Carta_Compromiso/carta_compromiso.jsp", target="_self");
 }
     function controltag(e,valida) {
             tecla = (document.all) ? e.keyCode : e.which; 
@@ -934,6 +1002,39 @@ function carga_modificacion(cont) {
         }
     });
 }
+function elimina(cont) {
+    var id_cc = document.getElementById("cc_id_" + cont).value;
+    var ruta = document.getElementById("ruta_principal").value;
+    swal({
+        title: "Está segur@?",
+        text: "Realmente desea eliminar la Carta del estudiante",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#337ab7",
+        confirmButtonText: "Eliminar",
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+    },
+    function() {
+        $.ajax({
+            type: 'POST',
+            data: {txt_id_carta_comp: id_cc, accion_form: 'E'},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_carta_compromiso.jsp',
+            success: function(data) {
+                if (data.trim() == "SI") {
+                    swal("Exito", "La carta compromiso ha sido eliminada exitosamente", "success");
+                    window.open(ruta + "/Entidad_Externa/Carta_Compromiso/carta_compromiso.jsp", "_self");
+                } else {
+                    swal("Error", "La carta compromiso no pudo ser eliminada", "error");
+                }
+            }
+        });
+    });
+
+}
+
 function imprime(cont) {
     var ruta = document.getElementById("ruta_principal").value;
     var id_cc = document.getElementById("cc_id_" + cont).value;
@@ -1021,23 +1122,6 @@ function carga_ingreso(cont) {
     document.getElementById("frm_datos").action = ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp";
     document.getElementById("frm_datos").target = "_self";
     document.frm_datos.submit();
-    //window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp", target = "_self");
-    /*$("#frm_consulta").css("display", "none");
-    $("#div_ingreso").css("display", "block");
-    //$scope.submitted = true;
-    $.ajax({
-        type: 'POST',
-        //data: {id_cmb:'carrera'},
-        //data: $('#formid').serialize(),
-        url: ruta + '/Entidad_Externa/Carta_Compromiso/cont_carta_compromiso.jsp',
-        success: function(data) {
-            $("#div_ingreso").html("");
-            $("#div_ingreso").append(data);
-            document.getElementById("accion_form").value = "M";
-            carga_datos(id_cc);
-            $("#div_campos_bloq").css("display", "block");
-        }
-    });*/
 }
 function carga_combo_tipo_empr_sel(tipo) {
         var ruta = document.getElementById("ruta_principal").value;

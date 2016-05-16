@@ -190,17 +190,43 @@ public class Administrar_Carta_Compromiso {
         return res;
     }
     
+    public String validaCC(String id_estudiante, String id_tipo_actividad){
+        String sql="SELECT cc_id \n" +
+                    "  FROM \"MPP_CARTA_COMPROMISO\" \n" +
+                    " WHERE es_id = CAST(? AS integer) "+
+                    "  AND trim(cc_tipo_actividad) = ? limit 1";
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1,id_estudiante.trim()));
+        lstPar.add(new Parametro(2,id_tipo_actividad.trim()));
+        String valor="NO";
+        
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql,lstPar);
+            
+            if (cres.next()) {
+                valor="SI";
+            }else{
+                valor="NO";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return valor;
+    }
+    
     public String elimina(String cc_id) {
         ArrayList<Parametro> parametros = new ArrayList<>();
         String res = "NO";
-        String sql = "delete FROM \"MPP_FICHA_ESTUDIANTE\" where trim(cc_id) = ?";
-        parametros.add(new Parametro(1, cc_id.trim()));
+        String sql = "SELECT f_devuelve_actividades(?)";
+        
+        parametros.add(new Parametro(1, cc_id));
+        
         try {
-             boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
-             //String act=actualiza_estado_cc(cc_id,"A");
-             if (cres){
-                 res="SI";
-             }
+             ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql, parametros);
+            while (cres.next()) {
+                res = cres.getString(0);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

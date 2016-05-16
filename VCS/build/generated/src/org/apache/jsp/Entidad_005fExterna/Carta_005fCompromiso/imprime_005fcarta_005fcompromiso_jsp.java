@@ -51,7 +51,7 @@ public final class imprime_005fcarta_005fcompromiso_jsp extends org.apache.jaspe
  String ruta=request.getContextPath(); 
       out.write("\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Ficha del Estudiante - Impresion</title>\n");
+      out.write("        <title>Carta Compromiso - Impresion</title>\n");
       out.write("        ");
  String id_cc = request.getParameter("txt_codigo").toString();
       out.write("\n");
