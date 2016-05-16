@@ -116,7 +116,7 @@ public class Administrar_Ficha_Estudiante {
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
                 + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, to_char(cc_fecha_suscripcion,'dd/mm/yyyy'), \n"
                 + " cc_lugar_suscripcion, cargo_director_carr, director_carrera, cargo_dir_tecnico, director_tecnico, total_horas,cc_objetivo_actividad, \n"
-                + " resp_vcs,resp_act \n"
+                + " resp_vcs,resp_act, ue_actividad_principal,telefono_dir_tec \n"
                 + "from view_datos_cc\n"
                 + "where trim(id_cc) = ? ";
 
@@ -169,6 +169,8 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setObjetivo_actividad(cres.getString(34).trim());
                 carta_comp.setNombre_delegado(cres.getString(35).trim());
                 carta_comp.setActividad_3(cres.getString(36).trim());
+                carta_comp.setAct_empresa(cres.getString(37).trim());
+                carta_comp.setTelf_delegado(cres.getString(38).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {

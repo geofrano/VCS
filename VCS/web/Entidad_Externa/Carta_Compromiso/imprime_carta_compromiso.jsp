@@ -24,8 +24,8 @@
     </head>
     <body onload="imprime()">
         <form action="" method="POST" id="frm_imprime" name="frm_imprime">
-            <input type="hidden" value="<%=ruta%>" id="ruta_principal" name="ruta_principal" />
-            <input type="hidden" value="<%=id_cc%>" id="txt_id_carta_comp" name="txt_id_carta_comp" />
+            <input type="text" value="<%=ruta%>" id="ruta_principal" name="ruta_principal" />
+            <input type="text" value="CC001.PA-GIS-10" id="txt_id_carta_comp" name="txt_id_carta_comp" />
         </form>
     </body>
 </html>

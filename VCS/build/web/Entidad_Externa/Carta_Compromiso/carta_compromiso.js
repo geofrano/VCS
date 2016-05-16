@@ -10,7 +10,79 @@ app.controller("ControladorVCS", function ($scope, $http) {
     $scope.submitted = false;
     $scope.muestra_carrera = false;
 
+    $scope.consultar_estudiante_cc = function() {
+        var estudiante = document.getElementById("txt_nombre_est").value;
+        var ruta = document.getElementById("ruta_principal").value;
+        var cont = 0;
+        var $tabla = $("#tbl_estudiante");
+        $tabla.find("tr:gt(0)").remove();
+        document.getElementById("existe_data").value = "0";
+        $("#div_consulta").css("display", "none");
+        $("#div_consulta2").css("display", "block");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_est: estudiante},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_Consulta_Estudiante',
+            success: function(data) {
+                $("#div_datos").html("");
 
+                $.each(data.items, function(index, article) {
+                    cont = cont + 1;
+                    $tabla.append("<tr><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\">" + article.id_cc + "</td>\n" +
+                            "<td>" + article.cc_tipo_act + "</td>\n" +
+                            "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
+                            //"<td>" + article.emp_nombre + "</td>\n" +
+                            "<td>" + article.lugar_suscrip + "</td>\n" +
+                            "<td>" + article.fecha_suscrip + "</td>\n" +
+                            "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div>" +
+                            "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
+                            "</td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
+                            "</td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
+                            "</td></tr>\n");
+                    var estado = parseInt(article.cc_estado);
+                    $("#" + "div_imprimir_" + cont).css("display", "block");
+                    $("#" + "div_eliminar_" + cont).css("display", "block");
+                    $("#" + "div_modificar_" + cont).css("display", "block");
+                    /*if (estado >= 4) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                        $("#" + "div_imprimir_" + cont).css("display", "block");
+                        $("#" + "div_eliminar_" + cont).css("display", "block");
+                    }
+                    if (article.cc_estado.trim() == "A") {
+                        $("#" + "div_eliminar_" + cont).css("display", "block");
+                        $("#" + "div_modificar_" + cont).css("display", "block");
+                        $("#" + "div_inserta_" + cont).css("display", "none");
+                    }
+                    if (estado >= 0 && estado <=4) {
+                        $("#" + "div_eliminar_" + cont).css("display", "block");
+                        $("#" + "div_modificar_" + cont).css("display", "block");
+                        $("#" + "div_inserta_" + cont).css("display", "none");
+                    }
+                    if (estado >= 4) {//La ficha del estudiante ya fue ingresada
+                        $("#" + "div_eliminar_" + cont).css("display", "block");
+                        $("#" + "div_modificar_" + cont).css("display", "block");
+                        $("#" + "div_inserta_" + cont).css("display", "none");
+                    }*/
+
+                    document.getElementById("existe_data").value = "1";
+                });
+                var v = document.getElementById("existe_data").value;
+
+                if (v == "0") {
+                    $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
+                }
+                $("#div_consulta").css("display", "block");
+                $("#div_consulta2").css("display", "none");
+            }
+        });
+
+    };
     $scope.carga2 = function () {
         var ruta = document.getElementById("ruta_principal").value;
         //var fullname = $('#fullname').val();
@@ -224,7 +296,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
                     data: $('#frm_carta_comp').serialize(),
                     url: ruta + '/F_carta_compromiso.jsp',
                     success: function(data) {
-                        if (data.trim() == "SI") {
+                        if (data.trim().substring(0,2) == "SI") {
                             //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
                             swal({
                                 title: "Exito!",
@@ -236,8 +308,9 @@ app.controller("ControladorVCS", function ($scope, $http) {
                                 closeOnConfirm: true
                             },
                             function() {
+                                document.getElementById("txt_codigo").value=data.trim().substring(3);
                                 document.getElementById("frm_carta_comp").action = ruta + "/Entidad_Externa/Carta_Compromiso/imprime_carta_compromiso.jsp";
-                                //document.frm_ficha.target="_new";
+                                document.frm_carta_comp.target="_new";
                                 //alert(document.getElementById("frm_ficha").action);
                                 $("#frm_carta_comp").submit();
                                 //location.reload();
@@ -253,12 +326,6 @@ app.controller("ControladorVCS", function ($scope, $http) {
             });
 
         }
-        
-        
-        
-        
-        
-        
     };
 
     $scope.carga_combo_carreras = function (id_carrera) {
@@ -581,6 +648,9 @@ app.controller("ControladorVCS", function ($scope, $http) {
         window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_empresa.jsp", target = "name", 'top=65, left=450, width=700, height=775,scrollbars=1');
     };
 });
+function recarga() {
+    location.reload();
+}
     function controltag(e,valida) {
             tecla = (document.all) ? e.keyCode : e.which; 
             if (tecla==8) return true; // para la tecla de retroseso
@@ -772,7 +842,6 @@ function carga_ingreso_empr(cont) {
                 data: $('#frm_empresa_ingreso').serialize(),
                 url: ruta + '/F_grabar_empresa',
                 success: function (data) {
-                    //alert(data);
                     if (data.trim() == "SI") {
                         //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
                         swal({
@@ -852,7 +921,14 @@ function carga_modificacion(cont) {
         }
     });
 }
-
+function imprime(cont) {
+    var ruta = document.getElementById("ruta_principal").value;
+    var id_cc = document.getElementById("cc_id_" + cont).value;
+    document.getElementById("txt_codigo").value = id_cc;
+    document.getElementById("frm_cc").action = ruta + "/Entidad_Externa/Carta_Compromiso/imprime_carta_compromiso.jsp";
+    document.frm_cc.target = "_new";
+    document.frm_cc.submit();
+}//FIN imprime
 
 function carga_combo_tipo_empr_sel(tipo) {
         var ruta = document.getElementById("ruta_principal").value;

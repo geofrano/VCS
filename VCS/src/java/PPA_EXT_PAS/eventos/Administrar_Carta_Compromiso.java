@@ -177,7 +177,7 @@ public class Administrar_Carta_Compromiso {
             while (cres.next()) {
                 res = cres.getString(0);
             }
-            
+            res=res+"-"+id_cart_comp;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
