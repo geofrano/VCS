@@ -217,7 +217,7 @@ public class Administrar_Carta_Compromiso {
     public String elimina(String cc_id) {
         ArrayList<Parametro> parametros = new ArrayList<>();
         String res = "NO";
-        String sql = "SELECT f_devuelve_actividades(?)";
+        String sql = "SELECT f_elimina_carta_comp(?)";
         
         parametros.add(new Parametro(1, cc_id));
         
