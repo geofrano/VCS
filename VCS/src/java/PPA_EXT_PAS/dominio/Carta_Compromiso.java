@@ -76,7 +76,10 @@ public class Carta_Compromiso {
     private String cargo_dir_tec;
     private String dir_tecnico;
     private String estado;
-
+    private String telef_empresa;
+    private String id_empresa;
+    private String id_estudiante;
+    
     public String getCargo_dir_tec() {
         return cargo_dir_tec;
     }
@@ -588,4 +591,29 @@ public class Carta_Compromiso {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getTelef_empresa() {
+        return telef_empresa;
+    }
+
+    public void setTelef_empresa(String telef_empresa) {
+        this.telef_empresa = telef_empresa;
+    }
+
+    public String getId_empresa() {
+        return id_empresa;
+    }
+
+    public void setId_empresa(String id_empresa) {
+        this.id_empresa = id_empresa;
+    }
+
+    public String getId_estudiante() {
+        return id_estudiante;
+    }
+
+    public void setId_estudiante(String id_estudiante) {
+        this.id_estudiante = id_estudiante;
+    }
+    
 }

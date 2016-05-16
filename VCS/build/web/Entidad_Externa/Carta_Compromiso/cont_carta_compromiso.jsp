@@ -7,7 +7,7 @@
 <h1 class="alineado3">Carta Compromiso Interinstitucional</h1>
 <div class="form-group">
     <form id="frm_carta_comp" name="frm_carta_comp" action="" method="POST">
-        <input type="hidden" id="accion_form" name="accion_form" value="M" />
+        <input type="hidden" id="accion_form" name="accion_form" value="I" />
         <fieldset class="legendas2"><legend class="legendas opcion_iluminada">Información General</legend>
             <table class="table table-hover table-responsive">
                 <tr>

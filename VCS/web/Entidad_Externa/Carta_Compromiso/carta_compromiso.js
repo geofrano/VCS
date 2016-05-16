@@ -136,7 +136,11 @@ app.controller("ControladorVCS", function ($scope, $http) {
 
     $scope.carga_ingreso = function () {
         var ruta = document.getElementById("ruta_principal").value;
-        window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp", target = "_self");
+        document.getElementById("id_cc_consulta").value="NADA";
+        document.getElementById("frm_datos").action = ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp";
+        document.getElementById("frm_datos").target = "_self";
+        document.frm_datos.submit();
+        //window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp", target = "_self");
     };
 
     $scope.carga_busca_cc = function () {
@@ -148,7 +152,6 @@ app.controller("ControladorVCS", function ($scope, $http) {
         var ruta = document.getElementById("ruta_principal").value;
         $scope.user = {};
         document.getElementById("frm_carta_comp").action = ruta + "/F_carta_compromiso.jsp";
-        
         
         var cod_cc           = document.getElementById("txt_codigo").value;
         var empresa_nomb     = document.getElementById("txt_nombre_empresa").value;
@@ -274,7 +277,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
             document.getElementById("txt_actividad_6").focus();
             swal("Error!", "Ha ingresado la actividad 6 incompleta. Favor verifique que se encuentren llenos los campos actividad 6, producto 6, resultado 6", "info");
         }else {
-            document.getElementById("accion_form").value="I";
+            //document.getElementById("accion_form").value="I";
             //document.frm_carta_comp.submit();
             //$scope.submitted = true;
             swal({
@@ -801,7 +804,6 @@ function carga_ingreso_empr(cont) {
         document.getElementById("id_ar").value =window.parent.opener.document.getElementById("ar_id_" + cont).value;
     }
     
-    
     if (nombre_empresa == "") {
         swal("Error!", "Favor ingrese el Nombre de la Empresa", "info");
         document.getElementById("txt_nombre_empresa_ing").focus();
@@ -863,6 +865,17 @@ function carga_ingreso_empr(cont) {
         });
     }
 }
+function verifica_accion(){
+    var id_cc_consul = document.getElementById("id_cc_consulta").value;
+    
+    if (id_cc_consul != "NADA" && id_cc_consul !=""){
+        document.getElementById("accion_form").value = "M";
+        carga_datos(id_cc_consul);
+        $("#div_campos_bloq").css("display", "block");
+    }
+    
+}
+
 function modif_empr() {
     var tipo_accion = window.parent.opener.document.getElementById("tipo_accion").value;
     var cont = window.parent.opener.document.getElementById("cont").value;
@@ -929,7 +942,103 @@ function imprime(cont) {
     document.frm_cc.target = "_new";
     document.frm_cc.submit();
 }//FIN imprime
+function carga_datos(id_cart_comp) {
+    var ruta = document.getElementById("ruta_principal").value;
+    //alert(id_cart_comp);
+    var id_cc = id_cart_comp.trim();
+    var accion = document.getElementById("accion_form").value;
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: {id_cc: id_cc, accion_form: accion},
+        //data: {id_cmb:'carrera'},
+        //data: $('#formid').serialize(),
+        url: ruta + '/F_muestra_carta_compromiso',
+        success: function(data) {
 
+            $.each(data.items, function(index, article) {
+                document.getElementById("txt_codigo").value = article.id_cc;
+                document.getElementById("txt_numero").value = article.num_cc;
+                document.getElementById("txt_nombre_empresa").value = article.empresa;
+                document.getElementById("txt_direccion").value = article.emp_dir;
+                document.getElementById("txt_telefono").value = article.empresa_fono;
+                document.getElementById("txt_actividad_empresa").value = article.act_emp;
+                document.getElementById("txt_nombre_estudiante").value = article.est_nombre;
+                //document.getElementById("cmb_ciclos").value = article.est_ciclo;
+                carga_combo_ciclo_modif(article.est_ciclo);
+                //document.getElementById("cmb_tipo_actividad").value = article.tipo_act;//------
+                carga_combo_tipo_actividad_modif(article.tipo_act);
+                //document.getElementById("cmb_carrera").value = article.est_carrera;
+                carga_combo_carreras_modif(article.est_carrera,article.tutor);
+                //document.getElementById("cmb_horas").value = article.duracion;//------
+                carga_combo_horas_modif(article.duracion);
+                document.getElementById("txt_obj_act_academica").value = article.objetivo_act;
+                document.getElementById("txt_fecha_ini").value = article.dia_ini + '/' + article.mes_ini + '/' + article.anio_ini;
+                document.getElementById("txt_fecha_fin").value = article.dia_fin + '/' + article.mes_fin + '/' + article.anio_fin;
+                document.getElementById("txt_horario").value = article.horario;
+                //document.getElementById("cmb_programa").value = article.programa;//------------
+                carga_combo_programas_modif(article.programa);
+                document.getElementById("txt_area_academica").value = article.area_act;
+                document.getElementById("txt_respon_area").value = article.resp_area;
+                document.getElementById("txt_actividad_1").value = article.act_1;
+                document.getElementById("txt_actividad_2").value = article.act_2;
+                document.getElementById("txt_actividad_3").value = article.act_3;
+                document.getElementById("txt_actividad_4").value = article.act_4;
+                document.getElementById("txt_actividad_5").value = article.act_5;
+                document.getElementById("txt_actividad_6").value = article.act_6;
+                document.getElementById("txt_resultado_1").value = article.res_1;
+                document.getElementById("txt_resultado_2").value = article.res_2;
+                document.getElementById("txt_resultado_3").value = article.res_3;
+                document.getElementById("txt_resultado_4").value = article.res_4;
+                document.getElementById("txt_resultado_5").value = article.res_5;
+                document.getElementById("txt_resultado_6").value = article.res_6;
+                document.getElementById("txt_producto_1").value = article.rec_1;
+                document.getElementById("txt_producto_2").value = article.rec_2;
+                document.getElementById("txt_producto_3").value = article.rec_3;
+                document.getElementById("txt_producto_4").value = article.rec_4;
+                document.getElementById("txt_producto_5").value = article.rec_5;
+                document.getElementById("txt_producto_6").value = article.rec_6;
+                //document.getElementById("cmb_tutor").value = article.tutor;//-----------------
+                //carga_combo_tutores_modif(article.tutor);
+                document.getElementById("txt_nombre_repr_legal").value = article.emp_rep;
+                document.getElementById("txt_cargo_repr_legal").value = article.cargo_rep;
+                document.getElementById("txt_fono_repr_legal").value = article.fono_rep;
+                document.getElementById("txt_nombre_deleg_ups").value = article.dir_tec;
+                document.getElementById("txt_cargo_deleg_ups").value = article.cargo_dir_tec;
+                document.getElementById("txt_fono_deleg_ups").value = article.fono_dir_tec;
+                document.getElementById("txt_lugar_fecha_suscrip").value = article.suscripcion;
+                document.getElementById("id_empresa").value = article.id_empr;
+                document.getElementById("txt_id_est").value = article.id_est;
+            });
+        }
+    });
+}
+function carga_ingreso(cont) {
+    var id_cc = document.getElementById("cc_id_" + cont).value;
+    document.getElementById("id_cc_consulta").value=id_cc;
+    //alert(id_cc);
+    var ruta = document.getElementById("ruta_principal").value;
+    document.getElementById("frm_datos").action = ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp";
+    document.getElementById("frm_datos").target = "_self";
+    document.frm_datos.submit();
+    //window.open(ruta + "/Entidad_Externa/Carta_Compromiso/ingresar_carta_compromiso.jsp", target = "_self");
+    /*$("#frm_consulta").css("display", "none");
+    $("#div_ingreso").css("display", "block");
+    //$scope.submitted = true;
+    $.ajax({
+        type: 'POST',
+        //data: {id_cmb:'carrera'},
+        //data: $('#formid').serialize(),
+        url: ruta + '/Entidad_Externa/Carta_Compromiso/cont_carta_compromiso.jsp',
+        success: function(data) {
+            $("#div_ingreso").html("");
+            $("#div_ingreso").append(data);
+            document.getElementById("accion_form").value = "M";
+            carga_datos(id_cc);
+            $("#div_campos_bloq").css("display", "block");
+        }
+    });*/
+}
 function carga_combo_tipo_empr_sel(tipo) {
         var ruta = document.getElementById("ruta_principal").value;
         var $cmb = $("#cmb_tipo_emp");
@@ -955,3 +1064,162 @@ function carga_combo_tipo_empr_sel(tipo) {
             }
         });
     };
+
+//Funcion que se cargan cuando es modificacion
+function carga_combo_horas_modif(variable){
+    var ruta = document.getElementById("ruta_principal").value;
+        //var fullname = $('#fullname').val();
+        var $cmb = $("#cmb_horas");
+        //$tabla.find("tr:gt(0)").remove();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cmb: 'horas'},
+            url: ruta + '/F_Muestra_programas',
+            success: function (result) {
+                $cmb.find('option').remove();
+                $.each(result.items, function (index, article) {
+                    if (variable == article.descripcion){
+                        $cmb.append("<option selected value=\"" + article.valor + "\">\n" + article.descripcion +
+                            "</option>");
+                    }else{
+                        $cmb.append("<option  value=\"" + article.valor + "\">\n" + article.descripcion +
+                                "</option>");
+                    }
+                });
+                console.log("Se cargo exitosamente el combo hora");
+            }
+        });
+}
+function carga_combo_ciclo_modif(ciclo){
+    var ruta = document.getElementById("ruta_principal").value;
+        var $cmb = $("#cmb_ciclos");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cmb: 'ciclos'},
+            url: ruta + '/F_Muestra_programas',
+            success: function (result) {
+                $cmb.find('option').remove();
+                $.each(result.items, function (index, article) {
+                    if (ciclo == article.descripcion){
+                      $cmb.append("<option selected value=\"" + article.valor + "\">\n" + article.descripcion +
+                                  "</option>");  
+                    }else{
+                      $cmb.append("<option  value=\"" + article.valor + "\">\n" + article.descripcion +
+                                  "</option>");
+                    }
+                    
+                });
+                console.log("Se cargo exitosamente el combo ciclo");
+            }
+        });
+}
+
+function carga_combo_tipo_actividad_modif(variable){
+    var ruta = document.getElementById("ruta_principal").value;
+        var $cmb = $("#cmb_tipo_actividad");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cmb: 'tipo_actividad'},
+            url: ruta + '/F_Muestra_programas',
+            success: function (result) {
+                $cmb.find('option').remove();
+                $.each(result.items, function (index, article) {
+                    if (variable == article.descripcion){
+                        $cmb.append("<option selected value=\"" + article.valor + "\">\n" + article.descripcion +
+                                "</option>");
+                    }else{
+                        $cmb.append("<option value=\"" + article.valor + "\">\n" + article.descripcion +
+                                "</option>");
+                    }
+                });
+                //carga_codigo2();//Carga el codigo de la carta compromiso
+                console.log("Se cargo exitosamente el combo tipo de actividad");
+            }
+        });
+}
+function carga_combo_programas_modif(variable){
+    var ruta = document.getElementById("ruta_principal").value;
+        var $cmb = $("#cmb_programa");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cmb: 'programas'},
+            url: ruta + '/F_Muestra_programas',
+            success: function (result) {
+                $cmb.find('option').remove();
+                $.each(result.items, function (index, article) {
+                    if (variable == article.descripcion){
+                        $cmb.append("<option selected value=\"" + article.valor + "\">\n" + article.descripcion +
+                                "</option>");
+                    }else{
+                        $cmb.append("<option value=\"" + article.valor + "\">\n" + article.descripcion +
+                                "</option>");
+                    }
+                });
+                console.log("Se cargo exitosamente el combo programas");
+            },
+            error: function (result) {
+                alert("Ocurrio un error al realizar la carga de programas " + result);
+            }
+        });
+}
+function carga_combo_carreras_modif(variable,tutor){
+    var ruta = document.getElementById("ruta_principal").value;
+        var nombre_est_form=document.getElementById("txt_nombre_estudiante").value ;
+        //var fullname = $('#fullname').val();
+        var $cmb = $("#cmb_carrera");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            //data: {id_cmb:'carrera'},
+            url: ruta + '/F_Muestra_carreras',
+            success: function (result) {
+                $cmb.find('option').remove();
+                //$('#div_carrera').html(result);
+                $.each(result.items, function (index, article) {
+                    if(variable == article.descripcion){
+                        $cmb.append("<option selected value=\"" + article.valor + "\">\n" + article.descripcion +
+                                    "</option>");
+                        carga_combo_tutores_modif(tutor);
+                    }else{
+                        $cmb.append("<option  value=\"" + article.valor + "\">\n" + article.descripcion +
+                                    "</option>");
+                    }
+                });
+                
+                console.log("Se cargo exitosamente el combo carreras");
+            }
+        });
+}
+
+function carga_combo_tutores_modif(variable) {
+    var ruta = document.getElementById("ruta_principal").value;
+    var carrera = document.getElementById("cmb_carrera").value;
+    //var carrera = "GIS";
+    var $cmb = $("#cmb_tutor");
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: {carrera: carrera},
+        url: ruta + '/F_muestra_tutor',
+        success: function (result) {
+            $cmb.find('option').remove();
+            $.each(result.items, function (index, article) {
+                if(variable == article.valor){
+                   $cmb.append("<option selected value=\"" + article.descripcion + "\">\n" + article.valor +
+                        "</option>"); 
+                }else{
+                    $cmb.append("<option  value=\"" + article.descripcion + "\">\n" + article.valor +
+                            "</option>");
+                }
+            });
+            console.log("Se cargo exitosamente el combo carreras");
+        }
+    });
+}
+
+
+

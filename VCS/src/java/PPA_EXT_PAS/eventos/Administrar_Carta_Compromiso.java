@@ -122,20 +122,26 @@ public class Administrar_Carta_Compromiso {
                                             "    ?,\n" +//RESULTADO 6
                                             "    ? \n" +//ACCION
                                             ")";//CC001.PA-GIS-2
-        String id_cart_comp=this.carta_compromiso.getId_carta_compromiso().substring(0,13);
-        String id_carrera = this.carta_compromiso.getId_carta_compromiso().substring(9,12);
-        String secuencia_real ="";
-        try {
-             ConjuntoResultado cres2
-                    = AccesoDatos.ejecutaQuery("select nextval('sec_cc_"+id_carrera+"')");
-            while (cres2.next()) {
-                secuencia_real = cres2.getString(0);//Obtengo la secuencia real que le corresponde
+        String id_cart_comp="";
+        if (accion.equals("I")){
+            id_cart_comp=this.carta_compromiso.getId_carta_compromiso().substring(0,13);
+            String id_carrera = this.carta_compromiso.getId_carta_compromiso().substring(9,12);
+            String secuencia_real ="";
+            try {
+                 ConjuntoResultado cres2
+                        = AccesoDatos.ejecutaQuery("select nextval('sec_cc_"+id_carrera+"')");
+                while (cres2.next()) {
+                    secuencia_real = cres2.getString(0);//Obtengo la secuencia real que le corresponde
+                }
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            id_cart_comp=id_cart_comp+secuencia_real;
+        } else {
+            id_cart_comp = this.carta_compromiso.getId_carta_compromiso();
         }
-        id_cart_comp=id_cart_comp+secuencia_real;
+        
         
         parametros.add(new Parametro(1, id_cart_comp));
         parametros.add(new Parametro(2, this.carta_compromiso.getNomb_estudiante()));

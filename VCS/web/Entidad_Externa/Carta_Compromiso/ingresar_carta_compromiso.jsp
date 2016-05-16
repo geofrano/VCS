@@ -30,8 +30,11 @@
         <script src="../../js/sweetalert-dev.js"></script>
         <link rel="stylesheet" href="../../css/sweetalert.css">
         <!--.......................-->
+        <% String id_cc = request.getParameter("id_cc_consulta").toString();if (id_cc == null){id_cc="NADA";}%>
+        
+        
     </head>
-    <body ng-controller="ControladorVCS">
+    <body ng-controller="ControladorVCS" onload="verifica_accion()">
         <div class="container">
             <div class="row">
                 <jsp:include page="../../vistas/cabecera_pagina.jsp"/>
@@ -41,6 +44,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div id="icono" class="col-md-9">
+                <input type="hidden" name="id_cc_consulta" id="id_cc_consulta" value="<%=id_cc==null?"":id_cc%>" />
                 <jsp:include page="cont_carta_compromiso.jsp"/>
             </div>
             </div>

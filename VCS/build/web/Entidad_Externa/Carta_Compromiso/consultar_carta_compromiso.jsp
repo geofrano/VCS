@@ -5,6 +5,7 @@
 --%>
 <div id="frm_consulta" name="frm_consulta">
     <form id="frm_datos" name="frm_datos" action="" method="POST">
+        <input type="hidden" id="id_cc_consulta" name="id_cc_consulta"/>
         <fieldset>
             <legend><h1 class="alineado3">Consultar Carta Compromiso</h1></legend>
             <br>
@@ -46,4 +47,6 @@
     <input type="hidden" readonly="readonly" id="txt_sede" name="txt_sede" ng-value="sede"/>
 </form>
 <div id="div_consul" style="display:none">
+</div>
+<div id="div_ingreso" style="display:none">
 </div>

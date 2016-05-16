@@ -15,7 +15,6 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

@@ -28,7 +28,8 @@
         <script src="../../js/bootstrap-datetimepicker.min.js"></script>
         <script src="../../js/id.js"></script>
         <script src="../../js/moment.js"></script>
-	<script src="../../js/sweetalert-dev.js"></script>
+        <script src="../../js/sweetalert-dev.js"></script>
+
 
     </head>
     <body ng-controller="ControladorVCS">

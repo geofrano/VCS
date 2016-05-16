@@ -156,10 +156,6 @@
         <servlet-name>F_genera_pdf_carta_compromiso</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_carta_compromiso</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>F_genera_pdf_cartas_compromiso</servlet-name>
-        <servlet-class>PPA_EXT_PAS.funciones_salida.F_genera_pdf_cartas_compromiso</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>F_autenticar_usuario</servlet-name>
         <url-pattern>/F_autenticar_usuario.jsp</url-pattern>
@@ -297,16 +293,24 @@
         <url-pattern>/F_muestra_tutor</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+            <servlet-name>F_Mantenimiento_parametro</servlet-name>
+            <url-pattern>/F_Mantenimiento_parametro</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>F_Consulta_Parametro</servlet-name>
+            <url-pattern>/F_Consulta_Parametro</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>F_genera_pdf_carta_compromiso</servlet-name>
+            <url-pattern>/F_genera_pdf_carta_compromiso</url-pattern>
+        </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>F_Consulta_Parametro</servlet-name>
         <url-pattern>/F_Consulta_Parametro</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>F_genera_pdf_carta_compromiso</servlet-name>
         <url-pattern>/F_genera_pdf_carta_compromiso</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>F_genera_pdf_cartas_compromiso</servlet-name>
-        <url-pattern>/F_genera_pdf_cartas_compromiso</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

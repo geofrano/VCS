@@ -3,21 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package PPA_EXT_PAS.funciones_entrada;
 
-import PPA_EXT_PAS.eventos.Administrar_Carta_Compromiso;
+import PPA_EXT_PAS.eventos.Administrar_Ficha_Estudiante;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author lpita
+ * @author Geovanny Barrera
  */
-public class F_carta_compromiso extends HttpServlet {
+@WebServlet(name = "F_muestra_carta_compromiso", urlPatterns = {"/F_muestra_carta_compromiso"})
+public class F_muestra_carta_compromiso extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,19 +34,21 @@ public class F_carta_compromiso extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String accion=request.getParameter("accion_form").toString();
-            if (accion.equals("E")){
-                String cc_id=request.getParameter("txt_id_carta_comp").toString();
-                Administrar_Carta_Compromiso carta_comp = new Administrar_Carta_Compromiso();
-                String resultado=carta_comp.elimina(cc_id);
-                out.println(resultado);
-            }else{
-                Administrar_Carta_Compromiso carta_comp = new Administrar_Carta_Compromiso(request);
-                String resultado=carta_comp.procesar_peticion(accion);
-                out.println(resultado);
+        response.setContentType("application/json; charset=UTF-8");
+        try {
+            String cod_carta_comp=request.getParameter("id_cc").toString();
+            String tipo_accion = request.getParameter("accion_form").toString();
+            
+            PrintWriter out = response.getWriter();
+            if (tipo_accion.equals("M")){//Para Modificacion
+                out.print(Administrar_Ficha_Estudiante.toJSON2(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp),tipo_accion));
             }
+            out.flush();
+            out.close();
+            
+        } catch (IOException e) {
+            RequestDispatcher a=request.getRequestDispatcher("Home.jsp");//pagina principal
+            a.forward(request, response);
         }
     }
 

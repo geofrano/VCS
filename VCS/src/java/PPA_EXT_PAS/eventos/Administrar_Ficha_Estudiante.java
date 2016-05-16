@@ -116,7 +116,7 @@ public class Administrar_Ficha_Estudiante {
                 + " cc_horario_previsto, cargo_rep_leg, ar_telefono, ue_direccion, programa, coalesce(proyecto, 'NA') proyecto,\n"
                 + " nombre_tutor, actividades, coalesce(cod_proy, 0) cod_proy, to_char(cc_fecha_suscripcion,'dd/mm/yyyy'), \n"
                 + " cc_lugar_suscripcion, cargo_director_carr, director_carrera, cargo_dir_tecnico, director_tecnico, total_horas,cc_objetivo_actividad, \n"
-                + " resp_vcs,resp_act, ue_actividad_principal,telefono_dir_tec \n"
+                + " resp_vcs,resp_act, ue_actividad_principal,telefono_dir_tec, ue_telefono,ue_id,es_id \n"
                 + "from view_datos_cc\n"
                 + "where trim(id_cc) = ? ";
 
@@ -171,6 +171,9 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setActividad_3(cres.getString(36).trim());
                 carta_comp.setAct_empresa(cres.getString(37).trim());
                 carta_comp.setTelf_delegado(cres.getString(38).trim());
+                carta_comp.setTelef_empresa(cres.getString(39).trim());
+                carta_comp.setId_empresa(cres.getString(40).trim());
+                carta_comp.setId_estudiante(cres.getString(41).trim());
                 opciones.add(carta_comp);
             }
         } catch (Exception e) {
@@ -398,6 +401,92 @@ public class Administrar_Ficha_Estudiante {
             for (Iterator<Carta_Compromiso> it = carta_comp.iterator(); it.hasNext();) {
                 Carta_Compromiso opciones = it.next();
                 jsonItems.put(toJSONObject(opciones,accion));
+            }
+
+            json.put("items", jsonItems);
+        } catch (JSONException ex) {
+            Logger.getLogger(Menu_principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
+    public static JSONObject toJSONObject2(Carta_Compromiso carta_comp,String accion) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id_cc", carta_comp.getId_carta_compromiso());
+            json.put("num_cc", carta_comp.getId_carta_compromiso().substring(13));
+            json.put("tipo_act", carta_comp.getTipo_actividad());
+            json.put("dia_ini", carta_comp.getDia_inicio());
+            json.put("mes_ini", carta_comp.getMes_inicio());
+            json.put("anio_ini", carta_comp.getAnio_inicio());
+            json.put("dia_fin", carta_comp.getDia_fin());
+            json.put("mes_fin", carta_comp.getMes_fin());
+            json.put("anio_fin", carta_comp.getAnio_fin());
+            json.put("est_ced", carta_comp.getCed_estudiante());
+            json.put("est_nombre", carta_comp.getNomb_estudiante());
+            json.put("est_fono", carta_comp.getFono_estudiante());
+            json.put("est_mail", carta_comp.getMail_estudiante());
+            json.put("est_carrera", carta_comp.getCarrera_grado());
+            json.put("est_ciclo", carta_comp.getCiclo_curso());
+            json.put("empresa_fono", carta_comp.getTelef_empresa());
+            json.put("empresa", carta_comp.getNomb_empresa());
+            json.put("act_emp", carta_comp.getAct_empresa());
+            json.put("emp_dir", carta_comp.getDir_empresa());
+            json.put("emp_rep", carta_comp.getNombre_representante());
+            json.put("cargo_rep", carta_comp.getCargo_representante());
+            json.put("fono_rep", carta_comp.getTelf_representante());
+            json.put("duracion", carta_comp.getTotal_horas());
+            json.put("objetivo_act", carta_comp.getObjetivo_actividad());
+            json.put("horario", carta_comp.getHorario_previsto());
+            json.put("programa", carta_comp.getNombre_programa());
+            json.put("area_act", carta_comp.getArea_actividad());
+            json.put("resp_area", carta_comp.getResponsable_area());
+            json.put("tutor", carta_comp.getNombre_tutor());
+            json.put("dir_tec", carta_comp.getDir_tecnico());
+            json.put("cargo_dir_tec", carta_comp.getCargo_dir_tec());
+            json.put("fono_dir_tec", carta_comp.getTelf_delegado());
+            json.put("id_est", carta_comp.getId_estudiante());
+            json.put("id_empr", carta_comp.getId_empresa());
+            json.put("suscripcion", carta_comp.getLugar_suscripcion()+", "+carta_comp.getFecha_suscripcion());
+            
+            Administrar_Ficha_Estudiante adm_ficha_est = new Administrar_Ficha_Estudiante();
+            List< Carta_Compromiso> carta_comp2_act = adm_ficha_est.obtiene_elemento2(carta_comp.getId_carta_compromiso(),"AC");
+            
+            int contador=0;
+            for (Iterator<Carta_Compromiso> it2 = carta_comp2_act.iterator(); it2.hasNext();) {
+                Carta_Compromiso elemento = it2.next();
+                contador = contador +1;
+                json.put("act_"+contador, elemento.getActividad_1().substring(2).replace(".", "").trim());
+            }
+            contador=0;
+            List< Carta_Compromiso> carta_comp2_res = adm_ficha_est.obtiene_elemento2(carta_comp.getId_carta_compromiso(),"RE");
+                
+            for (Iterator<Carta_Compromiso> it2 = carta_comp2_res.iterator(); it2.hasNext();) {
+                Carta_Compromiso elemento = it2.next();
+                contador = contador +1;
+                json.put("res_"+contador, elemento.getActividad_1().substring(2).replace(".", "").trim());
+            }
+            contador=0;
+            List< Carta_Compromiso> carta_comp2_rec = adm_ficha_est.obtiene_elemento2(carta_comp.getId_carta_compromiso(),"RC");
+                
+            for (Iterator<Carta_Compromiso> it2 = carta_comp2_rec.iterator(); it2.hasNext();) {
+                Carta_Compromiso elemento = it2.next();
+                contador = contador +1;
+                json.put("rec_"+contador, elemento.getActividad_1().substring(2).replace(".", "").trim());
+            }
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
+
+    public static JSONObject toJSON2(List< Carta_Compromiso> carta_comp,String accion) {
+        JSONObject json = new JSONObject();
+        try {
+            JSONArray jsonItems = new JSONArray();
+            for (Iterator<Carta_Compromiso> it = carta_comp.iterator(); it.hasNext();) {
+                Carta_Compromiso opciones = it.next();
+                jsonItems.put(toJSONObject2(opciones,accion));
             }
 
             json.put("items", jsonItems);
