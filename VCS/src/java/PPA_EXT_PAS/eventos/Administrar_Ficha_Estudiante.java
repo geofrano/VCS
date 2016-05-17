@@ -11,7 +11,6 @@ import PPA_EXT_PAS.dominio.Menu_principal;
 import accesodatos.AccesoDatos;
 import accesodatos.ConjuntoResultado;
 import accesodatos.Parametro;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -325,7 +324,7 @@ public class Administrar_Ficha_Estudiante {
     }
     public static List<Carta_Compromiso> obtiene_elemento2(String id_carta_comp, String tipo_elemento) {
         List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
-        String sql = "SELECT ae_orden||'. '||ae_descripcion elemento\n" +
+        String sql = "SELECT ae_orden||'. '||ae_descripcion elemento, ae_id\n" +
                         "  FROM \"MPP_ASIGNAR_ELEMENTO\" a\n" +
                         " where trim(a.cc_id) = trim(?)\n" +
                         "   AND a.ae_tipo = ? order by a.ae_orden";
@@ -340,6 +339,7 @@ public class Administrar_Ficha_Estudiante {
             while (cres.next()) {
                 carta_comp = new Carta_Compromiso();
                 carta_comp.setActividad_1(cres.getString(0));
+                carta_comp.setActividad_2(cres.getString(1));
                 //System.out.println("ACT "+cres.getString(0));
                 opciones.add(carta_comp);
             }
@@ -495,5 +495,41 @@ public class Administrar_Ficha_Estudiante {
         }
         return json;
     }
+    public static JSONObject toJSON3(String id_carta_compromiso) {
+        JSONObject json = new JSONObject();
+        try {
+            JSONArray jsonItems = new JSONArray();
 
+                jsonItems.put(toJSONObject3(id_carta_compromiso));
+
+            json.put("items", jsonItems);
+        } catch (JSONException ex) {
+            Logger.getLogger(Menu_principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
+    public static JSONObject toJSONObject3(String id_carta_compromiso) {
+        JSONObject json = new JSONObject();
+        try {
+            
+            Administrar_Ficha_Estudiante adm_ficha_est = new Administrar_Ficha_Estudiante();
+            Administrar_Carta_Compromiso adm_cc = new Administrar_Carta_Compromiso();
+            String num_horas=adm_cc.devuelveDatoCC(id_carta_compromiso,"cc_total_horas");
+            List< Carta_Compromiso> carta_comp2_act = adm_ficha_est.obtiene_elemento2(id_carta_compromiso,"AC");
+            
+            int contador=0;
+            for (Iterator<Carta_Compromiso> it2 = carta_comp2_act.iterator(); it2.hasNext();) {
+                Carta_Compromiso elemento = it2.next();
+                contador = contador +1;
+                json.put("act_"+contador, elemento.getActividad_1().trim());
+                json.put("cod_act_"+contador, elemento.getActividad_2().trim());
+            }
+            json.put("num_horas", num_horas);
+            
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(Carta_Compromiso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return json;
+    }
 }

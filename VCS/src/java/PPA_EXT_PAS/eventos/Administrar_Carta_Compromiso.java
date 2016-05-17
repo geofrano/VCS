@@ -6,14 +6,10 @@
 package PPA_EXT_PAS.eventos;
 
 import PPA_EXT_PAS.dominio.Carta_Compromiso;
-import accesodatos.AccesoDatos;
 import accesodatos.Parametro;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import accesodatos.AccesoDatos;
 import accesodatos.ConjuntoResultado;
 import java.util.LinkedList;
@@ -252,6 +248,28 @@ public class Administrar_Carta_Compromiso {
             throw new RuntimeException(e);
         }
         return secuencia;
+    }
+    
+    public String devuelveDatoCC(String id_carta_compromiso,String campo_devolver){
+        String sql="SELECT "+campo_devolver+" \n" +
+                    "  FROM \"MPP_CARTA_COMPROMISO\" \n" +
+                    " WHERE trim(cc_id) = ?";
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1,id_carta_compromiso.trim()));
+        String parametro="";
+        
+        try {
+            ConjuntoResultado cres = AccesoDatos.ejecutaQuery(sql,lstPar);
+            
+            if (cres.next()) {
+                parametro=cres.getString(0).trim();
+            }else{
+                parametro="";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return parametro;
     }
     
     private String devuelveParametroCC(String id_parametro){
