@@ -47,7 +47,7 @@ app.controller("ControladorVCS", function($scope, $http) {
                             "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
                             "</td></tr>\n");
                     var estado = parseInt(article.cc_estado);
-                    if (estado >= 4) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                    if (estado >= 4) {//Solo si esta en estado 4 (ya se genero el doc)
                         $("#" + "div_imprimir_" + cont).css("display", "block");
                         $("#" + "div_eliminar_" + cont).css("display", "block");
                     }
@@ -56,12 +56,12 @@ app.controller("ControladorVCS", function($scope, $http) {
                         $("#" + "div_modificar_" + cont).css("display", "none");
                         $("#" + "div_inserta_" + cont).css("display", "block");
                     }
-                    if (estado >= 0 && estado <=4) {
+                    if (estado >= 0 && estado <=3) {
                         $("#" + "div_eliminar_" + cont).css("display", "none");
                         $("#" + "div_modificar_" + cont).css("display", "none");
                         $("#" + "div_inserta_" + cont).css("display", "block");
                     }
-                    if (estado >= 4) {//La ficha del estudiante ya fue ingresada
+                    if (estado >= 4) {//ya fue ingresado
                         $("#" + "div_eliminar_" + cont).css("display", "block");
                         $("#" + "div_modificar_" + cont).css("display", "block");
                         $("#" + "div_inserta_" + cont).css("display", "none");
@@ -198,7 +198,7 @@ app.controller("ControladorVCS", function($scope, $http) {
     $scope.carga_datos = function(id_cart_comp) {
         var ruta = document.getElementById("ruta_principal").value;
         //document.getElementById("accion_form").value = "I";
-        document.getElementById("txt_id_carta_compromiso").value=id_cart_comp;
+        document.getElementById("txt_id_carta_comp").value=id_cart_comp;
         var id_cc = id_cart_comp;
         $.ajax({
             type: 'POST',
@@ -235,7 +235,7 @@ function graba() {
     var total_horas_act = document.getElementById("txt_horas_actividad").value;
     var total_horas = document.getElementById("txt_sum_total").value;
     
-    if (total_horas < total_horas_act) {
+    if (parseInt(total_horas) < parseInt(total_horas_act)) {
         swal("Error!", "El número de horas a cumplir es incorrecto. Debe cumplir mínimo "+total_horas_act+". Favor verifique.", "info");
         document.getElementById("txt_direccion_est").focus();
     } else {
@@ -296,7 +296,7 @@ function elimina(cont) {
     var ruta = document.getElementById("ruta_principal").value;
     swal({
         title: "Está segur@?",
-        text: "Realmente desea eliminar la ficha del estudiante",
+        text: "Realmente desea eliminar el cronograma de actividades",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#337ab7",
@@ -310,13 +310,13 @@ function elimina(cont) {
             data: {txt_id_carta_comp: id_cc, accion_form: 'E'},
             //data: {id_cmb:'carrera'},
             //data: $('#formid').serialize(),
-            url: ruta + '/F_graba_Ficha_estudiante',
+            url: ruta + '/F_graba_Cronograma',
             success: function(data) {
                 if (data.trim() == "SI") {
-                    swal("Exito", "La ficha del estudiante ha sido eliminada exitosamente", "success");
-                    window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
+                    swal("Exito", "El cronograma de actividades ha sido eliminado exitosamente", "success");
+                    window.open(ruta + "/Entidad_Externa/Cronograma/Cronograma.jsp", "_self");
                 } else {
-                    swal("Error", "La ficha del estudiante no pudo ser eliminada", "error");
+                    swal("Error", "El cronograma de actividades no pudo ser eliminado", "error");
                 }
             }
         });
@@ -335,7 +335,7 @@ function carga_ingreso(cont) {
         type: 'POST',
         //data: {id_cmb:'carrera'},
         //data: $('#formid').serialize(),
-        url: ruta + '/Administracion_de_Carrera/Ficha_del_Estudiante/cont_ficha_estudiante.jsp',
+        url: ruta + '/Entidad_Externa/Cronograma/cont_cronograma.jsp',
         success: function(data) {
             $("#div_ingreso").html("");
             $("#div_ingreso").append(data);
@@ -346,63 +346,195 @@ function carga_ingreso(cont) {
 }
 function carga_datos(id_cart_comp) {
     var ruta = document.getElementById("ruta_principal").value;
-    //alert(id_cart_comp);
+    alert(id_cart_comp);
     var id_cc = id_cart_comp.trim();
-    document.getElementById("txt_id_carta_compromiso").value=id_cc;
+    document.getElementById("txt_id_carta_comp").value=id_cc;
     var accion = document.getElementById("accion_form").value;
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        data: {id_cc: id_cc, accion_form: accion},
-        //data: {id_cmb:'carrera'},
-        //data: $('#formid').serialize(),
-        url: ruta + '/F_muestra_ficha_estudiante',
-        success: function(data) {
+    var id_cc = id_cart_comp;
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cc: id_cc, accion_form: 'M'},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_muestra_cronograma',
+            success: function(data) {
 
-            $.each(data.items, function(index, article) {
-                document.getElementById("txt_direccion_est").value = article.dir_est;
-                document.getElementById("txt_facebook").value = article.facebook;
-                document.getElementById("txt_linkedin").value = article.linked_in;
-                document.getElementById("txt_nomb_proy").value = article.nom_proy;
-                document.getElementById("txt_twitter").value = article.twitter;
-                document.getElementById("txt_id_carta_comp").value = article.id_carta_comp;
-                document.getElementById("txt_actividad").value = article.tipo_act;
-                document.getElementById("txt_fecha_ini").value = article.dia_ini + '/' + article.mes_ini + '/' + article.anio_ini;
-                document.getElementById("txt_fecha_fin").value = article.dia_fin + '/' + article.mes_fin + '/' + article.anio_fin;
-                if (article.est_ced.length > 10) {
-                    document.getElementById("txt_tipo_doc").value = "PASAPORTE";
-                } else {
-                    document.getElementById("txt_tipo_doc").value = "CÉDULA DE CIUDADANÍA";
-                }
-                document.getElementById("txt_cedula").value = article.est_ced;
-                document.getElementById("txt_nombre_completo").value = article.est_nombre;
-                document.getElementById("txt_fono_est").value = article.est_fono;
-                document.getElementById("txt_email_est").value = article.est_mail;
-                document.getElementById("txt_carrera").value = article.est_carrera;
-                document.getElementById("txt_semestre").value = article.est_ciclo;
-                document.getElementById("txt_empresa").value = article.empresa;
-                document.getElementById("txt_responsable_empresa").value = article.emp_rep;
-                document.getElementById("txt_departamento").value = article.area_act;
-                document.getElementById("txt_responsable_area").value = article.resp_area;
-                document.getElementById("txt_horario_previsto").value = article.horario;
-                document.getElementById("txt_cargo_resp_cia").value = article.cargo_rep;
-                document.getElementById("txt_telefono_cia").value = article.fono_rep;
-                document.getElementById("txt_dir_cia").value = article.emp_dir;
-                document.getElementById("txt_nomb_progama").value = article.programa;
-                document.getElementById("txt_nomb_proy").value = article.proyecto;
-                document.getElementById("txt_tutor").value = article.tutor;
-                document.getElementById("txt_act_realizar").value = article.actividades;
-                document.getElementById("txt_cod_proy").value = article.txt_cod_proy;
-            });
-        }
-    });
+                $.each(data.items, function(index, article) {
+                    document.getElementById("txt_actividad_1").value = article.act_1;
+                    document.getElementById("txt_actividad_2").value = article.act_2;
+                    document.getElementById("txt_actividad_3").value = article.act_3;
+                    document.getElementById("txt_actividad_4").value = article.act_4;
+                    document.getElementById("txt_actividad_5").value = article.act_5;
+                    document.getElementById("txt_actividad_6").value = article.act_6;
+                    document.getElementById("txt_cod_act_1").value = article.cod_act_1;
+                    document.getElementById("txt_cod_act_2").value = article.cod_act_2;
+                    document.getElementById("txt_cod_act_3").value = article.cod_act_3;
+                    document.getElementById("txt_cod_act_4").value = article.cod_act_4;
+                    document.getElementById("txt_cod_act_5").value = article.cod_act_5;
+                    document.getElementById("txt_cod_act_6").value = article.cod_act_6;
+                    document.getElementById("txt_horas_actividad").value = article.num_horas;
+                    
+                    if (article.act_1_sem1 == "X"){
+                        document.getElementById("txt_semana_1_1").checked="true";
+                    }
+                    if (article.act_1_sem2 == "X"){
+                        document.getElementById("txt_semana_1_2").checked="true";
+                    }
+                    if (article.act_1_sem3 == "X"){
+                        document.getElementById("txt_semana_1_3").checked="true";
+                    }
+                    if (article.act_1_sem4 == "X"){
+                        document.getElementById("txt_semana_1_4").checked="true";
+                    }
+                    if (article.act_1_sem5 == "X"){
+                        document.getElementById("txt_semana_1_5").checked="true";
+                    }
+                    if (article.act_1_sem6 == "X"){
+                        document.getElementById("txt_semana_1_6").checked="true";
+                    }
+                    if (article.act_1_sem7 == "X"){
+                        document.getElementById("txt_semana_1_7").checked="true";
+                    }
+                    
+                    if (article.act_2_sem1 == "X"){
+                        document.getElementById("txt_semana_2_1").checked="true";
+                    }
+                    if (article.act_2_sem2 == "X"){
+                        document.getElementById("txt_semana_2_2").checked="true";
+                    }
+                    if (article.act_2_sem3 == "X"){
+                        document.getElementById("txt_semana_2_3").checked="true";
+                    }
+                    if (article.act_2_sem4 == "X"){
+                        document.getElementById("txt_semana_2_4").checked="true";
+                    }
+                    if (article.act_2_sem5 == "X"){
+                        document.getElementById("txt_semana_2_5").checked="true";
+                    }
+                    if (article.act_2_sem6 == "X"){
+                        document.getElementById("txt_semana_2_6").checked="true";
+                    }
+                    if (article.act_2_sem7 == "X"){
+                        document.getElementById("txt_semana_2_7").checked="true";
+                    }
+                    
+                    
+                    if (article.act_3_sem1 == "X"){
+                        document.getElementById("txt_semana_3_1").checked="true";
+                    }
+                    if (article.act_3_sem2 == "X"){
+                        document.getElementById("txt_semana_3_2").checked="true";
+                    }
+                    if (article.act_3_sem3 == "X"){
+                        document.getElementById("txt_semana_3_3").checked="true";
+                    }
+                    if (article.act_3_sem4 == "X"){
+                        document.getElementById("txt_semana_3_4").checked="true";
+                    }
+                    if (article.act_3_sem5 == "X"){
+                        document.getElementById("txt_semana_3_5").checked="true";
+                    }
+                    if (article.act_3_sem6 == "X"){
+                        document.getElementById("txt_semana_3_6").checked="true";
+                    }
+                    if (article.act_3_sem7 == "X"){
+                        document.getElementById("txt_semana_3_7").checked="true";
+                    }
+                    
+                    if (article.act_4_sem1 == "X"){
+                        document.getElementById("txt_semana_4_1").checked="true";
+                    }
+                    if (article.act_4_sem2 == "X"){
+                        document.getElementById("txt_semana_4_2").checked="true";
+                    }
+                    if (article.act_4_sem3 == "X"){
+                        document.getElementById("txt_semana_4_3").checked="true";
+                    }
+                    if (article.act_4_sem4 == "X"){
+                        document.getElementById("txt_semana_4_4").checked="true";
+                    }
+                    if (article.act_4_sem5 == "X"){
+                        document.getElementById("txt_semana_4_5").checked="true";
+                    }
+                    if (article.act_4_sem6 == "X"){
+                        document.getElementById("txt_semana_4_6").checked="true";
+                    }
+                    if (article.act_4_sem7 == "X"){
+                        document.getElementById("txt_semana_4_7").checked="true";
+                    }
+                    
+                    if (article.act_5_sem1 == "X"){
+                        document.getElementById("txt_semana_5_1").checked="true";
+                    }
+                    if (article.act_5_sem2 == "X"){
+                        document.getElementById("txt_semana_5_2").checked="true";
+                    }
+                    if (article.act_5_sem3 == "X"){
+                        document.getElementById("txt_semana_5_3").checked="true";
+                    }
+                    if (article.act_5_sem4 == "X"){
+                        document.getElementById("txt_semana_5_4").checked="true";
+                    }
+                    if (article.act_5_sem5 == "X"){
+                        document.getElementById("txt_semana_5_5").checked="true";
+                    }
+                    if (article.act_5_sem6 == "X"){
+                        document.getElementById("txt_semana_5_6").checked="true";
+                    }
+                    if (article.act_5_sem7 == "X"){
+                        document.getElementById("txt_semana_5_7").checked="true";
+                    }
+                    
+                    if (article.act_6_sem1 == "X"){
+                        document.getElementById("txt_semana_6_1").checked="true";
+                    }
+                    if (article.act_6_sem2 == "X"){
+                        document.getElementById("txt_semana_6_2").checked="true";
+                    }
+                    if (article.act_6_sem3 == "X"){
+                        document.getElementById("txt_semana_6_3").checked="true";
+                    }
+                    if (article.act_6_sem4 == "X"){
+                        document.getElementById("txt_semana_6_4").checked="true";
+                    }
+                    if (article.act_6_sem5 == "X"){
+                        document.getElementById("txt_semana_6_5").checked="true";
+                    }
+                    if (article.act_6_sem6 == "X"){
+                        document.getElementById("txt_semana_6_6").checked="true";
+                    }
+                    if (article.act_6_sem7 == "X"){
+                        document.getElementById("txt_semana_6_7").checked="true";
+                    }
+                    document.getElementById("txt_tot_actividad_1").value=article.act_1_sum;
+                    document.getElementById("txt_tot_actividad_2").value=article.act_2_sum;
+                    document.getElementById("txt_tot_actividad_3").value=article.act_3_sum;
+                    document.getElementById("txt_tot_actividad_4").value=article.act_4_sum;
+                    document.getElementById("txt_tot_actividad_5").value=article.act_5_sum;
+                    document.getElementById("txt_tot_actividad_6").value=article.act_6_sum;
+                    
+                    document.getElementById("txt_sum_total").value=article.total_gnral;
+                    
+                    
+                    
+                    
+                });
+            }
+        });
 }
-function imprime(cont) {
+function devuelve_cc(){
+    var cont = document.getElementById("contador").value;
+    var id_cc = document.getElementById("cc_id_" + cont).value;
+    return id_cc;
+}
 
+function imprime(cont) {
     var ruta = document.getElementById("ruta_principal").value;
     var id_cc = document.getElementById("cc_id_" + cont).value;
     document.getElementById("txt_id_carta_comp").value = id_cc;
-    document.getElementById("frm_ficha").action = ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/imprime_ficha_estudiante.jsp";
+    //alert(id_cc);
+    document.getElementById("frm_ficha").action = ruta + "/Entidad_Externa/Cronograma/imprime_cronograma.jsp";
     document.frm_ficha.target = "_new";
     document.frm_ficha.submit();
 }//FIN imprime

@@ -26,6 +26,10 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>FiltroAutorizacion</filter-name>
+        <url-pattern>/Reportes/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FiltroAutorizacion</filter-name>
         <url-pattern>/Administracion_de_Carrera/*</url-pattern>
     </filter-mapping>
     <filter-mapping>

@@ -69,7 +69,8 @@ public final class carta_005fcompromiso_jsp extends org.apache.jasper.runtime.Ht
       out.write("        <script src=\"../../js/bootstrap-datetimepicker.min.js\"></script>\n");
       out.write("        <script src=\"../../js/id.js\"></script>\n");
       out.write("        <script src=\"../../js/moment.js\"></script>\n");
-      out.write("\t<script src=\"../../js/sweetalert-dev.js\"></script>\n");
+      out.write("        <script src=\"../../js/sweetalert-dev.js\"></script>\n");
+      out.write("\n");
       out.write("\n");
       out.write("    </head>\n");
       out.write("    <body ng-controller=\"ControladorVCS\">\n");

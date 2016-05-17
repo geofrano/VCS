@@ -272,7 +272,7 @@ public class Administrar_Carta_Compromiso {
         return parametro;
     }
     
-    private String devuelveParametroCC(String id_parametro){
+    public String devuelveParametroCC(String id_parametro){
         String sql="SELECT pa_valor \n" +
                     "  FROM \"MPP_PARAMETROS\" \n" +
                     " WHERE trim(pa_id) = ?";

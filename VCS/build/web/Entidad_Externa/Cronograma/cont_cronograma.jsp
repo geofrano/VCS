@@ -16,7 +16,8 @@
         <input type="hidden" name="txt_cod_act_5" id="txt_cod_act_5"/>
         <input type="hidden" name="txt_cod_act_6" id="txt_cod_act_6"/>
         <input type="hidden" name="txt_horas_actividad" id="txt_horas_actividad"/>
-        <input type="hidden" name="txt_id_carta_compromiso" id="txt_id_carta_compromiso"/>
+        <input type="hidden" name="txt_id_carta_comp" id="txt_id_carta_comp"/>
+        <input type="hidden" name="contador" id="contador"/>
         
         <table class="table table-hover table-responsive table-bordered" >
             <tr>

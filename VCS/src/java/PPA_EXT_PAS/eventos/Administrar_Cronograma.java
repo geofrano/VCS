@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 public class Administrar_Cronograma {
 
     private Cronograma cronograma;
-
+    public Administrar_Cronograma(){
+        super();
+    }
     public Administrar_Cronograma(HttpServletRequest request) {
         this.cronograma = new Cronograma();
-        this.cronograma.setId_carta_compromiso((String) request.getParameter("txt_id_carta_compromiso"));
+        this.cronograma.setId_carta_compromiso((String) request.getParameter("txt_id_carta_comp"));
         this.cronograma.setCod_actividad_1((String) request.getParameter("txt_cod_act_1"));
         this.cronograma.setCod_actividad_2((String) request.getParameter("txt_cod_act_2"));
         this.cronograma.setCod_actividad_3((String)request.getParameter("txt_cod_act_3"));
@@ -206,4 +208,24 @@ public class Administrar_Cronograma {
         }
         return res;
     }
+    
+    public String elimina(String cc_id) {
+        ArrayList<Parametro> parametros = new ArrayList<>();
+        String res = "NO";
+        String sql = "DELETE FROM \"MPP_CRONOGRAMA_ACT\"\n" +
+                    " WHERE ae_id in (select ae_id from \"MPP_ASIGNAR_ELEMENTO\" where cc_id = ?)";
+        parametros.add(new Parametro(1, cc_id.trim()));
+        Administrar_Ficha_Estudiante adm_ficha = new Administrar_Ficha_Estudiante();
+        try {
+             boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
+             String act=adm_ficha.actualiza_estado_cc(cc_id,"A");
+             if (cres){
+                 res="SI";
+             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+    
 }

@@ -39,8 +39,8 @@ public class F_graba_Cronograma extends HttpServlet {
             String accion=request.getParameter("accion_form").toString();
             if (accion.equals("E")){
                 String cc_id=request.getParameter("txt_id_carta_comp").toString();
-                Administrar_Carta_Compromiso carta_comp = new Administrar_Carta_Compromiso();
-                String resultado=carta_comp.elimina(cc_id);
+                Administrar_Cronograma cronograma = new Administrar_Cronograma();
+                String resultado=cronograma.elimina(cc_id);
                 out.println(resultado);
             }else{
                 Administrar_Cronograma cronograma = new Administrar_Cronograma(request);

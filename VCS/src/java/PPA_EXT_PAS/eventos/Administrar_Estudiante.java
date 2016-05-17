@@ -6,13 +6,11 @@
 package PPA_EXT_PAS.eventos;
 
 import PPA_EXT_PAS.dominio.Carta_Compromiso;
-import PPA_EXT_PAS.dominio.Estudiante;
 import PPA_EXT_PAS.dominio.Menu_principal;
 import accesodatos.AccesoDatos;
 import accesodatos.ConjuntoResultado;
 import accesodatos.Parametro;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;

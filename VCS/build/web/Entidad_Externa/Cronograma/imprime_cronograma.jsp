@@ -10,14 +10,14 @@
     <head>
         <% String ruta=request.getContextPath(); %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ficha del Estudiante - Impresion</title>
+        <title>Cronograma - Impresion</title>
         <% String id_cc = request.getParameter("txt_id_carta_comp").toString();%>
         <script>
             function imprime()
             {
                 window.opener.recarga();
                 var ruta=document.getElementById("ruta_principal").value; 
-                document.getElementById("frm_imprime").action=ruta+"/F_genera_pdf_ficha_estudiante";
+                document.getElementById("frm_imprime").action=ruta+"/F_genera_pdf_cronograma";
                 document.frm_imprime.submit();
             }
         </script>

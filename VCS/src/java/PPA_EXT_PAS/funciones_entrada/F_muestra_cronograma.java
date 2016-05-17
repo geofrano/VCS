@@ -41,7 +41,7 @@ public class F_muestra_cronograma extends HttpServlet {
             
             PrintWriter out = response.getWriter();
             if (tipo_accion.equals("M")){//Para Modificacion
-                out.print(Administrar_Ficha_Estudiante.toJSON2(Administrar_Ficha_Estudiante.mostrar_carta_compromiso(cod_carta_comp),tipo_accion));
+                out.print(Administrar_Ficha_Estudiante.toJSON4(cod_carta_comp));
             }else if (tipo_accion.equals("I")){//Para Modificacion
                 out.print(Administrar_Ficha_Estudiante.toJSON3(cod_carta_comp));
             }
