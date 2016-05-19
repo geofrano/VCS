@@ -27,20 +27,20 @@ import org.json.JSONObject;
  *
  * @author Hp
  */
-public class Administrar_Parametro_Mantenimiento {
+public class Administrar_Parametro_Tutor {
     
     private Parametro_Mantenimiento parametro;
     
-    private Administrar_Parametro_Mantenimiento(){
+    private Administrar_Parametro_Tutor(){
         super();
     }
     
-    public Administrar_Parametro_Mantenimiento(HttpServletRequest request) {
+    public Administrar_Parametro_Tutor(HttpServletRequest request) {
         this.parametro = new Parametro_Mantenimiento();
-        this.parametro.setId_parametro((String) request.getParameter("txt_id_parametro"));
+        this.parametro.setId_parametro((String) request.getParameter("txt_id_tutor"));
         this.parametro.setDescripcion((String) request.getParameter("txt_descripcion"));
-        this.parametro.setValor((String) request.getParameter("txt_valor"));
-        this.parametro.setTipo((String) request.getParameter("cmb_tipo_para"));
+        this.parametro.setValor((String) request.getParameter("txt_nombre"));
+        this.parametro.setTipo("TT");
     }
     
     public String procesar_parametro(String accion) {

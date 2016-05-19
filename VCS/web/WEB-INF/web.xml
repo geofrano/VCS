@@ -153,6 +153,22 @@
         <servlet-class>PPA_EXT_PAS.funciones_entrada.F_grabar_parametro</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>F_grabar_tutor</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_entrada.F_grabar_tutor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_consulta_codigo_mapeo</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_consulta_codigo_mapeo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_grabar_mapeo</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_entrada.F_grabar_mapeo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>F_Consulta_Mapeo</servlet-name>
+        <servlet-class>PPA_EXT_PAS.funciones_salida.F_Consulta_Mapeo</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>F_Muestra_tutores</servlet-name>
         <servlet-class>PPA_EXT_PAS.funciones_salida.F_Muestra_tutores</servlet-class>
     </servlet>
@@ -273,6 +289,14 @@
         <url-pattern>/F_Muestra_tutores</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>F_grabar_tutor</servlet-name>
+        <url-pattern>/F_grabar_tutor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_consulta_codigo_mapeo</servlet-name>
+        <url-pattern>/F_consulta_codigo_mapeo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FLogout</servlet-name>
         <url-pattern>/FLogout</url-pattern>
     </servlet-mapping>
@@ -291,6 +315,10 @@
     <servlet-mapping>
         <servlet-name>F_genera_pdf_carta_compromiso</servlet-name>
         <url-pattern>/F_genera_pdf_carta_compromiso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_grabar_mapeo</servlet-name>
+        <url-pattern>/F_grabar_mapeo</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>F_muestra_tutor</servlet-name>
@@ -315,6 +343,10 @@
     <servlet-mapping>
         <servlet-name>F_genera_pdf_carta_compromiso</servlet-name>
         <url-pattern>/F_genera_pdf_carta_compromiso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>F_Consulta_Mapeo</servlet-name>
+        <url-pattern>/F_Consulta_Mapeo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

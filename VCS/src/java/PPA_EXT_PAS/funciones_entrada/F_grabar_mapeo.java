@@ -5,7 +5,7 @@
  */
 package PPA_EXT_PAS.funciones_entrada;
 
-import PPA_EXT_PAS.eventos.Administrar_Parametro_Mantenimiento;
+import PPA_EXT_PAS.eventos.Administrar_Parametro_Mapeo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hp
  */
-public class F_grabar_parametro extends HttpServlet {
+public class F_grabar_mapeo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +33,14 @@ public class F_grabar_parametro extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             PrintWriter out = response.getWriter();
-            Administrar_Parametro_Mantenimiento parametro = new Administrar_Parametro_Mantenimiento(request);
+            Administrar_Parametro_Mapeo parametro = new Administrar_Parametro_Mapeo(request);
             String resultado = "";
             String accion=request.getParameter("tipo_accion").toString();
             System.out.println("Accion: "+accion);
             if (accion.equals("E")) {
-                resultado = parametro.elimina_parametro();
+                resultado = parametro.elimina_mapeo();
             } else {
-                resultado = parametro.procesar_parametro(accion);
+                resultado = parametro.procesar_mapeo(accion);
             }
             out.println(resultado);
             out.flush();

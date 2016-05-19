@@ -82,16 +82,19 @@ app.controller("ControladorVCS", function ($scope, $http) {
                 $.each(result.items, function (index, article) {
                     cont = cont + 1;
                     $tabla.append("<tr>\n" +
-                            "<td><input type=\"hidden\" name=\"par_id_" + cont + "\" id=\"par_id_" + cont + "\" value=\"" + article.id_parametro + "\"></td>\n" +
+                            "<td><input type=\"hidden\" name=\"tutor_id_" + cont + "\" id=\"tutor_id_" + cont + "\" value=\"" + article.id_parametro + "\"></td>\n" +
                             "<td>" + article.id_parametro + "</td>\n" +
-                            "<td><input type=\"hidden\" name=\"par_des_" + cont + "\" id=\"par_des_" + cont + "\" value=\"" + article.descripcion + "\"></td>" +
+                            "<td><input type=\"hidden\" name=\"tutor_des_" + cont + "\" id=\"tutor_des_" + cont + "\" value=\"" + article.descripcion + "\"></td>" +
                             "<td>" + article.descripcion + "</td>\n" +
-                            "<td><input type=\"hidden\" name=\"par_valor_" + cont + "\" id=\"par_valor_" + cont + "\" value=\"" + article.valor + "\"></td>" +
+                            "<td><input type=\"hidden\" name=\"tutor_valor_" + cont + "\" id=\"tutor_valor_" + cont + "\" value=\"" + article.valor + "\"></td>" +
                             "<td>" + article.valor + "</td>\n" +
-                            "<td><input type=\"hidden\" name=\"par_tipo_" + cont + "\" id=\"par_tipo_" + cont + "\" value=\"" + article.tipo_desc + "\"></td>" +
-                            "<td>" + article.tipo + "</td>\n" +
+                            "<td><input type=\"hidden\" name=\"tutor_tipo_" + cont + "\" id=\"tutor_tipo_" + cont + "\" value=\"" + article.tipo + "\"></td>" +
+                            "<td>" + article.tipo_desc + "</td>\n" +
                             "<td class=\"alineado3\">" +
                             "<div name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" data-toggle=\"modal\" data-target=\"#campos_parametro\" onclick=\"carga_cont(" + cont + ")\"/></div>" +
+                            "</td>\n" +
+                            "<td class=\"alineado3\">" +
+                            "<div name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"carga_cont(" + cont + "), asigna_accion_elimina(), modificar_tutor();\"/></div>" +
                             "</td>\n" +
                             "</tr>\n");
                     document.getElementById("existe_data").value = "1";
@@ -103,6 +106,24 @@ app.controller("ControladorVCS", function ($scope, $http) {
                 }
                 $("#div_consulta").css("display", "block");
                 $("#div_consulta2").css("display", "none");
+            }
+        });
+    };
+    
+    $scope.carga_cmb_tutor = function () {
+        var ruta = document.getElementById("ruta_principal").value;
+        var $cmb = $("#cmb_carrera_in");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {id_cmb: 'carrera'},
+            url: ruta + '/F_Mantenimiento_parametro',
+            success: function (result) {
+                $cmb.find('option').remove();
+                $.each(result.items, function (index, article) {
+                    $cmb.append("<option value=\"" + article.valor + "\">\n" + article.descripcion + "</option>");
+                });
+                console.log("Se cargo exitosamente el combo tipo de actividad");
             }
         });
     };
@@ -122,8 +143,89 @@ function carga_combo_carrera_parametro() {
             $.each(result.items, function (index, article) {
                 $cmb.append("<option value=\"" + article.valor + "\">\n" + article.descripcion + "</option>");
             });
-            console.log("Se cargo exitosamente el combo carrera");
+            console.log("Se cargo exitosamente el combo tipo de actividad");
         }
     });
 }
-;
+
+function carga_cont(seleccionado) {
+    var id_parametro = document.getElementById("tutor_id_"+seleccionado).value;
+    var descripcion = document.getElementById("tutor_des_"+seleccionado).value;
+    var valor = document.getElementById("tutor_valor_"+seleccionado).value;
+    var tipo = document.getElementById("tutor_tipo_"+seleccionado).value;
+    document.getElementById("tipo_accion").value = "M";
+    document.getElementById("cont").value = seleccionado;
+    document.getElementById("txt_id_tutor").value = id_parametro;
+    document.getElementById("txt_descripcion").value = descripcion;
+    document.getElementById("txt_nombre").value = valor;
+    document.forms["frm_datos"]["cmb_carrera_in"].value = tipo;
+}
+
+function modificar_tutor(){
+    var ruta = document.getElementById("ruta_principal").value;
+    var id_parametro = document.getElementById("txt_id_tutor").value;
+    var descripcion = document.getElementById("txt_descripcion").value;
+    var valor = document.getElementById("txt_nombre").value;
+    
+    if (id_parametro == "") {
+        swal("Error!", "Error al generar ID del Tutor", "info");
+        document.getElementById("txt_id_tutor").focus();
+    }else if (descripcion == "") {
+        swal("Error!", "Favor ingrese la Descripción del Parametro Tutor", "info");
+        document.getElementById("txt_descripcion").focus();
+    } else if (valor == "") {
+        swal("Error!", "Favor ingrese el Nombre del Parametro", "info");
+        document.getElementById("txt_nombre").focus();
+    } else {
+        swal({
+            title: "Está segur@?",
+            text: "Favor confirme que los datos son los correctos",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#337ab7",
+            confirmButtonText: "Si",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: 'POST',
+                data: $('#frm_datos').serialize(),
+                url: ruta + '/F_grabar_tutor',
+                success: function (data) {
+                    alert(data);
+                    if (data.trim() == "SI") {
+                        swal({
+                            title: "Exito!",
+                            text: "Proceso ejecutado correctamente",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: "#337ab7",
+                            confirmButtonText: "Ok",
+                            closeOnConfirm: false
+                        });
+                    } else {
+                        swal("Error!", "El proceso no ha sido ejecutado", "error");
+                    }
+                }
+            });
+        }); 
+    }
+}
+
+function asigna_accion_ingreso(){
+    var carrera = document.getElementById("cmb_carrera_in").value;
+    document.getElementById("tipo_accion").value = "I";
+    document.getElementById("txt_id_tutor").value = "TUTOR_"+carrera;
+    document.getElementById("txt_id_parametro").value = "";
+    document.getElementById("txt_descripcion").value = "";
+    document.getElementById("txt_valor").value = "";
+}
+
+function asigna_accion_elimina(){
+    document.getElementById("tipo_accion").value = "E";
+}
+
+function asigna_codigo(){
+    var carrera = document.getElementById("cmb_carrera_in").value;
+    document.getElementById("txt_id_tutor").value = "TUTOR_"+carrera;
+}

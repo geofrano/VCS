@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package PPA_EXT_PAS.funciones_entrada;
+package PPA_EXT_PAS.funciones_salida;
 
-import PPA_EXT_PAS.eventos.Administrar_Parametro_Mantenimiento;
+import PPA_EXT_PAS.eventos.Administrar_Parametro_Mapeo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hp
  */
-public class F_grabar_parametro extends HttpServlet {
+public class F_consulta_codigo_mapeo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,23 +31,15 @@ public class F_grabar_parametro extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
         try {
             PrintWriter out = response.getWriter();
-            Administrar_Parametro_Mantenimiento parametro = new Administrar_Parametro_Mantenimiento(request);
-            String resultado = "";
-            String accion=request.getParameter("tipo_accion").toString();
-            System.out.println("Accion: "+accion);
-            if (accion.equals("E")) {
-                resultado = parametro.elimina_parametro();
-            } else {
-                resultado = parametro.procesar_parametro(accion);
-            }
-            out.println(resultado);
+            out.print(Administrar_Parametro_Mapeo.toJSON(Administrar_Parametro_Mapeo.consulta_codigo_mapeo()));
             out.flush();
             out.close();
-        }catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            RequestDispatcher a=request.getRequestDispatcher("Home.jsp");//pagina principal
+            a.forward(request, response);
         }
     }
 

@@ -46,7 +46,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="title-c">Modificar Parametro</h4>
+                        <h4 class="title-c">Parametro</h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" value="I" id="tipo_accion" name="tipo_accion"/>
