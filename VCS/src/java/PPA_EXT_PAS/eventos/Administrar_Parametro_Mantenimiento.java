@@ -147,9 +147,8 @@ public class Administrar_Parametro_Mantenimiento {
                      "               else\n" +
                      "                 pa_id = ?\n" +
                      "               end) a\n" +
-                     "  where pa_id = 'TUTOR_'||a.id_carrera\n" +
+                     "  where pa_tipo = 'TUTOR_'||a.id_carrera\n" +
                      "    and pa_tipo = pt_tipo\n" +
-                     "    and pa_tipo = 'TT' \n" +
                      "    and upper(trim(pa_valor)) like upper('%'||trim(?)||'%')\n" +
                      "    and case when ? = 'TD' then\n" +
                      "          pa_id = pa_id\n" +
