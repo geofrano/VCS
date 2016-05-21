@@ -128,17 +128,23 @@ public class Administrar_Menu_Principal {
         }
 
     }
-    public static List<Menu_principal> mostrar_menu() {
+    public static List<Menu_principal> mostrar_menu(String usuario) {
         List< Menu_principal > opciones = new LinkedList< Menu_principal >();
 
-        String sql = "SELECT me_id, me_nombre, me_menu_padre, me_pagina, me_icono,me_es_padre\n"
-                + "  FROM \"MAU_MENU\" where me_estado='A' order by 1";
+        String sql = "SELECT c.me_id, c.me_nombre, c.me_menu_padre, c.me_pagina, c.me_icono,c.me_es_padre\n" +
+                        "FROM \"MAU_USUARIO\" a, \"MAU_ROL\" b, \"MAU_MENU\" c, \"MAU_MENU_ROL\" d\n" +
+                        "where upper(trim(a.us_usuario)) = ? \n" +
+                        "and a.ro_id = b.ro_id\n" +
+                        "and c.me_id = d.me_id\n" +
+                        "and d.ro_id = b.ro_id\n" +
+                        "and c.me_estado='A'\n" +
+                        "order by 1";
         ArrayList<Parametro> lstPar = new ArrayList<>();
-        //lstPar.add(new Parametro(1, "0"));
+        lstPar.add(new Parametro(1, usuario.toUpperCase()));
         Menu_principal adm_menu;
         try {
             ConjuntoResultado cres
-                    = AccesoDatos.ejecutaQuery(sql/*,lstPar*/);
+                    = AccesoDatos.ejecutaQuery(sql,lstPar);
             while (cres.next()) {
                 adm_menu = new Menu_principal();
                 adm_menu.setId_modulo(cres.getString(0).trim());

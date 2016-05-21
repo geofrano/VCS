@@ -30,7 +30,12 @@
         <script src="../../js/sweetalert-dev.js"></script>
         <link rel="stylesheet" href="../../css/sweetalert.css">
         <!--.......................-->
-        <% String id_cc = request.getParameter("id_cc_consulta").toString();if (id_cc == null){id_cc="NADA";}%>
+        <% String id_cc="";
+        try{
+            id_cc = request.getParameter("id_cc_consulta").toString();if (id_cc == null){id_cc="NADA";}
+        }catch(Exception e){
+            id_cc="NADA";
+        }%>
         
         
     </head>
@@ -44,6 +49,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div id="icono" class="col-md-9">
+                <br/><jsp:include page="ubicacion_actual_2.jsp"/>
                 <input type="hidden" name="id_cc_consulta" id="id_cc_consulta" value="<%=id_cc==null?"":id_cc%>" />
                 <jsp:include page="cont_carta_compromiso.jsp"/>
             </div>

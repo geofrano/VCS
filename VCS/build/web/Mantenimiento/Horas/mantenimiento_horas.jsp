@@ -38,6 +38,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
+                    <br/><jsp:include page="ubicacion_actual.jsp"/>
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div id="icono" class="col-md-9">

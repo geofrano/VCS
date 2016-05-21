@@ -40,9 +40,10 @@
                 <div class="col-md-3">
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
-            <div id="icono" class="col-md-9">
-                <jsp:include page="cont_tutor.jsp"/>
-            </div>
+                <div id="icono" class="col-md-9">
+                    <br/><jsp:include page="ubicacion_actual.jsp"/>
+                    <jsp:include page="cont_tutor.jsp"/>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">

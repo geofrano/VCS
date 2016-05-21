@@ -41,6 +41,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div id="icono" class="col-md-9">
+                <br/><jsp:include page="ubicacion_actual.jsp"/>
                 <jsp:include page="cont_parametro.jsp"/>
             </div>
             </div>

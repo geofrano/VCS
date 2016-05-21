@@ -47,24 +47,20 @@ app.controller("ControladorVCS", function($scope, $http) {
                             "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
                             "</td></tr>\n");
                     var estado = parseInt(article.cc_estado);
-                    if (estado >= 4) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                    if (estado > 4) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
                         $("#" + "div_imprimir_" + cont).css("display", "block");
+                        $("#" + "div_modificar_" + cont).css("display", "block");
                         $("#" + "div_eliminar_" + cont).css("display", "block");
                     }
                     if (article.cc_estado.trim() == "A") {
                         $("#" + "div_eliminar_" + cont).css("display", "none");
                         $("#" + "div_modificar_" + cont).css("display", "none");
-                        $("#" + "div_inserta_" + cont).css("display", "block");
+                        $("#" + "div_inserta_" + cont).css("display", "none");
                     }
-                    if (estado >= 0 && estado <=4) {
+                    if (estado == 4) {
                         $("#" + "div_eliminar_" + cont).css("display", "none");
                         $("#" + "div_modificar_" + cont).css("display", "none");
                         $("#" + "div_inserta_" + cont).css("display", "block");
-                    }
-                    if (estado >= 4) {//La ficha del estudiante ya fue ingresada
-                        $("#" + "div_eliminar_" + cont).css("display", "block");
-                        $("#" + "div_modificar_" + cont).css("display", "block");
-                        $("#" + "div_inserta_" + cont).css("display", "none");
                     }
 
                     document.getElementById("existe_data").value = "1";

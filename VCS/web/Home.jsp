@@ -34,6 +34,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div class="col-md-9">
+                <br/><jsp:include page="vistas/ubicacion_actual.jsp"/>
                 <center>
                     <div id="ajaxIconos" ng-open="carga_iconos()"></div>
                 </center>

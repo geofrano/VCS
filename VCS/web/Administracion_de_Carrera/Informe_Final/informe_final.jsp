@@ -39,6 +39,7 @@
                     <div class="list-group" id="ajaxResponse" ng-open="carga2()"></div>
                 </div>
             <div class="col-md-9">
+                <br/><jsp:include page="ubicacion_actual.jsp"/>
                 <jsp:include page="consultar_informe_final.jsp"/>
             </div>
             </div>

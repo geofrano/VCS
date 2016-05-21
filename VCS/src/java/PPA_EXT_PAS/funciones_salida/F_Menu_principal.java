@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,9 +39,11 @@ public class F_Menu_principal extends HttpServlet {
         try {
             //adm_menu.recorre_paginas(0, response,request);
             
-            
+            HttpSession sesion = request.getSession();//Toma la sesion actual
+            String usuario = (String) sesion.getAttribute("usuario");
+            //System.out.println("USUARIO: "+usuario);
             PrintWriter out = response.getWriter();
-            out.print(Administrar_Menu_Principal.toJSON(Administrar_Menu_Principal.mostrar_menu()));
+            out.print(Administrar_Menu_Principal.toJSON(Administrar_Menu_Principal.mostrar_menu(usuario)));
             out.flush();
             out.close();
             
