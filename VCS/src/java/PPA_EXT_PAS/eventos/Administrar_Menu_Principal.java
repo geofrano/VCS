@@ -128,6 +128,33 @@ public class Administrar_Menu_Principal {
         }
 
     }
+    public String total_menus(String usuario,String id_menu_padre) {
+
+        String sql = "SELECT count(c.me_id)\n" +
+                        "FROM \"MAU_USUARIO\" a, \"MAU_ROL\" b, \"MAU_MENU\" c, \"MAU_MENU_ROL\" d\n" +
+                        "where upper(trim(a.us_usuario)) = ? \n" +
+                        "and c.me_menu_padre = CAST(? AS integer) \n"+
+                        "and a.ro_id = b.ro_id\n" +
+                        "and c.me_id = d.me_id\n" +
+                        "and d.ro_id = b.ro_id\n" +
+                        "and c.me_estado='A'\n" +
+                        "order by 1";
+        String res="";
+        
+        ArrayList<Parametro> lstPar = new ArrayList<>();
+        lstPar.add(new Parametro(1, usuario.toUpperCase()));
+        lstPar.add(new Parametro(2, id_menu_padre));
+        try {
+            ConjuntoResultado cres
+                    = AccesoDatos.ejecutaQuery(sql,lstPar);
+            while (cres.next()) {
+                res=cres.getString(0);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public static List<Menu_principal> mostrar_menu(String usuario) {
         List< Menu_principal > opciones = new LinkedList< Menu_principal >();
 

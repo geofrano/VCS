@@ -24,7 +24,7 @@
         <script src="js/bootstrap.min.js"></script>
 
     </head>
-    <body ng-controller="ControladorVCS">
+    <body ng-controller="ControladorVCS" onload="carga_iconos()" >
         <div class="container">
             <div class="row">
                 <jsp:include page="vistas/cabecera_pagina.jsp"/>
@@ -36,7 +36,13 @@
             <div class="col-md-9">
                 <br/><jsp:include page="vistas/ubicacion_actual.jsp"/>
                 <center>
-                    <div id="ajaxIconos" ng-open="carga_iconos()"></div>
+                    <table id="tbl_iconos" class="table table-hover table-responsive">
+                            <tr>
+                                <th></th><th></th><th></th><th></th>
+                            </tr>
+
+                    </table>
+                    <div id="ajaxIconos"></div>
                 </center>
             </div>
             </div>

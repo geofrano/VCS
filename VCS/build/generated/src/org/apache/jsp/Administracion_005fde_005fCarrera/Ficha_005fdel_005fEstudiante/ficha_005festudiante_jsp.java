@@ -62,9 +62,9 @@ public final class ficha_005festudiante_jsp extends org.apache.jasper.runtime.Ht
       out.write("\n");
       out.write("        <script src=\"../../js/angular.min.js\"></script>\n");
       out.write("        <!-- This is what you need -->\n");
-      out.write("  <script src=\"../../js/sweetalert-dev.js\"></script>\n");
-      out.write("  <link rel=\"stylesheet\" href=\"../../css/sweetalert.css\">\n");
-      out.write("  <!--.......................-->\n");
+      out.write("        <script src=\"../../js/sweetalert-dev.js\"></script>\n");
+      out.write("        <link rel=\"stylesheet\" href=\"../../css/sweetalert.css\">\n");
+      out.write("        <!--.......................-->\n");
       out.write("        <script src=\"ficha_estudiante.js\"></script>\n");
       out.write("        <script src=\"../../js/jquery.js\"></script>\n");
       out.write("        <script src=\"../../js/bootstrap.min.js\"></script>\n");
@@ -82,6 +82,9 @@ public final class ficha_005festudiante_jsp extends org.apache.jasper.runtime.Ht
       out.write("                    <div class=\"list-group\" id=\"ajaxResponse\" ng-open=\"carga2()\"></div>\n");
       out.write("                </div>\n");
       out.write("            <div class=\"col-md-9\">\n");
+      out.write("                <br/>");
+      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "ubicacion_actual.jsp", out, false);
+      out.write("\n");
       out.write("                ");
       org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "consultar_ficha_estudiante.jsp", out, false);
       out.write("\n");

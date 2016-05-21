@@ -4,4 +4,4 @@
     Author     : Geovanny Barrera
 --%>
 
-<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Entidad_Externa/Carta_Compromiso/carta_compromiso.jsp">Carta de Compromiso</a>
+<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Entidad_Externa.jsp">Entidad Externa</a> / <a href="/VCS/Entidad_Externa/Carta_Compromiso/carta_compromiso.jsp">Carta de Compromiso</a>

@@ -4,4 +4,4 @@
     Author     : Geovanny Barrera
 --%>
 
-<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp">Ficha del Estudiante</a>
+<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Administracion_Carrera.jsp">Administración de Carrera</a> / <a href="/VCS/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp">Ficha del Estudiante</a>

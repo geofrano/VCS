@@ -4,4 +4,4 @@
     Author     : Geovanny Barrera
 --%>
 
-<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Entidad_Externa/Informe_Peticion_Verbal/informe_peticion_verbal.jsp">Informe de Petición Verbal</a>
+<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Entidad_Externa.jsp">Entidad Externa</a> / <a href="/VCS/Entidad_Externa/Informe_Peticion_Verbal/informe_peticion_verbal.jsp">Informe de Petición Verbal</a>

@@ -36,63 +36,6 @@ app.controller("ControladorVCS", function($scope, $http) {
         });
     };
 
-    $scope.carga_iconos = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        var id_modulo_padre = document.getElementById("id_modulo_padre").value;
-        //var fullname = $('#fullname').val();
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            mimeType: 'application/json',
-            //data: {id_cmb:'carrera'},
-            //data: $('#formid').serialize(),
-            url: ruta + '/F_Menu_principal.jsp',
-            success: function(data) {
-                $("#ajaxIconos").html("");
-                $.each(data.items, function(index, article) {
-
-                    /*<ul class="nav nav-pills">
-                     <li class="active">
-                     <a href="#">Home</a>
-                     </li>
-                     <li><a href="#">...</a></li>
-                     <li><a href="#">...</a></li>
-                     </ul>*/
-
-
-                    if (article.id_modulo_padre == id_modulo_padre) {
-
-                        $("#ajaxIconos").append("<a  href=\"" + article.pagina_modulo + "\">" +
-                                " <img width=\"150px\" height=\"150px\" class=\"img-circle\" src=\"" + article.icono_modulo + "\"/> " +
-                                article.nombre_modulo + "</a>");
-
-                    }
-                });
-            }
-        });
-    };
-
-    $scope.guarda_carta_comp = function() {
-        var ruta = document.getElementById("ruta_principal").value;
-        $scope.user = {};
-        document.getElementById("frm_carta_comp").action = ruta + "/F_carta_compromiso.jsp";
-        document.frm_carta_comp.submit();
-        $scope.submitted = true;
-    };
-
-    
-    $scope.llama_pagina_hija = function(tipo_accion) {
-        alert(tipo_accion);
-        if (tipo_accion == "ingresar") {
-            
-        } else if (tipo_accion == "modificar") {
-
-        } else if (tipo_accion == "eliminar") {
-
-        }
-
-    };
     /*$scope.insertaprueba=function() {
      $http.post("vistas/blank.jsp",{'txt_nombre_empresa':$scope.txt_nombre_empresa})
      .success(function(data,status,headers,config){
@@ -102,4 +45,95 @@ app.controller("ControladorVCS", function($scope, $http) {
 
 });
 
+function carga_iconos(){
+var ruta = document.getElementById("ruta_principal").value;
+        var id_modulo_padre = document.getElementById("id_modulo_padre").value;
+        var contador=0;
+        var pag_modulo_ant="";
+        var ruta_icono_ant="";
+        var nombre_modulo_ant="";
+        var total_menus=0;
+        var recorre_menus=0;
+        var recorre_menu2=0;
+        var $tabla = $("#tbl_iconos");
+        $tabla.find("tr:gt(0)").remove();
+        
+        $.ajax({
+            type: 'POST',
+            data: {txt_id_modulo_padre: id_modulo_padre},
+            //data: {id_cmb:'carrera'},
+            //data: $('#formid').serialize(),
+            url: ruta + '/F_devuelve_total_menus',
+            success: function(data) {
+                total_menus=parseInt(data);
+                
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    mimeType: 'application/json',
+                    //data: {id_cmb:'carrera'},
+                    //data: $('#formid').serialize(),
+                    url: ruta + '/F_Menu_principal.jsp',
+                    success: function(data) {
+                        $("#ajaxIconos").html("");
+                        $.each(data.items, function(index, article) {
 
+                            /*<ul class="nav nav-pills">
+                             <li class="active">
+                             <a href="#">Home</a>
+                             </li>
+                             <li><a href="#">...</a></li>
+                             <li><a href="#">...</a></li>
+                             </ul>*/
+
+
+                            if (article.id_modulo_padre == id_modulo_padre) {
+                                contador=contador+1;
+                                recorre_menu2=recorre_menu2+1;
+                                
+                                if (contador == 1){
+                                  pag_modulo_ant=article.pagina_modulo;
+                                  ruta_icono_ant=article.icono_modulo;
+                                  nombre_modulo_ant=article.nombre_modulo;  
+                                }
+
+                                if (contador > 1){
+                                    recorre_menus=recorre_menus+2;
+                                    contador=0;
+                                    $tabla.append("<tr>\n"+
+                                            "<td>" + "<a  href=\"" + pag_modulo_ant + "\">" +
+                                            " <img width=\"150px\" height=\"150px\" class=\"img-circle\" src=\"" + ruta_icono_ant + "\"/> </a>"+ "</td>\n" +
+                                            "<td>" + " <br><br><br><a  href=\"" + pag_modulo_ant + "\">" +nombre_modulo_ant+ "</td>\n" +
+                                            "<td>" + "<a  href=\"" + article.pagina_modulo + "\">" +
+                                            " <img width=\"150px\" height=\"150px\" class=\"img-circle\" src=\"" + article.icono_modulo + "\"/> </a>"+ "</td>\n" +
+                                            "<td>" + " <br><br><br><a  href=\"" + article.pagina_modulo + "\">" +article.nombre_modulo+ "</td>\n" +
+                                           "</tr>");
+                                /*$("#ajaxIconos").append("<a  href=\"" + article.pagina_modulo + "\">" +
+                                        " <img width=\"150px\" height=\"150px\" class=\"img-circle\" src=\"" + article.icono_modulo + "\"/> " +
+                                        article.nombre_modulo + "</a>");*/
+                                }
+                                
+                                if ((total_menus - 1) == recorre_menus && recorre_menu2 == total_menus ){
+                                    $tabla.append("<tr>\n"+
+                                            "<td>" + "<a  href=\"" + article.pagina_modulo + "\">" +
+                                            " <img width=\"150px\" height=\"150px\" class=\"img-circle\" src=\"" + article.icono_modulo + "\"/> </a>"+ "</td>\n" +
+                                            "<td>" + "<br><br><br> <a  href=\"" + article.pagina_modulo + "\">" +article.nombre_modulo+ "</td>\n" +
+                                            "<td>" + "</td>\n" +
+                                            "<td>" + "</td>\n" +
+                                           "</tr>");
+                                }
+
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        
+        //alert(total_menus);
+        
+        //var fullname = $('#fullname').val();
+        
+}

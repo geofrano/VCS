@@ -4,4 +4,4 @@
     Author     : Geovanny Barrera
 --%>
 
-<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Entidad_Externa/Cronograma/Cronograma.jsp">Cronograma de Actividades</a>
+<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Entidad_Externa.jsp">Entidad Externa</a> / <a href="/VCS/Entidad_Externa/Cronograma/Cronograma.jsp">Cronograma de Actividades</a>

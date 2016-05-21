@@ -84,6 +84,9 @@ public final class mantenimiento_005fparametro_jsp extends org.apache.jasper.run
       out.write("                    <div class=\"list-group\" id=\"ajaxResponse\" ng-open=\"carga2()\"></div>\n");
       out.write("                </div>\n");
       out.write("            <div id=\"icono\" class=\"col-md-9\">\n");
+      out.write("                <br/>");
+      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "ubicacion_actual.jsp", out, false);
+      out.write("\n");
       out.write("                ");
       org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "cont_parametro.jsp", out, false);
       out.write("\n");

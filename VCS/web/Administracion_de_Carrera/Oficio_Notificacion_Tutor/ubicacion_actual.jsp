@@ -4,4 +4,4 @@
     Author     : Geovanny Barrera
 --%>
 
-<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Administracion_de_Carrera/Oficio_Notificacion_Tutor/notificacion_tutor.jsp">Informe de Notificación al Tutor</a>
+<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Administracion_Carrera.jsp">Administración de Carrera</a> / <a href="/VCS/Administracion_de_Carrera/Oficio_Notificacion_Tutor/notificacion_tutor.jsp">Informe de Notificación al Tutor</a>

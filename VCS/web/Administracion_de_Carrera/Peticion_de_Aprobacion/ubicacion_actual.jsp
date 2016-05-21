@@ -4,4 +4,4 @@
     Author     : Geovanny Barrera
 --%>
 
-<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Administracion_de_Carrera/Peticion_de_Aprobacion/peticion_aprobacion.jsp">Informe de Petición de Aprobación</a>
+<a href="/VCS/Home.jsp">Principal</a> / <a href="/VCS/Administracion_Carrera.jsp">Administración de Carrera</a> / <a href="/VCS/Administracion_de_Carrera/Peticion_de_Aprobacion/peticion_aprobacion.jsp">Informe de Petición de Aprobación</a>
