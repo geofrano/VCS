@@ -1,0 +1,78 @@
+/* 
+    Created on : 10/01/2016, 04:47:52 PM
+    Author     : Geovanny Barrera
+*/
+
+.alineado{
+float: right;
+right: 22px; 
+}
+.alineado2{
+text-align: right;
+}
+.alineado3{
+text-align: center;
+}
+.tamanio{
+width: 1%;
+padding:0;
+}
+.tamanio2{
+width: 100%;
+}
+.caption {
+padding: 0;
+width: 100%;
+position: relative;
+}
+.caption img {
+width: 100%;
+height: auto;
+display: block;
+padding: 0;
+border: 0;
+}
+.caption::before {
+content: attr(title);
+position: absolute;
+background: #EAF200; /* Color de fondo */
+background: rgba(234, 242, 0, 0.6); /* Color de fondo en RGBA */
+color: #000; /* Color del texto */
+font-size: 14px; /* Tamaño del texto */
+padding: 5px;
+right: 0;
+bottom: 0;
+left: 0;
+text-align: center;
+z-index: 1;
+}
+
+.legendas {
+background: #337ab7;
+border: solid 1px black;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+padding: 6px;
+}
+.legendas2 {
+
+border: solid 1px black;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+padding: 6px;
+}
+.opcion_iluminada {
+    font-size: 20px;
+    color:#fff;
+    text-decoration:none;
+    padding: 10px;
+  }
+.titulos {
+    font-size: 50px;
+    font-style: italic;
+    color: #333;
+    padding: 10px;
+    text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
+  }
