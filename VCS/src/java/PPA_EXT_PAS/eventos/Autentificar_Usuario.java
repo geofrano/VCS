@@ -36,7 +36,22 @@ public class Autentificar_Usuario {
     public Usuario getAdmin() {
         return admin;
     }
-    
+    public String actualizaClave(String clave, String usuario) {
+        ArrayList<Parametro> parametros = new ArrayList<>();
+        String res = "NO";
+        String sql = "UPDATE \"MAU_USUARIO\" set us_contrasena = (select md5(?)) where upper(trim(us_usuario)) = ?";
+        parametros.add(new Parametro(1, clave));
+        parametros.add(new Parametro(2, usuario.toUpperCase()));
+        try {
+             boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
+             if (cres){
+                 res="SI";
+             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
     public boolean autenticaUsuario(String usuario, String clave){
         //AccesoDatos datos = new AccesoDatos();
         boolean lb_valida_login=false;

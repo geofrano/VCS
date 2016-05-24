@@ -19,9 +19,12 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"> <%= nombres + " " + apellidos%>&nbsp;&nbsp;<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu alineado1 btn-warning">
+                    <li class="btn-warning"><a href="/VCS/Login/cambia_clave.jsp" class="glyphicon glyphicon-play">&nbsp;&nbsp;Cambiar clave&nbsp;</a>
+                    </li>
                     <li class="btn-warning"><a href="/VCS/Login/logout.jsp" class="glyphicon glyphicon-off">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salir&nbsp;</a></li>
                 </ul>
             </li>
         </ul>
     </fieldset>
+                
 </div>
