@@ -80,7 +80,7 @@ public class Administrar_Ficha_Estudiante {
         parametros.add(new Parametro(1, cc_id.trim()));
         try {
              boolean cres = AccesoDatos.ejecutaComando(sql, parametros);
-             String act=actualiza_estado_cc(cc_id,"A");
+             String act=actualiza_estado_cc(cc_id,"4");
              if (cres){
                  res="SI";
              }
