@@ -65,7 +65,7 @@ public final class Administracion_005fCarrera_jsp extends org.apache.jasper.runt
       out.write("        <script src=\"js/bootstrap.min.js\"></script>\n");
       out.write("\n");
       out.write("    </head>\n");
-      out.write("    <body ng-controller=\"ControladorVCS\">\n");
+      out.write("    <body ng-controller=\"ControladorVCS\" onload=\"carga_iconos()\">\n");
       out.write("        <div class=\"container\">\n");
       out.write("            <div class=\"row\">\n");
       out.write("                ");
@@ -77,8 +77,17 @@ public final class Administracion_005fCarrera_jsp extends org.apache.jasper.runt
       out.write("                    <div class=\"list-group\" id=\"ajaxResponse\" ng-open=\"carga2()\"></div>\n");
       out.write("                </div>\n");
       out.write("            <div class=\"col-md-9\">\n");
+      out.write("                <br/>");
+      org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "vistas/ubicacion_actual_1.jsp", out, false);
+      out.write("\n");
       out.write("                <center>\n");
-      out.write("                    <div id=\"ajaxIconos\" ng-open=\"carga_iconos()\"></div>\n");
+      out.write("                    <table id=\"tbl_iconos\" class=\"table table-hover table-responsive\">\n");
+      out.write("                            <tr>\n");
+      out.write("                                <th></th><th></th><th></th><th></th>\n");
+      out.write("                            </tr>\n");
+      out.write("\n");
+      out.write("                    </table>\n");
+      out.write("                    <div id=\"ajaxIconos\"></div>\n");
       out.write("                </center>\n");
       out.write("            </div>\n");
       out.write("            </div>\n");
