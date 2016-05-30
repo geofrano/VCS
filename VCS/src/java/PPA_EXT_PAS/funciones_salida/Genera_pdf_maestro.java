@@ -16,7 +16,9 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import java.awt.Color;
@@ -581,8 +583,12 @@ public class Genera_pdf_maestro {
         
         //CRONOGRAMA DE ACTIVIDADES
          try {
-
+		    
+            document.setPageSize(PageSize.A4.rotate());
             document.newPage();
+            
+            document.setPageSize(PageSize.A4);
+			
             Image imagen = Image.getInstance(ruta_imagen + "/Logo_UPS.png");
             Image imagen2 = Image.getInstance(ruta_imagen + "/logo_vinculacion.png");
 
@@ -591,8 +597,8 @@ public class Genera_pdf_maestro {
             //PdfPTable table = new PdfPTable(1);
             //table.getDefaultCell().setBackgroundColor(new Color(205, 38, 38));
 
-            imagen2.setAbsolutePosition(416f, 763f);
-
+            imagen2.setAbsolutePosition(650f, 555f);
+            imagen.setAbsolutePosition(45f, 550f);
             document.add(imagen);
             document.add(imagen2);
 
@@ -602,46 +608,93 @@ public class Genera_pdf_maestro {
             for (Iterator<Carta_Compromiso> it = carta_comp.iterator(); it.hasNext();) {
                 Carta_Compromiso opciones = it.next();
                 
-                Paragraph titulo = new Paragraph(new Paragraph("PROGRAMA DE "+opciones.getTipo_actividad().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD, Color.BLACK)));
+                Paragraph titulo = new Paragraph(new Paragraph("PROGRAMA DE "+opciones.getTipo_actividad().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 15, Font.BOLD, Color.BLACK)));
                 titulo.setAlignment(Element.ALIGN_CENTER);
                 document.add(titulo);
                 
-                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 //document.add(new Chunk(NEWLINE));
                 
                 //document.add(chunkSeparador);
-
-                Paragraph comb = new Paragraph();
-                comb.add(new Chunk("CARTA COMPROMISO:   ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                comb.add(new Chunk(opciones.getId_carta_compromiso(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                comb.add(new Chunk("            ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                comb.add(new Chunk("TIPO DE ACTIVIDAD: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                comb.add(new Chunk(opciones.getTipo_actividad(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                document.add(comb);
-
-                Paragraph comb2 = new Paragraph();
-                comb2.add(new Chunk("INSTITUCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                comb2.add(new Chunk(opciones.getNomb_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                document.add(comb2);
-
-                Paragraph comb3 = new Paragraph();
-                comb3.add(new Chunk("ESTUDIANTE: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                comb3.add(new Chunk(opciones.getNomb_estudiante(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                comb3.add(new Chunk("   CÉDULA DE IDENTIDAD: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                comb3.add(new Chunk(opciones.getCed_estudiante(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                document.add(comb3);
                 
-                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-
                 
-                Paragraph dat_just_tit = new Paragraph(new Paragraph("JUSTIFICACIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                Paragraph dat_obj_tit = new Paragraph(new Paragraph("OBJETIVOS: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                Paragraph dat_duracion_tit = new Paragraph(new Paragraph("DURACIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                Paragraph paraf_cc = new Paragraph();
+                Paragraph paraf_act = new Paragraph();
+                Paragraph paraf_cc_val = new Paragraph();
+                Paragraph paraf_act_val = new Paragraph();
+                paraf_cc.add(new Chunk("CARTA COMPROMISO: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                paraf_cc_val.add(new Chunk(opciones.getId_carta_compromiso(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                paraf_act.add(new Chunk("TIPO DE ACTIVIDAD: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                paraf_act_val.add(new Chunk(opciones.getTipo_actividad(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                //document.add(comb);
+
+                Paragraph paraf_inst = new Paragraph();
+                Paragraph paraf_inst_val = new Paragraph();
+                Chunk chunk_int_val = new Chunk(opciones.getNomb_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK));
+                //chunk_int_val.setUnderline(0.1f, -2f); //0.1 thick, -2 y-location
+                //document.add(chunk_int_val);
+                paraf_inst.add(new Chunk("INSTITUCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                paraf_inst_val.add(chunk_int_val);
+                //document.add(comb2);
+
+                Paragraph paraf_est = new Paragraph();
+                Paragraph paraf_est_val = new Paragraph();
+                Paragraph paraf_ced = new Paragraph();
+                Paragraph paraf_ced_val = new Paragraph();
+                paraf_est.add(new Chunk("ESTUDIANTE: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                paraf_est_val.add(new Chunk(opciones.getNomb_estudiante(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                paraf_ced.add(new Chunk("CÉDULA DE CIUDADANÍA: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                paraf_ced_val.add(new Chunk(opciones.getCed_estudiante().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                //document.add(comb3);
+                
+                PdfPTable table_cab = new PdfPTable(4);
+                PdfPCell cell_cab_1=new PdfPCell(paraf_cc);
+                PdfPCell cell_cab_2=new PdfPCell(paraf_cc_val);
+                PdfPCell cell_cab_3=new PdfPCell(paraf_act);
+                PdfPCell cell_cab_4=new PdfPCell(paraf_act_val);
+                PdfPCell cell_cab_5=new PdfPCell(paraf_inst);
+                PdfPCell cell_cab_6=new PdfPCell(paraf_inst_val);
+                PdfPCell cell_cab_7=new PdfPCell(paraf_est);
+                PdfPCell cell_cab_8=new PdfPCell(paraf_est_val);
+                PdfPCell cell_cab_9=new PdfPCell(paraf_ced);
+                PdfPCell cell_cab_10=new PdfPCell(paraf_ced_val);
+                
+                cell_cab_1.setBorder(0);    cell_cab_2.setBorder(Rectangle.BOTTOM);    cell_cab_3.setBorder(0);
+                cell_cab_4.setBorder(Rectangle.BOTTOM);    cell_cab_5.setBorder(0);    cell_cab_6.setBorder(Rectangle.BOTTOM);
+                cell_cab_7.setBorder(0);    cell_cab_8.setBorder(Rectangle.BOTTOM);    cell_cab_9.setBorder(0);
+                cell_cab_10.setBorder(Rectangle.BOTTOM);
+                
+                cell_cab_6.setColspan(3);
+                
+                table_cab.addCell(cell_cab_1);
+                table_cab.addCell(cell_cab_2);
+                table_cab.addCell(cell_cab_3);
+                table_cab.addCell(cell_cab_4);
+                table_cab.addCell(cell_cab_5);
+                table_cab.addCell(cell_cab_6);
+                table_cab.addCell(cell_cab_7);
+                table_cab.addCell(cell_cab_8);
+                table_cab.addCell(cell_cab_9);
+                table_cab.addCell(cell_cab_10);
+                table_cab.setWidthPercentage(100);
+                float[] medidaCeldas_cab = {0.35f, 0.60f, 0.40f, 0.55f};
+                table_cab.setWidths(medidaCeldas_cab);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_cab);
+                
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+
                 Administrar_Carta_Compromiso adm_cc = new Administrar_Carta_Compromiso();
                 
-                Paragraph dat_just = new Paragraph(new Paragraph(adm_cc.devuelveParametroCC("JUSTIF_"+adm_cc.devuelveDatoCC(opciones.getId_carta_compromiso(), "cc_tipo_actividad")), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                Paragraph dat_obj = new Paragraph(new Paragraph(opciones.getObjetivo_actividad(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                Paragraph dat_duracion = new Paragraph(new Paragraph(opciones.getTotal_horas()+" horas", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                Paragraph dat_just_tit = new Paragraph(new Paragraph("JUSTIFICACIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph dat_obj_tit = new Paragraph(new Paragraph("OBJETIVOS: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph dat_duracion_tit = new Paragraph(new Paragraph("DURACIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                dat_just_tit.setAlignment(Element.ALIGN_LEFT);
+                dat_obj_tit.setAlignment(Element.ALIGN_LEFT);
+                dat_duracion_tit.setAlignment(Element.ALIGN_LEFT);
+                
+                Paragraph dat_just = new Paragraph(new Paragraph(adm_cc.devuelveParametroCC("JUSTIF_"+adm_cc.devuelveDatoCC(opciones.getId_carta_compromiso(), "cc_tipo_actividad")), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                Paragraph dat_obj = new Paragraph(new Paragraph(opciones.getObjetivo_actividad(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                Paragraph dat_duracion = new Paragraph(new Paragraph(opciones.getTotal_horas()+" horas", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
                 
                 
                 PdfPTable table_just = new PdfPTable(2);
@@ -653,12 +706,12 @@ public class Genera_pdf_maestro {
                 PdfPCell celda_duracion = new PdfPCell(dat_duracion);
                 //celda_just.setFixedHeight(16f);
                 //celda_just.setBackgroundColor(Color.LIGHT_GRAY);
-                celda_just_tit.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_obj_tit.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_duracion_tit.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_just.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_obj.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_duracion.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_just_tit.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_obj_tit.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_duracion_tit.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_just.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_obj.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_duracion.setHorizontalAlignment(Element.ALIGN_LEFT);
                 
                 celda_just_tit.setBorder(0);
                 celda_obj_tit.setBorder(0);
@@ -671,12 +724,17 @@ public class Genera_pdf_maestro {
                 table_just.addCell(celda_duracion_tit);
                 table_just.addCell(celda_duracion);
                 //table_just.setTotalWidth(3f);
-                table_just.setWidthPercentage(100);
+                //table_just.setWidthPercentage(100);
+                table_just.setHorizontalAlignment(Element.ALIGN_CENTER);
+                float[] medidaCeldas_just = {0.18f, 0.80f};
+                table_just.setWidths(medidaCeldas_just);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
                 document.add(table_just);
-    
+                
+                
                 Paragraph comb4 = new Paragraph();
-                comb4.add(new Chunk("RECURSOS QUE INTERVIENEN: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                comb4.add(new Chunk("RECURSOS QUE INTERVIENEN: ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 document.add(comb4);
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 5, Font.NORMAL, Color.BLACK)));
                 
                 Administrar_Ficha_Estudiante adm_ficha_est = new Administrar_Ficha_Estudiante();
                 List< Carta_Compromiso> carta_comp2_act = adm_ficha_est.obtiene_elemento2(opciones.getId_carta_compromiso(),"RC");
@@ -687,50 +745,70 @@ public class Genera_pdf_maestro {
                     Carta_Compromiso elemento = it2.next();
                     recursos=recursos+elemento.getActividad_1()+"-";
                 }
+                PdfPTable table_rec = new PdfPTable(1);
                 recursos=recursos.substring(2,recursos.length()-1).replace("-2. -3.", "").replace("-3. -4.", "").replace("-4. -5.", "").replace("-5. -6.", "").replace(" -6.", "");
-                
                 Paragraph act_contenido = new Paragraph();
-                act_contenido.add(new Chunk(recursos, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                document.add(act_contenido);
+                act_contenido.add(new Chunk(recursos, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                PdfPCell celda_recursos = new PdfPCell(act_contenido);
+                table_rec.addCell(celda_recursos);
+                table_rec.setWidthPercentage(100);
+                document.add(table_rec);
                 
                 Paragraph cronog_tit = new Paragraph();
-                cronog_tit.add(new Chunk("\nCRONOGRAMA DE ACTIVIDADES", FontFactory.getFont(FontFactory.HELVETICA, 13, Font.BOLD, Color.BLACK)));
+                cronog_tit.add(new Chunk("\nCRONOGRAMA DE ACTIVIDADES", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD, Color.BLACK)));
                 cronog_tit.setAlignment(Element.ALIGN_CENTER);
                 document.add(cronog_tit);
-                
                 
                 //document.add(new Paragraph(""));
                 //document.add(new Paragraph("\nDATOS DE LA EMPRESA Y/0 PROYECTO",FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
                 //document.add(chunkSeparador);
                 document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 6, Font.BOLD, Color.BLACK)));
                 
-                PdfPTable table_act = new PdfPTable(10);
+                PdfPTable table_act = new PdfPTable(18);
                 Paragraph tit_actividades = new Paragraph();
-                tit_actividades.add(new Chunk("ACTIVIDADES                                    ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_actividades.add(new Chunk("ACTIVIDADES                                    ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_semanas = new Paragraph();
-                tit_semanas.add(new Chunk("SEMANAS", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_semanas.add(new Chunk("SEMANAS", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_1 = new Paragraph();
-                tit_sem_1.add(new Chunk("1", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_1.add(new Chunk("1", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_2 = new Paragraph();
-                tit_sem_2.add(new Chunk("2", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_2.add(new Chunk("2", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_3 = new Paragraph();
-                tit_sem_3.add(new Chunk("3", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_3.add(new Chunk("3", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_4 = new Paragraph();
-                tit_sem_4.add(new Chunk("4", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_4.add(new Chunk("4", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_5 = new Paragraph();
-                tit_sem_5.add(new Chunk("5", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_5.add(new Chunk("5", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_6 = new Paragraph();
-                tit_sem_6.add(new Chunk("6", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_6.add(new Chunk("6", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_sem_7 = new Paragraph();
-                tit_sem_7.add(new Chunk("7", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_sem_7.add(new Chunk("7", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_8 = new Paragraph();
+                tit_sem_8.add(new Chunk("8", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_9 = new Paragraph();
+                tit_sem_9.add(new Chunk("9", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_10 = new Paragraph();
+                tit_sem_10.add(new Chunk("10", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_11 = new Paragraph();
+                tit_sem_11.add(new Chunk("11", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_12 = new Paragraph();
+                tit_sem_12.add(new Chunk("12", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_13 = new Paragraph();
+                tit_sem_13.add(new Chunk("13", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_14 = new Paragraph();
+                tit_sem_14.add(new Chunk("14", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                Paragraph tit_sem_15 = new Paragraph();
+                tit_sem_15.add(new Chunk("15", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_total_act = new Paragraph();
-                tit_total_act.add(new Chunk("TOTAL", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_total_act.add(new Chunk("TOTAL", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_total_gnral = new Paragraph();
-                tit_total_gnral.add(new Chunk("TOTAL", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
+                tit_total_gnral.add(new Chunk("TOTAL", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
                 Paragraph tit_h = new Paragraph();
-                tit_h.add(new Chunk(" h ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                tit_h.add(new Chunk(" h ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
                 Paragraph blanco = new Paragraph();
-                blanco.add(new Chunk(" ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                blanco.add(new Chunk(" ", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                
+                tit_h.setAlignment(Element.ALIGN_CENTER);
                 
                 PdfPCell celda_1 = new PdfPCell(tit_actividades);
                 PdfPCell celda_2 = new PdfPCell(tit_semanas);
@@ -741,13 +819,40 @@ public class Genera_pdf_maestro {
                 PdfPCell celda_7 = new PdfPCell(tit_sem_5);
                 PdfPCell celda_8 = new PdfPCell(tit_sem_6);
                 PdfPCell celda_9 = new PdfPCell(tit_sem_7);
+                PdfPCell celda_sem8 = new PdfPCell(tit_sem_8);
+                PdfPCell celda_sem9 = new PdfPCell(tit_sem_9);
+                PdfPCell celda_sem10 = new PdfPCell(tit_sem_10);
+                PdfPCell celda_sem11 = new PdfPCell(tit_sem_11);
+                PdfPCell celda_sem12 = new PdfPCell(tit_sem_12);
+                PdfPCell celda_sem13 = new PdfPCell(tit_sem_13);
+                PdfPCell celda_sem14 = new PdfPCell(tit_sem_14);
+                PdfPCell celda_sem15 = new PdfPCell(tit_sem_15);
+                
                 PdfPCell celda_10 = new PdfPCell(tit_total_act);
                 PdfPCell celda_11 = new PdfPCell(tit_total_gnral);
                 PdfPCell celda_12 = new PdfPCell(tit_h);
                 PdfPCell celda_blank = new PdfPCell(blanco); 
-                
+                celda_11.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_12.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_10.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_6.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_7.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_8.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_9.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem8.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem9.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem10.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem11.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem12.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem13.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem14.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_sem15.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celda_1.setRowspan(2);
-                celda_2.setColspan(7);
+                celda_2.setColspan(15);
+                celda_11.setColspan(2);
                 celda_2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 
                 table_act.addCell(celda_1);
@@ -761,24 +866,26 @@ public class Genera_pdf_maestro {
                 table_act.addCell(celda_7);
                 table_act.addCell(celda_8);
                 table_act.addCell(celda_9);
+                table_act.addCell(celda_sem8);
+                table_act.addCell(celda_sem9);
+                table_act.addCell(celda_sem10);
+                table_act.addCell(celda_sem11);
+                table_act.addCell(celda_sem12);
+                table_act.addCell(celda_sem13);
+                table_act.addCell(celda_sem14);
+                table_act.addCell(celda_sem15);
                 table_act.addCell(celda_10);
                 table_act.addCell(celda_blank);
 
                 List< Carta_Compromiso> carta_comp3_act = adm_ficha_est.obtiene_elemento3(opciones.getId_carta_compromiso(),"AC");
-                int num_h_sem1=0;
-                int num_h_sem2=0;
-                int num_h_sem3=0;
-                int num_h_sem4=0;
-                int num_h_sem5=0;
-                int num_h_sem6=0;
-                int num_h_sem7=0;
-                String valor_sem1="";
-                String valor_sem2="";
-                String valor_sem3="";
-                String valor_sem4="";
-                String valor_sem5="";
-                String valor_sem6="";
-                String valor_sem7="";
+                int num_h_sem1=0;    int num_h_sem2=0;   int num_h_sem3=0;    int num_h_sem4=0;   int num_h_sem5=0;
+                int num_h_sem6=0;    int num_h_sem7=0;   int num_h_sem8=0;    int num_h_sem9=0;   int num_h_sem10=0;
+                int num_h_sem11=0;   int num_h_sem12=0;  int num_h_sem13=0;   int num_h_sem14=0;  int num_h_sem15=0;
+				
+                String valor_sem1="";  String valor_sem2="";  String valor_sem3="";  String valor_sem4="";  String valor_sem5="";
+                String valor_sem6="";  String valor_sem7="";  String valor_sem8="";  String valor_sem9="";  String valor_sem10="";
+                String valor_sem11=""; String valor_sem12=""; String valor_sem13=""; String valor_sem14=""; String valor_sem15="";
+                
                 int sum_act=0;
                 int sum_tot=0;
                 
@@ -787,13 +894,8 @@ public class Genera_pdf_maestro {
                     Paragraph actividades = new Paragraph();
                     actividades.add(new Chunk(elemento.getActividad_1(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
                     PdfPCell celda_13 = new PdfPCell(actividades);
-                    valor_sem1="";
-                    valor_sem2="";
-                    valor_sem3="";
-                    valor_sem4="";
-                    valor_sem5="";
-                    valor_sem6="";
-                    valor_sem7="";
+                    valor_sem1="";	valor_sem2="";	valor_sem3="";	valor_sem4="";	valor_sem5="";	valor_sem6="";	valor_sem7="";	valor_sem8="";
+                    valor_sem9="";  valor_sem10=""; valor_sem11=""; valor_sem12=""; valor_sem13=""; valor_sem14=""; valor_sem15="";
                     
                     num_h_sem1=Integer.parseInt(elemento.getProducto_1());
                     num_h_sem2=Integer.parseInt(elemento.getProducto_2());
@@ -802,8 +904,17 @@ public class Genera_pdf_maestro {
                     num_h_sem5=Integer.parseInt(elemento.getProducto_5());
                     num_h_sem6=Integer.parseInt(elemento.getProducto_6());
                     num_h_sem7=Integer.parseInt(elemento.getActividad_3());
+                    num_h_sem8=Integer.parseInt(elemento.getResultado_1());
+                    num_h_sem9=Integer.parseInt(elemento.getResultado_2());
+                    num_h_sem10=Integer.parseInt(elemento.getResultado_3());
+                    num_h_sem11=Integer.parseInt(elemento.getResultado_4());
+                    num_h_sem12=Integer.parseInt(elemento.getResultado_5());
+                    num_h_sem13=Integer.parseInt(elemento.getResultado_6());
+                    num_h_sem14=Integer.parseInt(elemento.getActividad_4());
+                    num_h_sem15=Integer.parseInt(elemento.getActividad_5());
                     
-                    sum_act=num_h_sem1+num_h_sem2+num_h_sem3+num_h_sem4+num_h_sem5+num_h_sem6+num_h_sem7;
+                    sum_act=num_h_sem1+num_h_sem2+num_h_sem3+num_h_sem4+num_h_sem5+num_h_sem6+num_h_sem7+
+                            num_h_sem8+num_h_sem9+num_h_sem10+num_h_sem11+num_h_sem12+num_h_sem13+num_h_sem14+num_h_sem15;
                     sum_tot= sum_tot +sum_act;
                     if(num_h_sem1 > 0){
                         valor_sem1="X";
@@ -826,34 +937,114 @@ public class Genera_pdf_maestro {
                     if(num_h_sem7 > 0){
                         valor_sem7="X";
                     }
+                    if(num_h_sem8 > 0){
+                        valor_sem8="X";
+                    }
+                    if(num_h_sem9 > 0){
+                        valor_sem9="X";
+                    }
+                    if(num_h_sem10 > 0){
+                        valor_sem10="X";
+                    }
+                    if(num_h_sem11 > 0){
+                        valor_sem11="X";
+                    }
+                    if(num_h_sem12 > 0){
+                        valor_sem12="X";
+                    }
+                    if(num_h_sem13 > 0){
+                        valor_sem13="X";
+                    }
+                    if(num_h_sem14 > 0){
+                        valor_sem14="X";
+                    }
+                    if(num_h_sem15 > 0){
+                        valor_sem15="X";
+                    }
                     
                     Paragraph sem_1 = new Paragraph();
-                    sem_1.add(new Chunk(valor_sem1, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_1.add(new Chunk(valor_sem1, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_1.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_14 = new PdfPCell(sem_1);
+                    celda_14.setHorizontalAlignment(Element.ALIGN_CENTER);
                     Paragraph sem_2 = new Paragraph();
-                    sem_2.add(new Chunk(valor_sem2, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_2.add(new Chunk(valor_sem2, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_2.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_15 = new PdfPCell(sem_2);
                     Paragraph sem_3 = new Paragraph();
-                    sem_3.add(new Chunk(valor_sem3, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_3.add(new Chunk(valor_sem3, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_3.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_16 = new PdfPCell(sem_3);
                     Paragraph sem_4 = new Paragraph();
-                    sem_4.add(new Chunk(valor_sem4, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_4.add(new Chunk(valor_sem4, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_4.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_17 = new PdfPCell(sem_4);
                     Paragraph sem_5 = new Paragraph();
-                    sem_5.add(new Chunk(valor_sem5, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_5.add(new Chunk(valor_sem5, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_5.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_18 = new PdfPCell(sem_5);
                     Paragraph sem_6 = new Paragraph();
-                    sem_6.add(new Chunk(valor_sem6, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_6.add(new Chunk(valor_sem6, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_6.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_19 = new PdfPCell(sem_6);
                     Paragraph sem_7 = new Paragraph();
-                    sem_7.add(new Chunk(valor_sem7, FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    sem_7.add(new Chunk(valor_sem7, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_7.setAlignment(Element.ALIGN_CENTER);
                     PdfPCell celda_20 = new PdfPCell(sem_7);
+                    Paragraph sem_8 = new Paragraph();
+                    sem_8.add(new Chunk(valor_sem8, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_8.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_30 = new PdfPCell(sem_8);
+                    Paragraph sem_9 = new Paragraph();
+                    sem_9.add(new Chunk(valor_sem9, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_9.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_31 = new PdfPCell(sem_9);
+                    Paragraph sem_10 = new Paragraph();
+                    sem_10.add(new Chunk(valor_sem10, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_10.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_32 = new PdfPCell(sem_10);
+                    Paragraph sem_11 = new Paragraph();
+                    sem_11.add(new Chunk(valor_sem11, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_11.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_33 = new PdfPCell(sem_11);
+                    Paragraph sem_12 = new Paragraph();
+                    sem_12.add(new Chunk(valor_sem12, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_12.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_34 = new PdfPCell(sem_12);
+                    Paragraph sem_13 = new Paragraph();
+                    sem_13.add(new Chunk(valor_sem13, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_13.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_35 = new PdfPCell(sem_13);
+                    Paragraph sem_14 = new Paragraph();
+                    sem_14.add(new Chunk(valor_sem14, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_14.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_36 = new PdfPCell(sem_14);
+                    Paragraph sem_15 = new Paragraph();
+                    sem_15.add(new Chunk(valor_sem15, FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                    sem_15.setAlignment(Element.ALIGN_CENTER);
+                    PdfPCell celda_37 = new PdfPCell(sem_15);
                     
                     Paragraph tot_act = new Paragraph();
-                    tot_act.add(new Chunk(sum_act+"", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                    tot_act.add(new Chunk(sum_act+"", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
                     PdfPCell celda_21 = new PdfPCell(tot_act);
                     
-                    
+                    celda_14.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_15.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_16.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_17.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_18.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_19.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_20.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_30.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_31.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_32.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_33.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_34.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_35.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_36.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_37.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_21.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    celda_12.setHorizontalAlignment(Element.ALIGN_CENTER);
                     
                     table_act.addCell(celda_13);
                     table_act.addCell(celda_14);
@@ -863,13 +1054,29 @@ public class Genera_pdf_maestro {
                     table_act.addCell(celda_18);
                     table_act.addCell(celda_19);
                     table_act.addCell(celda_20);
+                    table_act.addCell(celda_30);
+                    table_act.addCell(celda_31);
+                    table_act.addCell(celda_32);
+                    table_act.addCell(celda_33);
+                    table_act.addCell(celda_34);
+                    table_act.addCell(celda_35);
+                    table_act.addCell(celda_36);
+                    table_act.addCell(celda_37);
                     table_act.addCell(celda_21);
                     table_act.addCell(celda_12);
                 }
                 Paragraph tot_gnral = new Paragraph();
-                tot_gnral.add(new Chunk(sum_tot+"", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
+                tot_gnral.add(new Chunk(sum_tot+"", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL, Color.BLACK)));
+                tot_gnral.setAlignment(Element.ALIGN_CENTER);
                 PdfPCell celda_22 = new PdfPCell(tot_gnral);
-                
+                celda_22.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table_act.addCell(celda_blank);
+                table_act.addCell(celda_blank);
+                table_act.addCell(celda_blank);
+                table_act.addCell(celda_blank);
+                table_act.addCell(celda_blank);
+                table_act.addCell(celda_blank);
+                table_act.addCell(celda_blank);
                 table_act.addCell(celda_blank);
                 table_act.addCell(celda_blank);
                 table_act.addCell(celda_blank);
@@ -882,42 +1089,56 @@ public class Genera_pdf_maestro {
                 table_act.addCell(celda_12);
                 
                 table_act.setWidthPercentage(100);
-                float[] medidaCeldas = {2.00f, 0.30f, 0.30f, 0.30f,0.30f, 0.30f, 0.30f,0.55f, 0.58f,0.30f};
+                float[] medidaCeldas = {6.00f, 0.30f, 0.30f, 0.30f,0.30f, 0.30f, 0.30f,0.30f,0.30f,0.30f,0.30f,0.30f,0.30f,0.30f,0.30f,0.55f, 0.58f,0.30f};
                 table_act.setWidths(medidaCeldas);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
                 document.add(table_act);
                 
-
-                Paragraph comb20 = new Paragraph();
-                comb20.add(new Chunk("\n\n\n______________________________________          ", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                comb20.add(new Chunk("                                            _____________________________________________", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                document.add(comb20);
-
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 20, Font.BOLD, Color.BLACK)));
+                
+                PdfPTable table_firmas = new PdfPTable(2);
+                
                 Paragraph comb21 = new Paragraph();
-                comb21.add(new Chunk(opciones.getNomb_estudiante(), FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                comb21.add(new Chunk("                                                                           RESPONSABLE DE VINCULACIÓN", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                document.add(comb21);
-
+                comb21.add(new Chunk(opciones.getNomb_estudiante()+"\n"+"CÉDULA DE CIUDADANÍA: "+opciones.getCed_estudiante(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                
                 Paragraph comb22 = new Paragraph();
-                comb22.add(new Chunk("CÉDULA DE IDENTIDAD: "+opciones.getCed_estudiante(), FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                comb22.add(new Chunk("                                                                    CARRERA DE "+opciones.getCarrera_grado(), FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                document.add(comb22);
+                comb22.add(new Chunk(opciones.getNombre_delegado()+"\n", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                comb22.add(new Chunk("CARRERA DE "+opciones.getCarrera_grado(), FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                
+                Paragraph comb23 = new Paragraph();
+                comb23.add(new Chunk("__________________________________________", FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD, Color.BLACK)));
+                
+                
+                PdfPCell celda_firma_est = new PdfPCell(comb21);
+                PdfPCell celda_firm_resp_ups = new PdfPCell(comb22);
+                PdfPCell celda_firm_guion = new PdfPCell(comb23);
+                celda_firma_est.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_firm_resp_ups.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_firm_guion.setHorizontalAlignment(Element.ALIGN_CENTER);
+                
+                celda_firma_est.setBorder(0);
+                celda_firm_resp_ups.setBorder(0);
+                celda_firm_guion.setBorder(0);
+                
+                table_firmas.addCell(celda_firm_guion);
+                table_firmas.addCell(celda_firm_guion);
+                table_firmas.addCell(celda_firma_est);
+                table_firmas.addCell(celda_firm_resp_ups);
+                table_firmas.setWidthPercentage(100);
+                document.add(table_firmas);
 
             }
-
-            //document.add(getInformationFooter("Gracias por visitarnos!"));
-            //table.setWidthPercentage(100);
-            //document.add(table);	
-            //document.close();
+            
         } catch (FileNotFoundException | DocumentException e) {
-
             e.printStackTrace();
         } catch (IOException ex) {
             Logger.getLogger(Genera_pdf_maestro.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+    
          //INFORME DE PETICION VERBAL
          try {
              document.newPage();
+             
             Image imagen = Image.getInstance(ruta_imagen + "/Logo_UPS.png");
             Image imagen2 = Image.getInstance(ruta_imagen + "/logo_vinculacion.png");
 

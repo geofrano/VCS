@@ -271,7 +271,7 @@ function graba() {
                     if (data.trim() == "SI") {
                         //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
                         swal({
-                            title: "Exito!",
+                            title: "Éxito!",
                             text: "La ficha del estudiante ha sido ingresada",
                             type: "success",
                             showCancelButton: false,
@@ -323,7 +323,7 @@ function elimina(cont) {
             url: ruta + '/F_graba_Ficha_estudiante',
             success: function(data) {
                 if (data.trim() == "SI") {
-                    swal("Exito", "La ficha del estudiante ha sido eliminada exitosamente", "success");
+                    swal("Éxito", "La ficha del estudiante ha sido eliminada exitosamente", "success");
                     window.open(ruta + "/Administracion_de_Carrera/Ficha_del_Estudiante/ficha_estudiante.jsp", "_self");
                 } else {
                     swal("Error", "La ficha del estudiante no pudo ser eliminada", "error");

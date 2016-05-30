@@ -62,7 +62,7 @@ public class F_genera_pdf_cronograma extends HttpServlet {
                     response.setHeader("Content-Disposition", "inline; filename=Cronograma_actividades.pdf");
 
                     // Creamos el documento con formato A4 veritical
-                    Document document = new Document(PageSize.A4);
+                    Document document = new Document(PageSize.A4.rotate());
 
                     // Asignamos a un buffer temporal el documento
                     ByteArrayOutputStream buffer = new ByteArrayOutputStream();

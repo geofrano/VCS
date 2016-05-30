@@ -49,7 +49,7 @@ public class Administrar_Estudiante {
                      "   AND cc.cc_tipo_actividad = tipo_act.pa_id "+
                      "   AND tipo_act.pa_tipo = 'AC'"+
                      "   AND (UPPER(es_nombre) LIKE UPPER('%' || ? || '%') \n" +
-                     "	OR UPPER(es_apellido) LIKE UPPER('%' || ? || '%'))";
+                     "	OR UPPER(es_apellido) LIKE UPPER('%' || ? || '%')) order by CASE WHEN cc_estado='A' THEN '0' ELSE cc_estado END";
         
         
         parametro.add(new Parametro(1, nombre_estudiante));

@@ -8,14 +8,12 @@ package PPA_EXT_PAS.funciones_salida;
 
 import PPA_EXT_PAS.dominio.Carta_Compromiso;
 import PPA_EXT_PAS.eventos.Administrar_Ficha_Estudiante;
-import PPA_EXT_PAS.eventos.Genera_pdf;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

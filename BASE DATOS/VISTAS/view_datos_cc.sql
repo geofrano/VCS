@@ -1,0 +1,71 @@
+﻿-- View: view_datos_cc
+
+-- DROP VIEW view_datos_cc;
+
+CREATE OR REPLACE VIEW view_datos_cc AS 
+ SELECT btrim(cc.cc_id::text) AS id_cc,
+    btrim(tipo_act.pa_valor::text) AS tipo_actividad,
+    to_char(cc.cc_fecha_inicio::timestamp with time zone, 'dd'::text) AS dia_ini,
+    to_char(cc.cc_fecha_inicio::timestamp with time zone, 'mm'::text) AS mes_ini,
+    to_char(cc.cc_fecha_inicio::timestamp with time zone, 'yyyy'::text) AS anio_ini,
+    to_char(cc.cc_fecha_fin::timestamp with time zone, 'dd'::text) AS dia_fin,
+    to_char(cc.cc_fecha_fin::timestamp with time zone, 'mm'::text) AS mes_fin,
+    to_char(cc.cc_fecha_fin::timestamp with time zone, 'yyyy'::text) AS anio_fin,
+    btrim(es.es_cedula::text) AS ced_est,
+    (es.es_apellido::text || ' '::text) || es.es_nombre::text AS nombre_estudiante,
+    btrim(es.es_celular::text) AS cel_est,
+    btrim(es.es_correo::text) AS correo_est,
+    btrim(carrera.pa_valor::text) AS carrera_est,
+    btrim(ciclo.pa_valor::text) AS ciclo_est,
+    btrim(emp.ue_nombre::text) AS institucion,
+    (btrim(rep.ar_apellido::text) || ' '::text) || btrim(rep.ar_nombre::text) AS rep_leg,
+    btrim(cc.cc_area_actividad::text) AS cc_area_actividad,
+    btrim(cc.cc_responsable_area::text) AS cc_responsable_area,
+    btrim(cc.cc_horario_previsto::text) AS cc_horario_previsto,
+    btrim(rep.ar_cargo::text) AS cargo_rep_leg,
+    btrim(rep.ar_telefono::text) AS ar_telefono,
+    btrim(emp.ue_direccion::text) AS ue_direccion,
+    btrim(programa.pa_valor::text) AS programa,
+    proy.pr_nombre AS proyecto,
+    btrim(tutor.pa_valor::text) || ' '::text AS nombre_tutor,
+    ( SELECT f_devuelve_actividades(cc.cc_id::text) AS f_devuelve_actividades) AS actividades,
+    proy.pr_id AS cod_proy,
+    btrim(cc.cc_lugar_suscripcion::text) AS cc_lugar_suscripcion,
+    cc.cc_fecha_suscripcion,
+    btrim(es.es_id_carrera::text) AS id_carrera_est,
+    btrim(dir_carrera.pa_descripcion::text) AS cargo_director_carr,
+    btrim(dir_carrera.pa_valor::text) AS director_carrera,
+    btrim(dir_tecnico.pa_descripcion::text) AS cargo_dir_tecnico,
+    btrim(dir_tecnico.pa_valor::text) AS director_tecnico,
+    cc.cc_total_horas AS total_horas,
+    cc.cc_objetivo_actividad,
+    resp_vcs.pa_valor AS resp_vcs,
+    resp_act.pa_valor AS resp_act,
+    emp.ue_actividad_principal,
+    fono_dir_tec.pa_valor AS telefono_dir_tec,
+    emp.ue_telefono,
+    emp.ue_id,
+    es.es_id
+   FROM "MPP_CARTA_COMPROMISO" cc,
+    "MPP_PARAMETROS" tutor,
+    "MPP_ESTUDIANTES" es,
+    "MPP_PARAMETROS" programa,
+    "MPP_PARAMETROS" tipo_act,
+    "MPP_PARAMETROS" ciclo,
+    "MPP_PARAMETROS" carrera,
+    "MPP_UNIDAD_EXTERNA" emp,
+    "MPP_AGREGAR_REPRESENTANTE" rep,
+    ( SELECT cart.cc_id,
+            pr.pr_nombre,
+            pr.pr_id
+           FROM "MPP_CARTA_COMPROMISO" cart
+             LEFT JOIN "MPR_PROYECTO" pr ON pr.pr_id_programa = cart.cc_id_programa) proy,
+    "MPP_PARAMETROS" dir_carrera,
+    "MPP_PARAMETROS" dir_tecnico,
+    "MPP_PARAMETROS" resp_vcs,
+    "MPP_PARAMETROS" resp_act,
+    "MPP_PARAMETROS" fono_dir_tec
+  WHERE cc.cc_id_tutor = tutor.pa_id::text AND cc.es_id = es.es_id AND cc.cc_id_programa = programa.pa_id AND cc.cc_tipo_actividad = tipo_act.pa_id AND es.es_id_ciclo = ciclo.pa_id AND es.es_id_carrera = carrera.pa_id AND emp.ue_id = cc.ue_id AND rep.ue_id = emp.ue_id AND proy.cc_id = cc.cc_id AND btrim(fono_dir_tec.pa_id::text) = 'TELEF_DIR_TEC_VCS'::text AND fono_dir_tec.pa_tipo = 'DIR_TEC_VCS'::bpchar AND btrim(dir_tecnico.pa_id::text) = 'DIR_TEC_VCS'::text AND btrim(dir_carrera.pa_id::text) = ('DIR_'::text || btrim(carrera.pa_id::text)) AND btrim(resp_vcs.pa_id::text) = ('RESP_VCS_'::text || btrim(carrera.pa_id::text)) AND btrim(resp_vcs.pa_tipo::text) = 'RESP_VCS'::text AND btrim(resp_act.pa_id::text) = ((('RESP_'::text || btrim(tipo_act.pa_id::text)) || '_'::text) || btrim(carrera.pa_id::text)) AND carrera.pa_tipo = 'CA'::bpchar AND programa.pa_tipo = 'PR'::bpchar AND tipo_act.pa_tipo = 'AC'::bpchar AND ciclo.pa_tipo = 'CI'::bpchar AND btrim(dir_carrera.pa_tipo::text) = 'DIR_CARRERA'::text;
+
+ALTER TABLE view_datos_cc
+  OWNER TO postgres;

@@ -311,7 +311,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
                                         if (data.trim().substring(0,2) == "SI") {
                                             //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
                                             swal({
-                                                title: "Exito!",
+                                                title: "Éxito!",
                                                 text: "La carta compromiso ha sido ingresada",
                                                 type: "success",
                                                 showCancelButton: false,
@@ -368,7 +368,7 @@ app.controller("ControladorVCS", function ($scope, $http) {
                             if (data.trim().substring(0,2) == "SI") {
                                 //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
                                 swal({
-                                    title: "Exito!",
+                                    title: "Éxito!",
                                     text: "La carta compromiso ha sido ingresada",
                                     type: "success",
                                     showCancelButton: false,
@@ -777,6 +777,7 @@ function carga_codigo() {
         cod_cc2=cod_cc.substring(9);
         cod_cc=cod_cc.substring(0, 8);
         var cod_cc_new = "CC001."+cc_act+"-"+cod_cc2;
+        cod_cc_new=cod_cc_new.replace("--","-");
         document.getElementById("txt_codigo").value=cod_cc_new;
     }
 }
@@ -915,7 +916,7 @@ function carga_ingreso_empr(cont) {
                     if (data.trim() == "SI") {
                         //swal("Exito!", "La ficha del estudiante ha sido ingresada", "success");
                         swal({
-                            title: "Exito!",
+                            title: "Éxito!",
                             text: "La Empresa ha sido ingresada",
                             type: "success",
                             showCancelButton: false,
@@ -1024,7 +1025,7 @@ function elimina(cont) {
             url: ruta + '/F_carta_compromiso.jsp',
             success: function(data) {
                 if (data.trim() == "SI") {
-                    swal("Exito", "La carta compromiso ha sido eliminada exitosamente", "success");
+                    swal("Éxito", "La carta compromiso ha sido eliminada exitosamente", "success");
                     window.open(ruta + "/Entidad_Externa/Carta_Compromiso/carta_compromiso.jsp", "_self");
                 } else {
                     swal("Error", "La carta compromiso no pudo ser eliminada", "error");

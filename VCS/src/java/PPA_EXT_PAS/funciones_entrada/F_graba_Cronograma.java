@@ -6,7 +6,6 @@
 
 package PPA_EXT_PAS.funciones_entrada;
 
-import PPA_EXT_PAS.eventos.Administrar_Carta_Compromiso;
 import PPA_EXT_PAS.eventos.Administrar_Cronograma;
 import java.io.IOException;
 import java.io.PrintWriter;

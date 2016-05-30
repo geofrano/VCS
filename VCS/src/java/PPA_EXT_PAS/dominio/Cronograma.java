@@ -32,6 +32,14 @@ public class Cronograma {
     private String semana_5_act_1;
     private String semana_6_act_1;
     private String semana_7_act_1;
+    private String semana_8_act_1;
+    private String semana_9_act_1;
+    private String semana_10_act_1;
+    private String semana_11_act_1;
+    private String semana_12_act_1;
+    private String semana_13_act_1;
+    private String semana_14_act_1;
+    private String semana_15_act_1;
     private String semana_1_act_2;
     private String semana_2_act_2;
     private String semana_3_act_2;
@@ -39,6 +47,14 @@ public class Cronograma {
     private String semana_5_act_2;
     private String semana_6_act_2;
     private String semana_7_act_2;
+    private String semana_8_act_2;
+    private String semana_9_act_2;
+    private String semana_10_act_2;
+    private String semana_11_act_2;
+    private String semana_12_act_2;
+    private String semana_13_act_2;
+    private String semana_14_act_2;
+    private String semana_15_act_2;
     private String semana_1_act_3;
     private String semana_2_act_3;
     private String semana_3_act_3;
@@ -46,6 +62,14 @@ public class Cronograma {
     private String semana_5_act_3;
     private String semana_6_act_3;
     private String semana_7_act_3;
+    private String semana_8_act_3;
+    private String semana_9_act_3;
+    private String semana_10_act_3;
+    private String semana_11_act_3;
+    private String semana_12_act_3;
+    private String semana_13_act_3;
+    private String semana_14_act_3;
+    private String semana_15_act_3;
     private String semana_1_act_4;
     private String semana_2_act_4;
     private String semana_3_act_4;
@@ -53,6 +77,14 @@ public class Cronograma {
     private String semana_5_act_4;
     private String semana_6_act_4;
     private String semana_7_act_4;
+    private String semana_8_act_4;
+    private String semana_9_act_4;
+    private String semana_10_act_4;
+    private String semana_11_act_4;
+    private String semana_12_act_4;
+    private String semana_13_act_4;
+    private String semana_14_act_4;
+    private String semana_15_act_4;
     private String semana_1_act_5;
     private String semana_2_act_5;
     private String semana_3_act_5;
@@ -60,6 +92,14 @@ public class Cronograma {
     private String semana_5_act_5;
     private String semana_6_act_5;
     private String semana_7_act_5;
+    private String semana_8_act_5;
+    private String semana_9_act_5;
+    private String semana_10_act_5;
+    private String semana_11_act_5;
+    private String semana_12_act_5;
+    private String semana_13_act_5;
+    private String semana_14_act_5;
+    private String semana_15_act_5;
     private String semana_1_act_6;
     private String semana_2_act_6;
     private String semana_3_act_6;
@@ -67,6 +107,14 @@ public class Cronograma {
     private String semana_5_act_6;
     private String semana_6_act_6;
     private String semana_7_act_6;
+    private String semana_8_act_6;
+    private String semana_9_act_6;
+    private String semana_10_act_6;
+    private String semana_11_act_6;
+    private String semana_12_act_6;
+    private String semana_13_act_6;
+    private String semana_14_act_6;
+    private String semana_15_act_6;
     
     public String getId_carta_compromiso() {
         return id_carta_compromiso;
@@ -514,6 +562,390 @@ public class Cronograma {
 
     public void setSemana_7_act_6(String semana_7_act_6) {
         this.semana_7_act_6 = semana_7_act_6;
+    }
+
+    public String getSemana_8_act_1() {
+        return semana_8_act_1;
+    }
+
+    public void setSemana_8_act_1(String semana_8_act_1) {
+        this.semana_8_act_1 = semana_8_act_1;
+    }
+
+    public String getSemana_9_act_1() {
+        return semana_9_act_1;
+    }
+
+    public void setSemana_9_act_1(String semana_9_act_1) {
+        this.semana_9_act_1 = semana_9_act_1;
+    }
+
+    public String getSemana_10_act_1() {
+        return semana_10_act_1;
+    }
+
+    public void setSemana_10_act_1(String semana_10_act_1) {
+        this.semana_10_act_1 = semana_10_act_1;
+    }
+
+    public String getSemana_11_act_1() {
+        return semana_11_act_1;
+    }
+
+    public void setSemana_11_act_1(String semana_11_act_1) {
+        this.semana_11_act_1 = semana_11_act_1;
+    }
+
+    public String getSemana_12_act_1() {
+        return semana_12_act_1;
+    }
+
+    public void setSemana_12_act_1(String semana_12_act_1) {
+        this.semana_12_act_1 = semana_12_act_1;
+    }
+
+    public String getSemana_13_act_1() {
+        return semana_13_act_1;
+    }
+
+    public void setSemana_13_act_1(String semana_13_act_1) {
+        this.semana_13_act_1 = semana_13_act_1;
+    }
+
+    public String getSemana_14_act_1() {
+        return semana_14_act_1;
+    }
+
+    public void setSemana_14_act_1(String semana_14_act_1) {
+        this.semana_14_act_1 = semana_14_act_1;
+    }
+
+    public String getSemana_15_act_1() {
+        return semana_15_act_1;
+    }
+
+    public void setSemana_15_act_1(String semana_15_act_1) {
+        this.semana_15_act_1 = semana_15_act_1;
+    }
+
+    public String getSemana_8_act_2() {
+        return semana_8_act_2;
+    }
+
+    public void setSemana_8_act_2(String semana_8_act_2) {
+        this.semana_8_act_2 = semana_8_act_2;
+    }
+
+    public String getSemana_9_act_2() {
+        return semana_9_act_2;
+    }
+
+    public void setSemana_9_act_2(String semana_9_act_2) {
+        this.semana_9_act_2 = semana_9_act_2;
+    }
+
+    public String getSemana_10_act_2() {
+        return semana_10_act_2;
+    }
+
+    public void setSemana_10_act_2(String semana_10_act_2) {
+        this.semana_10_act_2 = semana_10_act_2;
+    }
+
+    public String getSemana_11_act_2() {
+        return semana_11_act_2;
+    }
+
+    public void setSemana_11_act_2(String semana_11_act_2) {
+        this.semana_11_act_2 = semana_11_act_2;
+    }
+
+    public String getSemana_12_act_2() {
+        return semana_12_act_2;
+    }
+
+    public void setSemana_12_act_2(String semana_12_act_2) {
+        this.semana_12_act_2 = semana_12_act_2;
+    }
+
+    public String getSemana_13_act_2() {
+        return semana_13_act_2;
+    }
+
+    public void setSemana_13_act_2(String semana_13_act_2) {
+        this.semana_13_act_2 = semana_13_act_2;
+    }
+
+    public String getSemana_14_act_2() {
+        return semana_14_act_2;
+    }
+
+    public void setSemana_14_act_2(String semana_14_act_2) {
+        this.semana_14_act_2 = semana_14_act_2;
+    }
+
+    public String getSemana_15_act_2() {
+        return semana_15_act_2;
+    }
+
+    public void setSemana_15_act_2(String semana_15_act_2) {
+        this.semana_15_act_2 = semana_15_act_2;
+    }
+
+    public String getSemana_8_act_3() {
+        return semana_8_act_3;
+    }
+
+    public void setSemana_8_act_3(String semana_8_act_3) {
+        this.semana_8_act_3 = semana_8_act_3;
+    }
+
+    public String getSemana_9_act_3() {
+        return semana_9_act_3;
+    }
+
+    public void setSemana_9_act_3(String semana_9_act_3) {
+        this.semana_9_act_3 = semana_9_act_3;
+    }
+
+    public String getSemana_10_act_3() {
+        return semana_10_act_3;
+    }
+
+    public void setSemana_10_act_3(String semana_10_act_3) {
+        this.semana_10_act_3 = semana_10_act_3;
+    }
+
+    public String getSemana_11_act_3() {
+        return semana_11_act_3;
+    }
+
+    public void setSemana_11_act_3(String semana_11_act_3) {
+        this.semana_11_act_3 = semana_11_act_3;
+    }
+
+    public String getSemana_12_act_3() {
+        return semana_12_act_3;
+    }
+
+    public void setSemana_12_act_3(String semana_12_act_3) {
+        this.semana_12_act_3 = semana_12_act_3;
+    }
+
+    public String getSemana_13_act_3() {
+        return semana_13_act_3;
+    }
+
+    public void setSemana_13_act_3(String semana_13_act_3) {
+        this.semana_13_act_3 = semana_13_act_3;
+    }
+
+    public String getSemana_14_act_3() {
+        return semana_14_act_3;
+    }
+
+    public void setSemana_14_act_3(String semana_14_act_3) {
+        this.semana_14_act_3 = semana_14_act_3;
+    }
+
+    public String getSemana_15_act_3() {
+        return semana_15_act_3;
+    }
+
+    public void setSemana_15_act_3(String semana_15_act_3) {
+        this.semana_15_act_3 = semana_15_act_3;
+    }
+
+    public String getSemana_8_act_4() {
+        return semana_8_act_4;
+    }
+
+    public void setSemana_8_act_4(String semana_8_act_4) {
+        this.semana_8_act_4 = semana_8_act_4;
+    }
+
+    public String getSemana_9_act_4() {
+        return semana_9_act_4;
+    }
+
+    public void setSemana_9_act_4(String semana_9_act_4) {
+        this.semana_9_act_4 = semana_9_act_4;
+    }
+
+    public String getSemana_10_act_4() {
+        return semana_10_act_4;
+    }
+
+    public void setSemana_10_act_4(String semana_10_act_4) {
+        this.semana_10_act_4 = semana_10_act_4;
+    }
+
+    public String getSemana_11_act_4() {
+        return semana_11_act_4;
+    }
+
+    public void setSemana_11_act_4(String semana_11_act_4) {
+        this.semana_11_act_4 = semana_11_act_4;
+    }
+
+    public String getSemana_12_act_4() {
+        return semana_12_act_4;
+    }
+
+    public void setSemana_12_act_4(String semana_12_act_4) {
+        this.semana_12_act_4 = semana_12_act_4;
+    }
+
+    public String getSemana_13_act_4() {
+        return semana_13_act_4;
+    }
+
+    public void setSemana_13_act_4(String semana_13_act_4) {
+        this.semana_13_act_4 = semana_13_act_4;
+    }
+
+    public String getSemana_14_act_4() {
+        return semana_14_act_4;
+    }
+
+    public void setSemana_14_act_4(String semana_14_act_4) {
+        this.semana_14_act_4 = semana_14_act_4;
+    }
+
+    public String getSemana_15_act_4() {
+        return semana_15_act_4;
+    }
+
+    public void setSemana_15_act_4(String semana_15_act_4) {
+        this.semana_15_act_4 = semana_15_act_4;
+    }
+
+    public String getSemana_8_act_5() {
+        return semana_8_act_5;
+    }
+
+    public void setSemana_8_act_5(String semana_8_act_5) {
+        this.semana_8_act_5 = semana_8_act_5;
+    }
+
+    public String getSemana_9_act_5() {
+        return semana_9_act_5;
+    }
+
+    public void setSemana_9_act_5(String semana_9_act_5) {
+        this.semana_9_act_5 = semana_9_act_5;
+    }
+
+    public String getSemana_10_act_5() {
+        return semana_10_act_5;
+    }
+
+    public void setSemana_10_act_5(String semana_10_act_5) {
+        this.semana_10_act_5 = semana_10_act_5;
+    }
+
+    public String getSemana_11_act_5() {
+        return semana_11_act_5;
+    }
+
+    public void setSemana_11_act_5(String semana_11_act_5) {
+        this.semana_11_act_5 = semana_11_act_5;
+    }
+
+    public String getSemana_12_act_5() {
+        return semana_12_act_5;
+    }
+
+    public void setSemana_12_act_5(String semana_12_act_5) {
+        this.semana_12_act_5 = semana_12_act_5;
+    }
+
+    public String getSemana_13_act_5() {
+        return semana_13_act_5;
+    }
+
+    public void setSemana_13_act_5(String semana_13_act_5) {
+        this.semana_13_act_5 = semana_13_act_5;
+    }
+
+    public String getSemana_14_act_5() {
+        return semana_14_act_5;
+    }
+
+    public void setSemana_14_act_5(String semana_14_act_5) {
+        this.semana_14_act_5 = semana_14_act_5;
+    }
+
+    public String getSemana_15_act_5() {
+        return semana_15_act_5;
+    }
+
+    public void setSemana_15_act_5(String semana_15_act_5) {
+        this.semana_15_act_5 = semana_15_act_5;
+    }
+
+    public String getSemana_8_act_6() {
+        return semana_8_act_6;
+    }
+
+    public void setSemana_8_act_6(String semana_8_act_6) {
+        this.semana_8_act_6 = semana_8_act_6;
+    }
+
+    public String getSemana_9_act_6() {
+        return semana_9_act_6;
+    }
+
+    public void setSemana_9_act_6(String semana_9_act_6) {
+        this.semana_9_act_6 = semana_9_act_6;
+    }
+
+    public String getSemana_10_act_6() {
+        return semana_10_act_6;
+    }
+
+    public void setSemana_10_act_6(String semana_10_act_6) {
+        this.semana_10_act_6 = semana_10_act_6;
+    }
+
+    public String getSemana_11_act_6() {
+        return semana_11_act_6;
+    }
+
+    public void setSemana_11_act_6(String semana_11_act_6) {
+        this.semana_11_act_6 = semana_11_act_6;
+    }
+
+    public String getSemana_12_act_6() {
+        return semana_12_act_6;
+    }
+
+    public void setSemana_12_act_6(String semana_12_act_6) {
+        this.semana_12_act_6 = semana_12_act_6;
+    }
+
+    public String getSemana_13_act_6() {
+        return semana_13_act_6;
+    }
+
+    public void setSemana_13_act_6(String semana_13_act_6) {
+        this.semana_13_act_6 = semana_13_act_6;
+    }
+
+    public String getSemana_14_act_6() {
+        return semana_14_act_6;
+    }
+
+    public void setSemana_14_act_6(String semana_14_act_6) {
+        this.semana_14_act_6 = semana_14_act_6;
+    }
+
+    public String getSemana_15_act_6() {
+        return semana_15_act_6;
+    }
+
+    public void setSemana_15_act_6(String semana_15_act_6) {
+        this.semana_15_act_6 = semana_15_act_6;
     }
     
     

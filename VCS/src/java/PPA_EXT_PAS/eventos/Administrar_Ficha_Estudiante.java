@@ -361,36 +361,38 @@ public class Administrar_Ficha_Estudiante {
         List< Carta_Compromiso> opciones = new LinkedList< Carta_Compromiso>();
         String sql = "SELECT a.ae_orden||'. '||a.ae_descripcion elemento, \n" +
                             "a.ae_id,\n" +
-                            "sem_1.ca_num_hora, \n" +
-                            "sem_2.ca_num_hora,\n" +
-                            "sem_3.ca_num_hora, \n" +
-                            "sem_4.ca_num_hora,\n" +
-                            "sem_5.ca_num_hora, \n" +
-                            "sem_6.ca_num_hora, \n" +
-                            "sem_7.ca_num_hora\n" +
-                            "     FROM \"MPP_ASIGNAR_ELEMENTO\" a, \n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_1,\n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_2,\n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_3,\n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_4,\n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_5,\n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_6,\n" +
-                            "          \"MPP_CRONOGRAMA_ACT\" sem_7\n" +
-                            "   where a.ae_id=sem_1.ae_id\n" +
-                            "     AND a.ae_id=sem_2.ae_id\n" +
-                            "     AND a.ae_id=sem_3.ae_id\n" +
-                            "     AND a.ae_id=sem_4.ae_id\n" +
-                            "     AND a.ae_id=sem_5.ae_id\n" +
-                            "     AND a.ae_id=sem_6.ae_id\n" +
-                            "     AND a.ae_id=sem_7.ae_id\n" +
-                            "     AND sem_1.ca_semana = 1\n" +
-                            "     AND sem_2.ca_semana = 2\n" +
-                            "     AND sem_3.ca_semana = 3\n" +
-                            "     AND sem_4.ca_semana = 4\n" +
-                            "     AND sem_5.ca_semana = 5\n" +
-                            "     AND sem_6.ca_semana = 6\n" +
-                            "     AND sem_7.ca_semana = 7\n" +
-                            "     AND trim(a.cc_id) = trim(?)\n" +
+                            "coalesce(sem_1.ca_num_hora,0) semana1, \n" +
+                            "coalesce(sem_2.ca_num_hora,0) semana2,\n" +
+                            "coalesce(sem_3.ca_num_hora,0) semana3, \n" +
+                            "coalesce(sem_4.ca_num_hora,0) semana4,\n" +
+                            "coalesce(sem_5.ca_num_hora,0) semana5, \n" +
+                            "coalesce(sem_6.ca_num_hora,0) semana6,\n" +
+                            "coalesce(sem_7.ca_num_hora,0) semana7, \n" +
+                            "coalesce(sem_8.ca_num_hora,0) semana8,\n" +
+                            "coalesce(sem_9.ca_num_hora,0) semana9, \n" +
+                            "coalesce(sem_10.ca_num_hora,0) semana10,\n" +
+                            "coalesce(sem_11.ca_num_hora,0) semana11, \n" +
+                            "coalesce(sem_12.ca_num_hora,0) semana12,\n" +
+                            "coalesce(sem_13.ca_num_hora,0) semana13, \n" +
+                            "coalesce(sem_14.ca_num_hora,0) semana14,\n" +
+                            "coalesce(sem_15.ca_num_hora,0) semana15\n" +
+                            "     FROM \"MPP_ASIGNAR_ELEMENTO\" a \n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_1 ON a.ae_id=sem_1.ae_id and sem_1.ca_semana = 1\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_2 ON a.ae_id=sem_2.ae_id and sem_2.ca_semana = 2\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_3 ON a.ae_id=sem_3.ae_id and sem_3.ca_semana = 3\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_4 ON a.ae_id=sem_4.ae_id and sem_4.ca_semana = 4\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_5 ON a.ae_id=sem_5.ae_id and sem_5.ca_semana = 5\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_6 ON a.ae_id=sem_6.ae_id and sem_6.ca_semana = 6\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_7 ON a.ae_id=sem_7.ae_id and sem_7.ca_semana = 7\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_8 ON a.ae_id=sem_8.ae_id and sem_8.ca_semana = 8\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_9 ON a.ae_id=sem_9.ae_id and sem_9.ca_semana = 9\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_10 ON a.ae_id=sem_10.ae_id and sem_10.ca_semana = 10\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_11 ON a.ae_id=sem_11.ae_id and sem_11.ca_semana = 11\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_12 ON a.ae_id=sem_12.ae_id and sem_12.ca_semana = 12\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_13 ON a.ae_id=sem_13.ae_id and sem_13.ca_semana = 13\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_14 ON a.ae_id=sem_14.ae_id and sem_14.ca_semana = 14\n" +
+                            "       LEFT JOIN \"MPP_CRONOGRAMA_ACT\" sem_15 ON a.ae_id=sem_15.ae_id and sem_15.ca_semana = 15\n" +
+                            "   where trim(a.cc_id) = trim(?)\n" +
                             "     AND a.ae_tipo = ? order by a.ae_orden";
         
         ArrayList<Parametro> lstPar = new ArrayList<>();
@@ -411,6 +413,14 @@ public class Administrar_Ficha_Estudiante {
                 carta_comp.setProducto_5(cres.getString(6));
                 carta_comp.setProducto_6(cres.getString(7));
                 carta_comp.setActividad_3(cres.getString(8));
+                carta_comp.setResultado_1(cres.getString(9));
+                carta_comp.setResultado_2(cres.getString(10));
+                carta_comp.setResultado_3(cres.getString(11));
+                carta_comp.setResultado_4(cres.getString(12));
+                carta_comp.setResultado_5(cres.getString(13));
+                carta_comp.setResultado_6(cres.getString(14));
+                carta_comp.setActividad_4(cres.getString(15));
+                carta_comp.setActividad_5(cres.getString(16));
                 //System.out.println("ACT "+cres.getString(0));
                 opciones.add(carta_comp);
             }
@@ -644,26 +654,22 @@ public class Administrar_Ficha_Estudiante {
                 int num_h_sem5=0;
                 int num_h_sem6=0;
                 int num_h_sem7=0;
-                String valor_sem1="";
-                String valor_sem2="";
-                String valor_sem3="";
-                String valor_sem4="";
-                String valor_sem5="";
-                String valor_sem6="";
-                String valor_sem7="";
+                int num_h_sem8=0;
+                int num_h_sem9=0;
+                int num_h_sem10=0;
+                int num_h_sem11=0;
+                int num_h_sem12=0;
+                int num_h_sem13=0;
+                int num_h_sem14=0;
+                int num_h_sem15=0;
+                
                 int sum_act=0;
                 int sum_tot=0;
                 
                 for (Iterator<Carta_Compromiso> it2 = carta_comp3_act.iterator(); it2.hasNext();) {
                     Carta_Compromiso elemento = it2.next();
                     contador = contador +1;
-                    valor_sem1="";
-                    valor_sem2="";
-                    valor_sem3="";
-                    valor_sem4="";
-                    valor_sem5="";
-                    valor_sem6="";
-                    valor_sem7="";
+
                     num_h_sem1=0;
                     num_h_sem2=0;
                     num_h_sem3=0;
@@ -671,7 +677,14 @@ public class Administrar_Ficha_Estudiante {
                     num_h_sem5=0;
                     num_h_sem6=0;
                     num_h_sem7=0;
-                    
+                    num_h_sem8=0;
+                    num_h_sem9=0;
+                    num_h_sem10=0;
+                    num_h_sem11=0;
+                    num_h_sem12=0;
+                    num_h_sem13=0;
+                    num_h_sem14=0;
+                    num_h_sem15=0;
                     
                     num_h_sem1=Integer.parseInt(elemento.getProducto_1());
                     num_h_sem2=Integer.parseInt(elemento.getProducto_2());
@@ -680,38 +693,36 @@ public class Administrar_Ficha_Estudiante {
                     num_h_sem5=Integer.parseInt(elemento.getProducto_5());
                     num_h_sem6=Integer.parseInt(elemento.getProducto_6());
                     num_h_sem7=Integer.parseInt(elemento.getActividad_3());
+                    num_h_sem8=Integer.parseInt(elemento.getResultado_1());
+                    num_h_sem9=Integer.parseInt(elemento.getResultado_2());
+                    num_h_sem10=Integer.parseInt(elemento.getResultado_3());
+                    num_h_sem11=Integer.parseInt(elemento.getResultado_4());
+                    num_h_sem12=Integer.parseInt(elemento.getResultado_5());
+                    num_h_sem13=Integer.parseInt(elemento.getResultado_6());
+                    num_h_sem14=Integer.parseInt(elemento.getActividad_4());
+                    num_h_sem15=Integer.parseInt(elemento.getActividad_5());
                     
-                    sum_act=num_h_sem1+num_h_sem2+num_h_sem3+num_h_sem4+num_h_sem5+num_h_sem6+num_h_sem7;
+                    sum_act=num_h_sem1+num_h_sem2+num_h_sem3+num_h_sem4+num_h_sem5+num_h_sem6+num_h_sem7+
+                            num_h_sem8+num_h_sem9+num_h_sem10+num_h_sem11+num_h_sem12+num_h_sem13+num_h_sem14+num_h_sem15;
+                    
                     sum_tot= sum_tot +sum_act;
-                    if(num_h_sem1 > 0){
-                        valor_sem1="X";
-                    }
-                    if(num_h_sem2 > 0){
-                        valor_sem2="X";
-                    }
-                    if(num_h_sem3 > 0){
-                        valor_sem3="X";
-                    }
-                    if(num_h_sem4 > 0){
-                        valor_sem4="X";
-                    }
-                    if(num_h_sem5 > 0){
-                        valor_sem5="X";
-                    }
-                    if(num_h_sem6 > 0){
-                        valor_sem6="X";
-                    }
-                    if(num_h_sem7 > 0){
-                        valor_sem7="X";
-                    }
                     
-                    json.put("act_"+contador+"_sem1", valor_sem1);
-                    json.put("act_"+contador+"_sem2", valor_sem2);
-                    json.put("act_"+contador+"_sem3", valor_sem3);
-                    json.put("act_"+contador+"_sem4", valor_sem4);
-                    json.put("act_"+contador+"_sem5", valor_sem5);
-                    json.put("act_"+contador+"_sem6", valor_sem6);
-                    json.put("act_"+contador+"_sem7", valor_sem7);
+                    
+                    json.put("act_"+contador+"_sem1", num_h_sem1);
+                    json.put("act_"+contador+"_sem2", num_h_sem2);
+                    json.put("act_"+contador+"_sem3", num_h_sem3);
+                    json.put("act_"+contador+"_sem4", num_h_sem4);
+                    json.put("act_"+contador+"_sem5", num_h_sem5);
+                    json.put("act_"+contador+"_sem6", num_h_sem6);
+                    json.put("act_"+contador+"_sem7", num_h_sem7);
+                    json.put("act_"+contador+"_sem8", num_h_sem8);
+                    json.put("act_"+contador+"_sem9", num_h_sem9);
+                    json.put("act_"+contador+"_sem10", num_h_sem10);
+                    json.put("act_"+contador+"_sem11", num_h_sem11);
+                    json.put("act_"+contador+"_sem12", num_h_sem12);
+                    json.put("act_"+contador+"_sem13", num_h_sem13);
+                    json.put("act_"+contador+"_sem14", num_h_sem14);
+                    json.put("act_"+contador+"_sem15", num_h_sem15);
                     json.put("act_"+contador+"_sum", sum_act);
                     
                     
