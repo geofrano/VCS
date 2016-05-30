@@ -15,73 +15,58 @@ app.controller("ControladorVCS", function ($scope, $http) {
         var ruta = document.getElementById("ruta_principal").value;
         var cont = 0;
         var $tabla = $("#tbl_estudiante");
-        $tabla.find("tr:gt(0)").remove();
-        document.getElementById("existe_data").value = "0";
-        $("#div_consulta").css("display", "none");
-        $("#div_consulta2").css("display", "block");
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {id_est: estudiante},
-            //data: {id_cmb:'carrera'},
-            //data: $('#formid').serialize(),
-            url: ruta + '/F_Consulta_Estudiante',
-            success: function(data) {
-                $("#div_datos").html("");
+        if (estudiante != ""){
+            
+            $tabla.find("tr:gt(0)").remove();
+            document.getElementById("existe_data").value = "0";
+            $("#div_consulta").css("display", "none");
+            $("#div_consulta2").css("display", "block");
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {id_est: estudiante},
+                //data: {id_cmb:'carrera'},
+                //data: $('#formid').serialize(),
+                url: ruta + '/F_Consulta_Estudiante',
+                success: function(data) {
+                    $("#div_datos").html("");
 
-                $.each(data.items, function(index, article) {
-                    cont = cont + 1;
-                    $tabla.append("<tr><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\">" + article.id_cc + "</td>\n" +
-                            "<td>" + article.cc_tipo_act + "</td>\n" +
-                            "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
-                            //"<td>" + article.emp_nombre + "</td>\n" +
-                            "<td>" + article.lugar_suscrip + "</td>\n" +
-                            "<td>" + article.fecha_suscrip + "</td>\n" +
-                            "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div>" +
-                            "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
-                            "</td>\n" +
-                            "<td class=\"alineado3\">" +
-                            "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
-                            "</td>\n" +
-                            "<td class=\"alineado3\">" +
-                            "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
-                            "</td></tr>\n");
-                    var estado = parseInt(article.cc_estado);
-                    $("#" + "div_imprimir_" + cont).css("display", "block");
-                    $("#" + "div_eliminar_" + cont).css("display", "block");
-                    $("#" + "div_modificar_" + cont).css("display", "block");
-                    /*if (estado >= 4) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                    $.each(data.items, function(index, article) {
+                        cont = cont + 1;
+                        $tabla.append("<tr><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\">" + article.id_cc + "</td>\n" +
+                                "<td>" + article.cc_tipo_act + "</td>\n" +
+                                "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
+                                //"<td>" + article.emp_nombre + "</td>\n" +
+                                "<td>" + article.lugar_suscrip + "</td>\n" +
+                                "<td>" + article.fecha_suscrip + "</td>\n" +
+                                "<td><div style=\"display:none\" name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"group1\" id = \"group1\" value = \"" + article.id_cc + "\" ></div>" +
+                                "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
+                                "</td>\n" +
+                                "<td class=\"alineado3\">" +
+                                "<div style=\"display:none\" name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_ingreso(" + cont + ")\"/></div>" +
+                                "</td>\n" +
+                                "<td class=\"alineado3\">" +
+                                "<div style=\"display:none\" name=\"div_eliminar_" + cont + "\" id=\"div_eliminar_" + cont + "\"><img width=\"20px\" height=\"10px\" src=\"../../images/eliminar.jpg\" title=\"Eliminar\" onclick=\"elimina(" + cont + ")\"/>" +
+                                "</td></tr>\n");
+                        var estado = parseInt(article.cc_estado);
                         $("#" + "div_imprimir_" + cont).css("display", "block");
                         $("#" + "div_eliminar_" + cont).css("display", "block");
-                    }
-                    if (article.cc_estado.trim() == "A") {
-                        $("#" + "div_eliminar_" + cont).css("display", "block");
                         $("#" + "div_modificar_" + cont).css("display", "block");
-                        $("#" + "div_inserta_" + cont).css("display", "none");
-                    }
-                    if (estado >= 0 && estado <=4) {
-                        $("#" + "div_eliminar_" + cont).css("display", "block");
-                        $("#" + "div_modificar_" + cont).css("display", "block");
-                        $("#" + "div_inserta_" + cont).css("display", "none");
-                    }
-                    if (estado >= 4) {//La ficha del estudiante ya fue ingresada
-                        $("#" + "div_eliminar_" + cont).css("display", "block");
-                        $("#" + "div_modificar_" + cont).css("display", "block");
-                        $("#" + "div_inserta_" + cont).css("display", "none");
-                    }*/
+                        
+                        document.getElementById("existe_data").value = "1";
+                    });
+                    var v = document.getElementById("existe_data").value;
 
-                    document.getElementById("existe_data").value = "1";
-                });
-                var v = document.getElementById("existe_data").value;
-
-                if (v == "0") {
-                    $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    if (v == "0") {
+                        $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    }
+                    $("#div_consulta").css("display", "block");
+                    $("#div_consulta2").css("display", "none");
                 }
-                $("#div_consulta").css("display", "block");
-                $("#div_consulta2").css("display", "none");
-            }
-        });
-
+            });
+        }else{
+            alert("Favor ingrese el nombre del estudiante");
+        }    
     };
     $scope.carga2 = function () {
         var ruta = document.getElementById("ruta_principal").value;
@@ -579,45 +564,49 @@ app.controller("ControladorVCS", function ($scope, $http) {
         
         $("#btn_aceptar_est").attr('disabled','disabled');
         var $tabla = $("#tbl_estudiante");
-        $tabla.find("tr:gt(0)").remove();
-        document.getElementById("existe_estudiante").value = "0";
-        $("#div_consulta_est").css("display", "none");
-        $("#div_consulta2_est").css("display", "block");
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {estudiante: estudiante, cedula_est: cedula},
-            url: ruta + '/F_Consulta_EstudianteCC',
-            success: function (data) {
-                $.each(data.items, function (index, article) {
-                    cont = cont + 1;
-                    $tabla.append("<tr>\n" +
-                            "<td>" + article.nomb_est + "\n" +
-                            "<input type=\"hidden\" name=\"id_est_" + cont + "\" id=\"id_est_" + cont + "\" value=\"" + article.id_est + "\">\n" +
-                            "<input type=\"hidden\" name=\"id_ciclo_" + cont + "\" id=\"id_ciclo_" + cont + "\" value=\"" + article.id_ciclo + "\">\n" +
-                            "<input type=\"hidden\" name=\"id_carrera_" + cont + "\" id=\"id_carrera_" + cont + "\" value=\"" + article.id_carrera + "\">\n" +
-                            "<input type=\"hidden\" name=\"nombre_estudiante_" + cont + "\" id=\"nombre_estudiante_" + cont + "\" value=\"" + article.nomb_est + "\"></td>\n" +
-                            "<td>" + article.cedula + "\n" +
-                            "<input type=\"hidden\" name=\"cedula_" + cont + "\" id=\"cedula_" + cont + "\" value=\"" + article.cedula + "\"></td>\n" +
-                            "<td>" + article.carrera + "\n" +
-                            "<input type=\"hidden\" name=\"carrera_" + cont + "\" id=\"carrera_" + cont + "\" value=\"" + article.carrera + "\"></td>\n" +
-                            "<td>" + article.ciclo + "\n" +
-                            "<input type=\"hidden\" name=\"ciclo_" + cont + "\" id=\"ciclo_" + cont + "\" value=\"" + article.ciclo + "\"></td>\n" +
-                            "<td><div name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"grupo_est\" id = \"grupo_est\" value = \"" + cont + "\" onclick=\"habilita_btn()\"></div></td>\n" +
-                            "</tr>\n");
-                    document.getElementById("existe_estudiante").value = "1";
-                    //$("#btn_aceptar_est").removeAttr('disabled');
-                });
-                var v = document.getElementById("existe_estudiante").value;
+        if (estudiante != "" || cedula != ""){
+            $tabla.find("tr:gt(0)").remove();
+            document.getElementById("existe_estudiante").value = "0";
+            $("#div_consulta_est").css("display", "none");
+            $("#div_consulta2_est").css("display", "block");
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {estudiante: estudiante, cedula_est: cedula},
+                url: ruta + '/F_Consulta_EstudianteCC',
+                success: function (data) {
+                    $.each(data.items, function (index, article) {
+                        cont = cont + 1;
+                        $tabla.append("<tr>\n" +
+                                "<td>" + article.nomb_est + "\n" +
+                                "<input type=\"hidden\" name=\"id_est_" + cont + "\" id=\"id_est_" + cont + "\" value=\"" + article.id_est + "\">\n" +
+                                "<input type=\"hidden\" name=\"id_ciclo_" + cont + "\" id=\"id_ciclo_" + cont + "\" value=\"" + article.id_ciclo + "\">\n" +
+                                "<input type=\"hidden\" name=\"id_carrera_" + cont + "\" id=\"id_carrera_" + cont + "\" value=\"" + article.id_carrera + "\">\n" +
+                                "<input type=\"hidden\" name=\"nombre_estudiante_" + cont + "\" id=\"nombre_estudiante_" + cont + "\" value=\"" + article.nomb_est + "\"></td>\n" +
+                                "<td>" + article.cedula + "\n" +
+                                "<input type=\"hidden\" name=\"cedula_" + cont + "\" id=\"cedula_" + cont + "\" value=\"" + article.cedula + "\"></td>\n" +
+                                "<td>" + article.carrera + "\n" +
+                                "<input type=\"hidden\" name=\"carrera_" + cont + "\" id=\"carrera_" + cont + "\" value=\"" + article.carrera + "\"></td>\n" +
+                                "<td>" + article.ciclo + "\n" +
+                                "<input type=\"hidden\" name=\"ciclo_" + cont + "\" id=\"ciclo_" + cont + "\" value=\"" + article.ciclo + "\"></td>\n" +
+                                "<td><div name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"grupo_est\" id = \"grupo_est\" value = \"" + cont + "\" onclick=\"habilita_btn()\"></div></td>\n" +
+                                "</tr>\n");
+                        document.getElementById("existe_estudiante").value = "1";
+                        //$("#btn_aceptar_est").removeAttr('disabled');
+                    });
+                    var v = document.getElementById("existe_estudiante").value;
 
-                if (v == "0") {
-                    $("#btn_aceptar_est").attr('disabled','disabled');
-                    $tabla.append("<tr><td colspan=\"9\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    if (v == "0") {
+                        $("#btn_aceptar_est").attr('disabled','disabled');
+                        $tabla.append("<tr><td colspan=\"9\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    }
+                    $("#div_consulta_est").css("display", "block");
+                    $("#div_consulta2_est").css("display", "none");
                 }
-                $("#div_consulta_est").css("display", "block");
-                $("#div_consulta2_est").css("display", "none");
-            }
-        });
+            });
+        }else{
+            alert("Favor ingrese el nombre del estudiante o su cédula");
+        }
     };
     
     $scope.consultar_empresa = function () {
@@ -626,50 +615,55 @@ app.controller("ControladorVCS", function ($scope, $http) {
         var cont = 0;
         $("#btn_aceptar_emp").attr('disabled','disabled');
         var $tabla = $("#tbl_empresa");
-        $tabla.find("tr:gt(0)").remove();
-        document.getElementById("existe_empresa").value = "0";
-        $("#div_consulta").css("display", "none");
-        $("#div_consulta2").css("display", "block");
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {empresa: empresa},
-            url: ruta + '/F_Consulta_Empresa',
-            success: function (data) {
-                $.each(data.items, function (index, article) {
-                    cont = cont + 1;
-                    $tabla.append("<tr>\n" +
-                            "<td>" + article.nombre_empresa + "\n" +
-                            "<input type=\"hidden\" name=\"ue_id_" + cont + "\" id=\"ue_id_" + cont + "\" value=\"" + article.ue_id + "\">\n" +
-                            "<input type=\"hidden\" name=\"ar_id_" + cont + "\" id=\"ar_id_" + cont + "\" value=\"" + article.ar_id + "\">\n" +
-                            "<input type=\"hidden\" name=\"nombre_empresa_" + cont + "\" id=\"nombre_empresa_" + cont + "\" value=\"" + article.nombre_empresa + "\"></td>\n" +
-                            "<td>" + article.direccion + "\n" +
-                            "<input type=\"hidden\" name=\"direccion_" + cont + "\" id=\"direccion_" + cont + "\" value=\"" + article.direccion + "\"></td>\n" +
-                            "<td>" + article.telefono + "\n" +
-                            "<input type=\"hidden\" name=\"telefono_" + cont + "\" id=\"telefono_" + cont + "\" value=\"" + article.telefono + "\"></td>\n" +
-                            "<td>" + article.actividad + "\n" +
-                            "<input type=\"hidden\" name=\"actividad_" + cont + "\" id=\"actividad_" + cont + "\" value=\"" + article.actividad + "\"></td>\n" +
-                            "<td colspan=\"2\">" + article.nombre + " " + article.apellido + "\n" +
-                            "<input type=\"hidden\" name=\"representante_" + cont + "\" id=\"representante_" + cont + "\" value=\"" + article.nombre + " " + article.apellido + "\"></td>\n" +
-                            "<td>" + article.cargo + "\n" +
-                            "<input type=\"hidden\" name=\"cargo_" + cont + "\" id=\"cargo_" + cont + "\" value=\"" + article.cargo + "\"></td>\n" +
-                            "<td><input type=\"hidden\" name=\"tele_repre_" + cont + "\" id=\"tele_repre_" + cont + "\" value=\"" + article.tele_repre + "\"></td>\n" +
-                            "<td><div name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"grupo\" id = \"grupo\" value = \"" + cont + "\" onclick=\"habilita_btn()\"></div></td>\n" +
-                            "<td><div name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_datos_empresa(" + cont + ",'M')\"/></div></td> \n" +
-                            "</tr>\n");
-                    document.getElementById("existe_empresa").value = "1";
-                    //$("#btn_aceptar_emp").removeAttr('disabled');
-                });
-                var v = document.getElementById("existe_empresa").value;
+        if (empresa != ""){
+            
+            $tabla.find("tr:gt(0)").remove();
+            document.getElementById("existe_empresa").value = "0";
+            $("#div_consulta").css("display", "none");
+            $("#div_consulta2").css("display", "block");
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {empresa: empresa},
+                url: ruta + '/F_Consulta_Empresa',
+                success: function (data) {
+                    $.each(data.items, function (index, article) {
+                        cont = cont + 1;
+                        $tabla.append("<tr>\n" +
+                                "<td>" + article.nombre_empresa + "\n" +
+                                "<input type=\"hidden\" name=\"ue_id_" + cont + "\" id=\"ue_id_" + cont + "\" value=\"" + article.ue_id + "\">\n" +
+                                "<input type=\"hidden\" name=\"ar_id_" + cont + "\" id=\"ar_id_" + cont + "\" value=\"" + article.ar_id + "\">\n" +
+                                "<input type=\"hidden\" name=\"nombre_empresa_" + cont + "\" id=\"nombre_empresa_" + cont + "\" value=\"" + article.nombre_empresa + "\"></td>\n" +
+                                "<td>" + article.direccion + "\n" +
+                                "<input type=\"hidden\" name=\"direccion_" + cont + "\" id=\"direccion_" + cont + "\" value=\"" + article.direccion + "\"></td>\n" +
+                                "<td>" + article.telefono + "\n" +
+                                "<input type=\"hidden\" name=\"telefono_" + cont + "\" id=\"telefono_" + cont + "\" value=\"" + article.telefono + "\"></td>\n" +
+                                "<td>" + article.actividad + "\n" +
+                                "<input type=\"hidden\" name=\"actividad_" + cont + "\" id=\"actividad_" + cont + "\" value=\"" + article.actividad + "\"></td>\n" +
+                                "<td colspan=\"2\">" + article.nombre + " " + article.apellido + "\n" +
+                                "<input type=\"hidden\" name=\"representante_" + cont + "\" id=\"representante_" + cont + "\" value=\"" + article.nombre + " " + article.apellido + "\"></td>\n" +
+                                "<td>" + article.cargo + "\n" +
+                                "<input type=\"hidden\" name=\"cargo_" + cont + "\" id=\"cargo_" + cont + "\" value=\"" + article.cargo + "\"></td>\n" +
+                                "<td><input type=\"hidden\" name=\"tele_repre_" + cont + "\" id=\"tele_repre_" + cont + "\" value=\"" + article.tele_repre + "\"></td>\n" +
+                                "<td><div name=\"div_inserta_" + cont + "\" id=\"div_inserta_" + cont + "\"><input type = \"radio\" name = \"grupo\" id = \"grupo\" value = \"" + cont + "\" onclick=\"habilita_btn()\"></div></td>\n" +
+                                "<td><div name=\"div_modificar_" + cont + "\" id=\"div_modificar_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/modificar.png\" title=\"Modificar\" onclick=\"carga_datos_empresa(" + cont + ",'M')\"/></div></td> \n" +
+                                "</tr>\n");
+                        document.getElementById("existe_empresa").value = "1";
+                        //$("#btn_aceptar_emp").removeAttr('disabled');
+                    });
+                    var v = document.getElementById("existe_empresa").value;
 
-                if (v == "0") {
-                    $("#btn_aceptar_emp").attr('disabled','disabled');
-                    $tabla.append("<tr><td colspan=\"9\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    if (v == "0") {
+                        $("#btn_aceptar_emp").attr('disabled','disabled');
+                        $tabla.append("<tr><td colspan=\"9\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    }
+                    $("#div_consulta").css("display", "block");
+                    $("#div_consulta2").css("display", "none");
                 }
-                $("#div_consulta").css("display", "block");
-                $("#div_consulta2").css("display", "none");
-            }
-        });
+            });
+        }else{
+            alert("Favor ingrese el nombre de la empresa");
+        }   
     };
 
     $scope.datos_empresa = function () {

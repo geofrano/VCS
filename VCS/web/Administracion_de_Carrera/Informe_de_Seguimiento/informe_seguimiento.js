@@ -15,48 +15,52 @@ app.controller("ControladorVCS", function($scope, $http) {
         var ruta = document.getElementById("ruta_principal").value;
         var cont = 0;
         var $tabla = $("#tbl_estudiante");
-        $tabla.find("tr:gt(0)").remove();
-        document.getElementById("existe_data").value = "0";
-        $("#div_consulta").css("display", "none");
-        $("#div_consulta2").css("display", "block");
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {id_est: estudiante},
-            //data: {id_cmb:'carrera'},
-            //data: $('#formid').serialize(),
-            url: ruta + '/F_Consulta_Estudiante',
-            success: function(data) {
-                $("#div_datos").html("");
+        if (estudiante != ""){
 
-                $.each(data.items, function(index, article) {
-                    cont = cont + 1;
-                    $tabla.append("<tr title=\"Si no ha ingresado la ficha del estudiante no podra generar el Informe de Seguimiento\"><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\" >" + article.id_cc + "</td>\n" +
-                            "<td>" + article.cc_tipo_act + "</td>\n" +
-                            "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
-                            //"<td>" + article.emp_nombre + "</td>\n" +
-                            "<td>" + article.lugar_suscrip + "</td>\n" +
-                            "<td>" + article.fecha_suscrip + "</td>\n" +
-                            "<td class=\"alineado3\">" +
-                            "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
-                            "</td>\n" +
-                            "</tr>\n");
+            $tabla.find("tr:gt(0)").remove();
+            document.getElementById("existe_data").value = "0";
+            $("#div_consulta").css("display", "none");
+            $("#div_consulta2").css("display", "block");
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {id_est: estudiante},
+                //data: {id_cmb:'carrera'},
+                //data: $('#formid').serialize(),
+                url: ruta + '/F_Consulta_Estudiante',
+                success: function(data) {
+                    $("#div_datos").html("");
 
-                    if (article.cc_estado >= 5) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
-                        $("#" + "div_imprimir_" + cont).css("display", "block");
+                    $.each(data.items, function(index, article) {
+                        cont = cont + 1;
+                        $tabla.append("<tr title=\"Si no ha ingresado la ficha del estudiante no podra generar el Informe de Seguimiento\"><td><input type=\"hidden\" name=\"cc_id_" + cont + "\" id=\"cc_id_" + cont + "\" value=\"" + article.id_cc + "\" >" + article.id_cc + "</td>\n" +
+                                "<td>" + article.cc_tipo_act + "</td>\n" +
+                                "<td colspan=\"2\">" + article.nomb_est + "</td>\n" +
+                                //"<td>" + article.emp_nombre + "</td>\n" +
+                                "<td>" + article.lugar_suscrip + "</td>\n" +
+                                "<td>" + article.fecha_suscrip + "</td>\n" +
+                                "<td class=\"alineado3\">" +
+                                "<div style=\"display:none\" name=\"div_imprimir_" + cont + "\" id=\"div_imprimir_" + cont + "\"><img width=\"30px\" height=\"30px\" src=\"../../images/imprimir.png\" title=\"Generar\" onclick=\"imprime(" + cont + ")\"/></div>" +
+                                "</td>\n" +
+                                "</tr>\n");
+
+                        if (article.cc_estado >= 5) {//Solo si esta en estado 5 (ya se genero la ficha del estudiante)
+                            $("#" + "div_imprimir_" + cont).css("display", "block");
+                        }
+                        document.getElementById("existe_data").value = "1";
+                    });
+                    var v = document.getElementById("existe_data").value;
+
+                    if (v == "0") {
+                        $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
                     }
-                    document.getElementById("existe_data").value = "1";
-                });
-                var v = document.getElementById("existe_data").value;
-
-                if (v == "0") {
-                    $tabla.append("<tr><td colspan=\"8\" align=\"center\">No hay datos a mostrar</td></tr>");
+                    $("#div_consulta").css("display", "block");
+                    $("#div_consulta2").css("display", "none");
                 }
-                $("#div_consulta").css("display", "block");
-                $("#div_consulta2").css("display", "none");
-            }
-        });
-
+            });
+        }else{
+            alert("Favor ingrese el nombre del estudiante");
+        }
     };
 
     $scope.carga2 = function() {

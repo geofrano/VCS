@@ -45,14 +45,15 @@ public class Genera_pdf_maestro {
 	} catch (Exception ex) {
             Logger.getLogger(Genera_pdf_maestro.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // <editor-fold defaultstate="collapsed" desc="CARTA COMPROMISO">
         try {
+            
+            
             Image imagen = Image.getInstance(ruta_imagen + "/Logo_UPS.png");
             Image imagen2 = Image.getInstance(ruta_imagen + "/logo_vinculacion.png");
 
             imagen2.scalePercent(40f);
             imagen.scalePercent(3f);
-            //PdfPTable table = new PdfPTable(1);
-            //table.getDefaultCell().setBackgroundColor(new Color(205, 38, 38));
 
             imagen2.setAbsolutePosition(476f, 799f);
             imagen.setAbsolutePosition(50f, 799f);
@@ -83,41 +84,121 @@ public class Genera_pdf_maestro {
 
                 document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 1, Font.NORMAL, Color.BLACK)));
 
-                Paragraph comb = new Paragraph();
-                comb.add(new Chunk("CÓDIGO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb.add(new Chunk(opciones.getId_carta_compromiso(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb.add(new Chunk("                                                                               ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb.add(new Chunk("NO.: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb.add(new Chunk(opciones.getId_carta_compromiso().substring(13), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb);
-
-                Paragraph comb2 = new Paragraph();
-                comb2.add(new Chunk("NOMBRE DE LA EMPRESA O INSTITUCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb2.add(new Chunk(opciones.getNomb_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                //comb2.add(new Chunk("                                                ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                //comb2.add(new Chunk("INICIO: ", FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD, Color.BLACK)));
-                //comb2.add(new Chunk(opciones.getDia_inicio() + "/" + opciones.getMes_inicio() + "/" + opciones.getAnio_inicio(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                document.add(comb2);
-
-                Paragraph comb3 = new Paragraph();
-                comb3.add(new Chunk("DIRECCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb3.add(new Chunk(opciones.getDir_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb3.add(new Chunk("                                                ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb3.add(new Chunk("TELEFONO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb3.add(new Chunk(opciones.getTelf_representante(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                //comb3.add(new Chunk(opciones.getDia_fin() + "/" + opciones.getMes_fin() + "/" + opciones.getAnio_fin(), FontFactory.getFont(FontFactory.HELVETICA, 11, Font.NORMAL, Color.BLACK)));
-                document.add(comb3);
-
-                Paragraph comb4 = new Paragraph();
-                comb4.add(new Chunk("ACTIVIDAD PRINCIPAL DE LA EMPRESA O INSTITUCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb4.add(new Chunk(opciones.getAct_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb4);
-
-                Paragraph comb5 = new Paragraph();
-                comb5.add(new Chunk("APELLIDOS Y NOMBRES DEL ESTUDIANTE: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb5.add(new Chunk(opciones.getNomb_estudiante().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb5);
-
+                Paragraph paraf_cod_tit = new Paragraph();
+                Paragraph paraf_cod_val = new Paragraph();
+                Paragraph paraf_num_tit = new Paragraph();
+                Paragraph paraf_num_val = new Paragraph();
+                paraf_cod_tit.add(new Chunk("CÓDIGO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_cod_val.add(new Chunk(opciones.getId_carta_compromiso(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_num_tit.add(new Chunk("NO.: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_num_val.add(new Chunk(opciones.getId_carta_compromiso().substring(13), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                Paragraph paraf_emp_tit = new Paragraph();
+                Paragraph paraf_emp_val = new Paragraph();
+                paraf_emp_tit.add(new Chunk("NOMBRE DE LA EMPRESA O INSTITUCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_emp_val.add(new Chunk(opciones.getNomb_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                
+                PdfPTable table_cab = new PdfPTable(4);
+                PdfPCell celda1_cab = new PdfPCell(paraf_cod_tit);
+                PdfPCell celda2_cab = new PdfPCell(paraf_cod_val);
+                PdfPCell celda3_cab = new PdfPCell(paraf_num_tit);
+                PdfPCell celda4_cab = new PdfPCell(paraf_num_val);
+                PdfPCell celda5_cab = new PdfPCell(paraf_emp_tit);
+                PdfPCell celda6_cab = new PdfPCell(paraf_emp_val);
+                
+                celda1_cab.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                celda3_cab.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                celda4_cab.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda6_cab.setColspan(3);
+                
+                celda1_cab.setBorder(0);
+                celda2_cab.setBorder(Rectangle.BOTTOM);
+                celda3_cab.setBorder(0);
+                celda4_cab.setBorder(Rectangle.BOTTOM);
+                celda5_cab.setBorder(0);
+                celda6_cab.setBorder(Rectangle.BOTTOM);
+                
+                table_cab.addCell(celda1_cab);
+                table_cab.addCell(celda2_cab);
+                table_cab.addCell(celda3_cab);
+                table_cab.addCell(celda4_cab);
+                table_cab.addCell(celda5_cab);
+                table_cab.addCell(celda6_cab);
+                table_cab.setWidthPercentage(100);
+                float[] medidaCeldas_cab = {0.63f, 0.60f, 0.40f, 0.55f};
+                table_cab.setWidths(medidaCeldas_cab);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_cab);
+                
+                PdfPTable table_dir = new PdfPTable(4);
+                Paragraph paraf_dir_tit = new Paragraph();
+                Paragraph paraf_telef_tit = new Paragraph();
+                Paragraph paraf_dir_val = new Paragraph();
+                Paragraph paraf_telef_val = new Paragraph();
+                paraf_dir_tit.add(new Chunk("DIRECCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_dir_val.add(new Chunk(opciones.getDir_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_telef_tit.add(new Chunk("TELÉFONO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_telef_val.add(new Chunk(opciones.getTelf_representante(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                PdfPCell celda1_dir = new PdfPCell(paraf_dir_tit);
+                PdfPCell celda2_dir = new PdfPCell(paraf_dir_val);
+                PdfPCell celda3_dir = new PdfPCell(paraf_telef_tit);
+                PdfPCell celda4_dir = new PdfPCell(paraf_telef_val);
+                
+                celda1_dir.setBorder(0);
+                celda2_dir.setBorder(Rectangle.BOTTOM);
+                celda3_dir.setBorder(0);
+                celda4_dir.setBorder(Rectangle.BOTTOM);
+                
+                table_dir.addCell(celda1_dir);
+                table_dir.addCell(celda2_dir);
+                table_dir.addCell(celda3_dir);
+                table_dir.addCell(celda4_dir);
+                table_dir.setWidthPercentage(100);
+                float[] medidaCeldas_dir = {0.18f, 0.90f, 0.18f, 0.80f};
+                table_dir.setWidths(medidaCeldas_dir);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_dir);
+                
+                PdfPTable table_act = new PdfPTable(2);
+                
+                Paragraph paraf_act_tit = new Paragraph();
+                Paragraph paraf_act_val = new Paragraph();
+                paraf_act_tit.add(new Chunk("ACTIVIDAD PRINCIPAL DE LA EMPRESA O INSTITUCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_act_val.add(new Chunk(opciones.getAct_empresa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                PdfPCell celda1_act = new PdfPCell(paraf_act_tit);
+                PdfPCell celda2_act = new PdfPCell(paraf_act_val);
+                
+                celda1_act.setBorder(0);
+                celda2_act.setBorder(Rectangle.BOTTOM);
+                
+                table_act.addCell(celda1_act);
+                table_act.addCell(celda2_act);
+                
+                table_act.setWidthPercentage(100);
+                float[] medidaCeldas_act = {0.24f, 0.90f};
+                table_act.setWidths(medidaCeldas_act);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_act);
+                
+                PdfPTable table_est = new PdfPTable(2);
+                
+                Paragraph paraf_est_tit = new Paragraph();
+                Paragraph paraf_est_val = new Paragraph();
+                paraf_est_tit.add(new Chunk("APELLIDOS Y NOMBRES DEL ESTUDIANTE: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_est_val.add(new Chunk(opciones.getNomb_estudiante().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                PdfPCell celda1_est = new PdfPCell(paraf_est_tit);
+                PdfPCell celda2_est = new PdfPCell(paraf_est_val);
+                
+                celda1_est.setBorder(0);
+                celda2_est.setBorder(Rectangle.BOTTOM);
+                
+                table_est.addCell(celda1_est);
+                table_est.addCell(celda2_est);
+                
+                table_est.setWidthPercentage(100);
+                float[] medidaCeldas_est = {0.39f, 0.90f};
+                table_est.setWidths(medidaCeldas_est);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_est);
+                
                 Paragraph comb6 = new Paragraph();
                 comb6.add(new Chunk("CARRERA DE GRADO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
                 comb6.add(new Chunk(opciones.getCarrera_grado(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
@@ -142,13 +223,36 @@ public class Genera_pdf_maestro {
 
                 document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 1, Font.NORMAL, Color.BLACK)));
                 
-                Paragraph comb7 = new Paragraph();
-                comb7.add(new Chunk("TIPO DE ACTIVIDAD ACADÉMICA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb7.add(new Chunk(opciones.getTipo_actividad(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb7.add(new Chunk("                     ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb7.add(new Chunk("DURACIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb7.add(new Chunk(opciones.getTotal_horas()+" horas", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb7);
+                PdfPTable table_tipo_act = new PdfPTable(4);
+                Paragraph paraf_tipo_act_tit = new Paragraph();
+                Paragraph paraf_tipo_act_val = new Paragraph();
+                Paragraph paraf_duracion_tit = new Paragraph();
+                Paragraph paraf_duracion_val = new Paragraph();
+                
+                paraf_tipo_act_tit.add(new Chunk("TIPO DE ACTIVIDAD ACADÉMICA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_tipo_act_val.add(new Chunk(opciones.getTipo_actividad(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_duracion_tit.add(new Chunk("DURACIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_duracion_val.add(new Chunk(opciones.getTotal_horas()+" horas", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                PdfPCell celda1_tipo_act = new PdfPCell(paraf_tipo_act_tit);
+                PdfPCell celda2_tipo_act = new PdfPCell(paraf_tipo_act_val);
+                PdfPCell celda3_tipo_act = new PdfPCell(paraf_duracion_tit);
+                PdfPCell celda4_tipo_act = new PdfPCell(paraf_duracion_val);
+                
+                celda1_tipo_act.setBorder(0);
+                celda2_tipo_act.setBorder(Rectangle.BOTTOM);
+                celda3_tipo_act.setBorder(0);
+                celda4_tipo_act.setBorder(Rectangle.BOTTOM);
+                
+                table_tipo_act.addCell(celda1_tipo_act);
+                table_tipo_act.addCell(celda2_tipo_act);
+                table_tipo_act.addCell(celda3_tipo_act);
+                table_tipo_act.addCell(celda4_tipo_act);
+                
+                table_tipo_act.setWidthPercentage(100);
+                float[] medidaCeldas_tipo_act = {0.66f, 0.95f,0.30f, 0.78f};
+                table_tipo_act.setWidths(medidaCeldas_tipo_act);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_tipo_act);
                 
                 document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 1, Font.BOLD, Color.BLACK)));
                 
@@ -173,22 +277,22 @@ public class Genera_pdf_maestro {
                 PdfPCell celda_8=new PdfPCell(campo8);
                 
                 celda_1.setBorder(0);
-                celda_2.setBorder(0);
+                //celda_2.setBorder(0);
                 celda_3.setBorder(0);
-                celda_4.setBorder(0);
+                celda_4.setBorder(Rectangle.BOTTOM);
                 celda_5.setBorder(0);
-                celda_6.setBorder(0);
+                celda_6.setBorder(Rectangle.BOTTOM);
                 celda_7.setBorder(0);
-                celda_8.setBorder(0);
+                celda_8.setBorder(Rectangle.BOTTOM);
                 
                 celda_1.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda_2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_3.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_4.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_5.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_6.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_7.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda_8.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celda_3.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_4.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_5.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_6.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_7.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celda_8.setHorizontalAlignment(Element.ALIGN_LEFT);
                 
                 celda_2.setRowspan(3);
                 celda_1.setRowspan(3);
@@ -203,22 +307,59 @@ public class Genera_pdf_maestro {
                 table_objetivo_ac.addCell(celda_8);
                 
                 table_objetivo_ac.setWidthPercentage(100);//Para que ocupe toda la hoja
-                float[] medidaCeldas_ob_tab = {0.50f, 2.00f, 0.80f, 1.18f};
+                float[] medidaCeldas_ob_tab = {0.50f, 2.10f, 0.64f, 1.18f};
                 table_objetivo_ac.setWidths(medidaCeldas_ob_tab);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
                 document.add(table_objetivo_ac);
                 
-                Paragraph comb8 = new Paragraph();
-                comb8.add(new Chunk("NOMBRE PROGRAMA: ", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                comb8.add(new Chunk(opciones.getNombre_programa(), FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, Color.BLACK)));
-                document.add(comb8);
+                PdfPTable table_programa = new PdfPTable(2);
                 
-                Paragraph comb9 = new Paragraph();
-                comb9.add(new Chunk("ÁREA QUE REQUIERE LA ACTIVIDAD ACADÉMICA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb9.add(new Chunk(opciones.getArea_actividad().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb9.add(new Chunk("         ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb9.add(new Chunk("RESPONSABLE DEL ÁREA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb9.add(new Chunk(opciones.getResponsable_area(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb9);
+                Paragraph paraf_prog_tit = new Paragraph();
+                Paragraph paraf_prog_val = new Paragraph();
+                paraf_prog_tit.add(new Chunk("NOMBRE PROGRAMA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_prog_val.add(new Chunk(opciones.getNombre_programa(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                PdfPCell celda_1_prog=new PdfPCell(paraf_prog_tit);
+                PdfPCell celda_2_prog=new PdfPCell(paraf_prog_val);
+                
+                celda_1_prog.setBorder(0);
+                celda_2_prog.setBorder(Rectangle.BOTTOM);
+                table_programa.addCell(celda_1_prog);
+                table_programa.addCell(celda_2_prog);
+                
+                table_programa.setWidthPercentage(100);//Para que ocupe toda la hoja
+                float[] medidaCeldas_prog = {0.45f, 2.10f};
+                table_programa.setWidths(medidaCeldas_prog);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_programa);
+                
+                PdfPTable table_area = new PdfPTable(4);
+                
+                Paragraph paraf_area_tit = new Paragraph();
+                Paragraph paraf_area_val = new Paragraph();
+                Paragraph paraf_resp_area_tit = new Paragraph();
+                Paragraph paraf_resp_area_val = new Paragraph();
+                paraf_area_tit.add(new Chunk("ÁREA QUE REQUIERE LA ACTIVIDAD ACADÉMICA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_area_val.add(new Chunk(opciones.getArea_actividad().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_resp_area_tit.add(new Chunk("RESPONSABLE DEL ÁREA: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_resp_area_val.add(new Chunk(opciones.getResponsable_area(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                PdfPCell celda_1_area=new PdfPCell(paraf_area_tit);
+                PdfPCell celda_2_area=new PdfPCell(paraf_area_val);
+                PdfPCell celda_3_area=new PdfPCell(paraf_resp_area_tit);
+                PdfPCell celda_4_area=new PdfPCell(paraf_resp_area_val);
+                
+                celda_1_area.setBorder(0);
+                celda_2_area.setBorder(Rectangle.BOTTOM);
+                celda_3_area.setBorder(0);
+                celda_4_area.setBorder(Rectangle.BOTTOM);
+                table_area.addCell(celda_1_area);
+                table_area.addCell(celda_2_area);
+                table_area.addCell(celda_3_area);
+                table_area.addCell(celda_4_area);
+                
+                table_area.setWidthPercentage(100);//Para que ocupe toda la hoja
+                float[] medidaCeldas_area = {1.10f, 1f,0.70f,1f};
+                table_area.setWidths(medidaCeldas_area);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                document.add(table_area);
                 
                 Paragraph act_prev_tit = new Paragraph();
                 act_prev_tit.add(new Chunk("ACTIVIDADES PREVISTAS A SER DESARROLLADAS EN LA ACTIVIDAD ACADÉMICA:(SEÑALE AQUELLAS QUE PREVÉN RESULTADOS Y PRODUCTOS)", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
@@ -226,36 +367,55 @@ public class Genera_pdf_maestro {
                 Administrar_Ficha_Estudiante adm_ficha_est = new Administrar_Ficha_Estudiante();
                 List< Carta_Compromiso> carta_comp2_act = adm_ficha_est.obtiene_elemento2(opciones.getId_carta_compromiso(),"AC");
                 
+                PdfPTable table_actividades = new PdfPTable(1);
+                
                 for (Iterator<Carta_Compromiso> it2 = carta_comp2_act.iterator(); it2.hasNext();) {
                     Carta_Compromiso elemento = it2.next();
                     Paragraph act_contenido = new Paragraph();
                     act_contenido.add(new Chunk(elemento.getActividad_1(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                    document.add(act_contenido);
+                    PdfPCell celda_1_actividades=new PdfPCell(act_contenido);
+                    celda_1_actividades.setBorder(Rectangle.BOTTOM);
+                    table_actividades.addCell(celda_1_actividades);
                 }
-               
+                table_actividades.setWidthPercentage(100);//Para que ocupe toda la hoja
+                document.add(table_actividades);
+                
                 Paragraph result_prev_tit = new Paragraph();
                 result_prev_tit.add(new Chunk("RESULTADOS PREVISTOS DE ACTIVIDAD ACADÉMICA:", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
                 document.add(result_prev_tit);
                 List< Carta_Compromiso> carta_comp2_res = adm_ficha_est.obtiene_elemento2(opciones.getId_carta_compromiso(),"RE");
                 
+                PdfPTable table_resultados = new PdfPTable(1);
+                
                 for (Iterator<Carta_Compromiso> it2 = carta_comp2_res.iterator(); it2.hasNext();) {
                     Carta_Compromiso elemento = it2.next();
                     Paragraph act_contenido = new Paragraph();
                     act_contenido.add(new Chunk(elemento.getActividad_1(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                    document.add(act_contenido);
+                    PdfPCell celda_1_resultados=new PdfPCell(act_contenido);
+                    celda_1_resultados.setBorder(Rectangle.BOTTOM);
+                    table_resultados.addCell(celda_1_resultados);
                 }
+                table_resultados.setWidthPercentage(100);//Para que ocupe toda la hoja
+                document.add(table_resultados);
+                
                 
                 Paragraph recursos_prev_tit = new Paragraph();
                 recursos_prev_tit.add(new Chunk("RECURSOS: PRODUCTOS ENTREGABLES PREVISTOS DE LA ACTIVIDAD ACADÉMICA Y LOS MATERIALES FÍSICOS QUE SE GENERAN EN LA INTERVENCIÓN", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
                 document.add(recursos_prev_tit);
                 List< Carta_Compromiso> carta_comp2_rec = adm_ficha_est.obtiene_elemento2(opciones.getId_carta_compromiso(),"RC");
                 
+                PdfPTable table_productos = new PdfPTable(1);
+                
                 for (Iterator<Carta_Compromiso> it2 = carta_comp2_rec.iterator(); it2.hasNext();) {
                     Carta_Compromiso elemento = it2.next();
                     Paragraph act_contenido = new Paragraph();
                     act_contenido.add(new Chunk(elemento.getActividad_1(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                    document.add(act_contenido);
+                    PdfPCell celda_1_productos=new PdfPCell(act_contenido);
+                    celda_1_productos.setBorder(Rectangle.BOTTOM);
+                    table_productos.addCell(celda_1_productos);
                 }
+                table_productos.setWidthPercentage(100);//Para que ocupe toda la hoja
+                document.add(table_productos);
                 
                 Paragraph recursos_tutor_tit = new Paragraph();
                 recursos_tutor_tit.add(new Chunk("NOMBRE DEL TUTOR: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
@@ -281,39 +441,94 @@ public class Genera_pdf_maestro {
 
                 document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 1, Font.BOLD, Color.BLACK)));
 
-                /*Paragraph comb10 = new Paragraph();
-                comb10.add(new Chunk("INSTITUCIÓN O EMPRESA DE INTERÉS: ", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD, Color.BLACK)));
-                comb10.add(new Chunk(opciones.getNomb_empresa().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, Color.BLACK)));
-                document.add(comb10);*/
-
-                Paragraph comb_representante = new Paragraph();
-                comb_representante.add(new Chunk("APELLIDOS Y NOMBRES DEL REPRESENTANTE LEGAL: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb_representante.add(new Chunk(opciones.getNombre_representante().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_representante.add(new Chunk("  ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_representante.add(new Chunk("CARGO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb_representante.add(new Chunk(opciones.getCargo_representante(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_representante.add(new Chunk("  ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_representante.add(new Chunk("TELÉFONO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb_representante.add(new Chunk(opciones.getTelf_representante(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb_representante);
-
-                Paragraph comb_deleg = new Paragraph();
-                comb_deleg.add(new Chunk("APELLIDOS Y NOMBRES DELEGADO UPS: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb_deleg.add(new Chunk(opciones.getDir_tecnico().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_deleg.add(new Chunk("  ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_deleg.add(new Chunk("CARGO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb_deleg.add(new Chunk(opciones.getCargo_dir_tec(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_deleg.add(new Chunk("  ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                comb_deleg.add(new Chunk("TELÉFONO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                comb_deleg.add(new Chunk(opciones.getTelf_delegado(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(comb_deleg);
+                PdfPTable table_aceptacion = new PdfPTable(6);
                 
-                Paragraph lugar_suscrip = new Paragraph();
-                lugar_suscrip.add(new Chunk("LUGAR Y FECHA SUSCRIPCIÓN:  ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
-                lugar_suscrip.add(new Chunk(opciones.getLugar_suscripcion() + ", " + opciones.getFecha_suscripcion(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
-                document.add(lugar_suscrip);
+                Paragraph paraf_rep_tit = new Paragraph();
+                Paragraph paraf_rep_val = new Paragraph();
+                Paragraph paraf_rep_cargo_tit = new Paragraph();
+                Paragraph paraf_rep_cargo_val = new Paragraph();
+                Paragraph paraf_rep_telef_tit = new Paragraph();
+                Paragraph paraf_rep_telef_val = new Paragraph();
+                Paragraph paraf_deleg_tit = new Paragraph();
+                Paragraph paraf_deleg_val = new Paragraph();
+                Paragraph paraf_deleg_cargo_tit = new Paragraph();
+                Paragraph paraf_deleg_cargo_val = new Paragraph();
+                Paragraph paraf_deleg_telef_tit = new Paragraph();
+                Paragraph paraf_deleg_telef_val = new Paragraph();
+                Paragraph paraf_suscrip_tit = new Paragraph();
+                Paragraph paraf_suscrip_val = new Paragraph();
                 
-                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 2, Font.NORMAL, Color.BLACK)));
+                paraf_rep_tit.add(new Chunk("APELLIDOS Y NOMBRES DEL REPRESENTANTE LEGAL: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_rep_val.add(new Chunk(opciones.getNombre_representante().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_rep_cargo_tit.add(new Chunk("CARGO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_rep_cargo_val.add(new Chunk(opciones.getCargo_representante(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_rep_telef_tit.add(new Chunk("TELÉFONO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_rep_telef_val.add(new Chunk(opciones.getTelf_representante(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+
+                paraf_deleg_tit.add(new Chunk("APELLIDOS Y NOMBRES DELEGADO UPS: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_deleg_val.add(new Chunk(opciones.getDir_tecnico().toUpperCase(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_deleg_cargo_tit.add(new Chunk("CARGO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_deleg_cargo_val.add(new Chunk(opciones.getCargo_dir_tec(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                paraf_deleg_telef_tit.add(new Chunk("TELÉFONO: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_deleg_telef_val.add(new Chunk(opciones.getTelf_delegado(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+
+                paraf_suscrip_tit.add(new Chunk("LUGAR Y FECHA SUSCRIPCIÓN: ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD, Color.BLACK)));
+                paraf_suscrip_val.add(new Chunk(opciones.getLugar_suscripcion() + ", " + opciones.getFecha_suscripcion(), FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK)));
+                
+                PdfPCell celda_1_aceptacion=new PdfPCell(paraf_rep_tit);
+                PdfPCell celda_2_aceptacion=new PdfPCell(paraf_rep_val);
+                PdfPCell celda_3_aceptacion=new PdfPCell(paraf_rep_cargo_tit);
+                PdfPCell celda_4_aceptacion=new PdfPCell(paraf_rep_cargo_val);
+                PdfPCell celda_5_aceptacion=new PdfPCell(paraf_rep_telef_tit);
+                PdfPCell celda_6_aceptacion=new PdfPCell(paraf_rep_telef_val);
+                PdfPCell celda_7_aceptacion=new PdfPCell(paraf_deleg_tit);
+                PdfPCell celda_8_aceptacion=new PdfPCell(paraf_deleg_val);
+                PdfPCell celda_9_aceptacion=new PdfPCell(paraf_deleg_cargo_tit);
+                PdfPCell celda_10_aceptacion=new PdfPCell(paraf_deleg_cargo_val);
+                PdfPCell celda_11_aceptacion=new PdfPCell(paraf_deleg_telef_tit);
+                PdfPCell celda_12_aceptacion=new PdfPCell(paraf_deleg_telef_val);
+                PdfPCell celda_13_aceptacion=new PdfPCell(paraf_suscrip_tit);
+                PdfPCell celda_14_aceptacion=new PdfPCell(paraf_suscrip_val);
+                
+                celda_1_aceptacion.setBorder(0);
+                celda_2_aceptacion.setBorder(Rectangle.BOTTOM);
+                celda_3_aceptacion.setBorder(0);
+                celda_4_aceptacion.setBorder(Rectangle.BOTTOM);
+                celda_5_aceptacion.setBorder(0);
+                celda_6_aceptacion.setBorder(Rectangle.BOTTOM);
+                celda_7_aceptacion.setBorder(0);
+                celda_8_aceptacion.setBorder(Rectangle.BOTTOM);
+                celda_9_aceptacion.setBorder(0);
+                celda_10_aceptacion.setBorder(Rectangle.BOTTOM);
+                celda_11_aceptacion.setBorder(0);
+                celda_12_aceptacion.setBorder(Rectangle.BOTTOM);
+                celda_13_aceptacion.setBorder(0);
+                celda_14_aceptacion.setBorder(Rectangle.BOTTOM);
+                
+                celda_14_aceptacion.setColspan(5);
+                
+                table_aceptacion.addCell(celda_1_aceptacion);
+                table_aceptacion.addCell(celda_2_aceptacion);
+                table_aceptacion.addCell(celda_3_aceptacion);
+                table_aceptacion.addCell(celda_4_aceptacion);
+                table_aceptacion.addCell(celda_5_aceptacion);
+                table_aceptacion.addCell(celda_6_aceptacion);
+                table_aceptacion.addCell(celda_7_aceptacion);
+                table_aceptacion.addCell(celda_8_aceptacion);
+                table_aceptacion.addCell(celda_9_aceptacion);
+                table_aceptacion.addCell(celda_10_aceptacion);
+                table_aceptacion.addCell(celda_11_aceptacion);
+                table_aceptacion.addCell(celda_12_aceptacion);
+                table_aceptacion.addCell(celda_13_aceptacion);
+                table_aceptacion.addCell(celda_14_aceptacion);
+                
+                table_aceptacion.setWidthPercentage(100);
+                float[] medidaCeldas_aceptacion = {0.90f, 1f,0.24f,0.50f,0.28f,0.40f};
+                table_aceptacion.setWidths(medidaCeldas_aceptacion);// ASIGNO LAS MEDIDAS A LA TABLA (ANCHO)
+                
+                document.add(table_aceptacion);
+                
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 5, Font.NORMAL, Color.BLACK)));
                 
                 PdfPTable table_firma_rep_leg = new PdfPTable(3);
                 PdfPCell tit_firma_rep_leg=new PdfPCell(new Paragraph(new Paragraph("REPRESENTANTE LEGAL ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK))));
@@ -326,7 +541,8 @@ public class Genera_pdf_maestro {
                 table_firma_rep_leg.addCell(tit_firma3_rep_leg);
                 table_firma_rep_leg.setWidthPercentage(100);//Para que ocupe toda la hoja
                 document.add(table_firma_rep_leg);
-               
+                document.add(new Paragraph("\n", FontFactory.getFont(FontFactory.HELVETICA, 3, Font.NORMAL, Color.BLACK)));
+
                 PdfPTable table_firma_deleg_ups = new PdfPTable(3);
                 PdfPCell tit_firma_deleg_ups=new PdfPCell(new Paragraph(new Paragraph("DIRECCIÓN TÉCNICA DE \nVINCULACIÓN CON LA \nSOCIEDAD ", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK))));
                 PdfPCell tit_firma2_deleg_ups=new PdfPCell(new Paragraph(new Paragraph("\n\n\nfirma", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.NORMAL, Color.BLACK))));
@@ -337,23 +553,21 @@ public class Genera_pdf_maestro {
                 table_firma_deleg_ups.addCell(tit_firma2_deleg_ups);
                 table_firma_deleg_ups.addCell(tit_firma3_deleg_ups);
                 table_firma_deleg_ups.setWidthPercentage(100);//Para que ocupe toda la hoja
-                document.add(table_firma_deleg_ups);
                 
+                document.add(table_firma_deleg_ups);
 
             }
 
-            //document.add(getInformationFooter("Gracias por visitarnos!"));
-            //table.setWidthPercentage(100);
-            //document.add(table);	
-            //document.close();
         } catch (FileNotFoundException | DocumentException e) {
             e.printStackTrace();
         } catch (IOException ex) {
             Logger.getLogger(Genera_pdf_maestro.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+        // </editor-fold>
+    
         
-        //FICHA DEL ESTUDIANTE
+        // <editor-fold defaultstate="collapsed" desc="FICHA DEL ESTUDIANTE">
         try {
             document.newPage();
             Image imagen = Image.getInstance(ruta_imagen + "/Logo_UPS.png");
@@ -569,19 +783,15 @@ public class Genera_pdf_maestro {
 
             }
 
-            //document.add(getInformationFooter("Gracias por visitarnos!"));
-            //table.setWidthPercentage(100);
-            //document.add(table);	
-            //document.close();
         } catch (FileNotFoundException | DocumentException e) {
-
             e.printStackTrace();
         } catch (IOException ex) {
             Logger.getLogger(Genera_pdf_maestro.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // </editor-fold>
     
         
-        //CRONOGRAMA DE ACTIVIDADES
+        // <editor-fold defaultstate="collapsed" desc="CRONOGRAMA DE ACTIVIDADES">
          try {
 		    
             document.setPageSize(PageSize.A4.rotate());
@@ -1133,6 +1343,7 @@ public class Genera_pdf_maestro {
         } catch (IOException ex) {
             Logger.getLogger(Genera_pdf_maestro.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // </editor-fold>
     
     
          //INFORME DE PETICION VERBAL
